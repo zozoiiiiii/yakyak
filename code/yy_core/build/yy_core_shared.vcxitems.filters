@@ -22,15 +22,6 @@
     <Filter Include="util\src">
       <UniqueIdentifier>{78043008-ec77-4341-8be5-04b80bc67b99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{18b8b6b1-58c2-47c0-b3a9-4b04cd971dc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math\inc">
-      <UniqueIdentifier>{22e6945f-8b35-4c8a-b690-da6212e3eb3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math\src">
-      <UniqueIdentifier>{1364b57e-8dd9-45d4-afd3-508f14ccaa77}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_class.h">
@@ -121,39 +112,6 @@
       <Filter>core\src</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\yy_core.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_aabb.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_frustum.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_mat4f.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math_func.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_plane.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_quaternion.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_ray.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec2f.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec3f.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec4f.h">
-      <Filter>math\inc</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_log.cpp">
@@ -193,35 +151,5 @@
       <Filter>core\src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\yy_core.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_aabb.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_frustum.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_mat4f.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_math_func.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_plane.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_quaternion.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_ray.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec2f.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec4f.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vect3f.cpp">
-      <Filter>math\src</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
