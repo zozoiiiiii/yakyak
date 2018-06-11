@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{aea6a89c-7428-42a0-a065-6ece9c16fdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reflection">
+      <UniqueIdentifier>{a7df3555-6cb9-4d8d-a00b-4b71bd4d285b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\inc">
+      <UniqueIdentifier>{eaf22efe-e731-4f62-889d-03eca1d960ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\src">
+      <UniqueIdentifier>{b6856bbc-43d4-455d-9f9a-4251ab6fb8fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{7043df20-da01-4e7d-b874-df1656b00132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util\inc">
+      <UniqueIdentifier>{d4d38671-49a2-4214-bb78-b033734e3d67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util\src">
+      <UniqueIdentifier>{78043008-ec77-4341-8be5-04b80bc67b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{18b8b6b1-58c2-47c0-b3a9-4b04cd971dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math\inc">
+      <UniqueIdentifier>{22e6945f-8b35-4c8a-b690-da6212e3eb3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math\src">
+      <UniqueIdentifier>{1364b57e-8dd9-45d4-afd3-508f14ccaa77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_class.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_field.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_method.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_method_void.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_reflection.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_type.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_var_helper.h">
+      <Filter>reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\FastDelegate.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\FastDelegateBind.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_coroutine.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_entity.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_entitymgr.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_enum.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_exception.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_macros.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_reflection_mgr.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_serializer.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_var.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_varlist.h">
+      <Filter>core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_log.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_memory.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_queue.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_reg.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_string.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_time.h">
+      <Filter>util\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\entitymgr.h">
+      <Filter>core\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\input_mgr.h">
+      <Filter>core\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\reflection_mgr.h">
+      <Filter>core\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\serializer.h">
+      <Filter>core\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\yy_core.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_aabb.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_frustum.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_mat4f.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math_func.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_plane.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_quaternion.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_ray.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec2f.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec3f.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec4f.h">
+      <Filter>math\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_log.cpp">
+      <Filter>util\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_memory.cpp">
+      <Filter>util\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_string.cpp">
+      <Filter>util\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_time.cpp">
+      <Filter>util\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\entitymgr.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\input_mgr.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\reflection_mgr.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\serializer.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_entity.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_exception.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_var.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_varlist.cpp">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\yy_core.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_aabb.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_frustum.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_mat4f.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_math_func.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_plane.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_quaternion.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_ray.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec2f.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec4f.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vect3f.cpp">
+      <Filter>math\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{088012a5-32ed-4611-9a84-8abf6984e007}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\FastDelegate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\FastDelegateBind.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_coroutine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_entity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_entitymgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_enum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_exception.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_macros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_reflection_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_serializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_var.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\inc\yy_varlist.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\entitymgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\input_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\reflection_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\core\src\serializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_aabb.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_frustum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_mat4f.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_math_func.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_plane.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_quaternion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_ray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec2f.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec3f.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\math\inc\yy_vec4f.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_class.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_field.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_method.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_meta_method_void.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_reflection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_type.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\reflection\yy_var_helper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_log.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_queue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_reg.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_string.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\util\inc\yy_time.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\yy_core.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\entitymgr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\input_mgr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\reflection_mgr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\serializer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_entity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_exception.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_var.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\core\src\yy_varlist.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_aabb.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_frustum.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_mat4f.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_math_func.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_plane.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_quaternion.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_ray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec2f.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vec4f.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\math\src\yy_vect3f.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_log.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_memory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_string.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\util\src\yy_time.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\yy_core.cpp" />
+  </ItemGroup>
+</Project>
