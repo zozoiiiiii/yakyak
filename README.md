@@ -1,10 +1,15 @@
--- language
-c++
+what i want to do is develop a opengl es engine, then can run as on native app or web app(consider qml webgl stream)
 
--- support platform
-1. windows
-2. android
-3. ios
 
--- IDE
-visual studio 2017
+
+web app                                          | native app
+---------------------------------------------------------------------
+                        java script api
+                              ----------------------------------------
+                              | java script bind |
+                              |-------------------
+                              |             c++ api
+----------------------------------------------------------------------
+webgl engine                  |           opengl es engine
+----------------------------------------------------------------------
+web platform(firefox, chrome) | native platform(windows, android, ios)
