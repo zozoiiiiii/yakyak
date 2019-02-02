@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\public\app\app.cpp">
+      <Filter>public\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\public\device\egl_device.cpp">
+      <Filter>public\device</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="public">
+      <UniqueIdentifier>{c41315cb-bf8a-4c83-98db-93bbeca4d26d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\app">
+      <UniqueIdentifier>{2d3b8df0-cc26-44eb-a965-6dbb4c2de11b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\device">
+      <UniqueIdentifier>{53319bde-5ebc-4fed-88dd-2818743f6a8a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\public\app\app.h">
+      <Filter>public\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\public\device\egl_device.h">
+      <Filter>public\device</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

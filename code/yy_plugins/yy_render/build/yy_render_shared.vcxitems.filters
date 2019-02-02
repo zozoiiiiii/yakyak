@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="inc">
+      <UniqueIdentifier>{7eb9acdd-f7ee-4d2c-ba71-0c8be1f1ee32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{ee94c345-1c94-4d69-b100-ed0c6bee4631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\model">
+      <UniqueIdentifier>{785b3fdc-468a-4abd-902d-77d82cfe4605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\res">
+      <UniqueIdentifier>{add11f45-c60a-4481-a21d-c297280e6220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\batch">
+      <UniqueIdentifier>{bd500004-b72f-40cf-82b4-d5461d4cef31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\res">
+      <UniqueIdentifier>{032ce20c-7d05-4d9e-a2e8-2f0e5a074f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\model">
+      <UniqueIdentifier>{24476fe5-2568-448a-b1a8-bd09cb272d2a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_batch.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_render.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_render_context.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_anim.h">
+      <Filter>inc\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_mesh.h">
+      <Filter>inc\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_model_res.h">
+      <Filter>inc\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_skeleton.h">
+      <Filter>inc\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_framebuffer.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_renderbuffer.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_res.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_res_mgr.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_shader.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_texture.h">
+      <Filter>inc\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\batch\batch_group.h">
+      <Filter>src\batch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\framebuffer.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\renderbuffer.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\res_mgr.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\shader.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\texture.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\platform.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\render.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\anim.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\mesh.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\model_res.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\skeleton.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\batch\batch_group.cpp">
+      <Filter>src\batch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\framebuffer.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\renderbuffer.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\res_mgr.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\shader.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\texture.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_deferred.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_forward.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\anim.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\mesh.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\model_res.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\skeleton.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

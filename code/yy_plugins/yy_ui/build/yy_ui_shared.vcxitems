@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{38AE5F05-2D90-44AE-8B9A-783E0004A81B}</ItemsProjectGuid>
+    <ItemsProjectName>yy_ui_shared</ItemsProjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gui.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\ui_main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_gui.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_mouse_area.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_painter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_rectangle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gui.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.h" />
+  </ItemGroup>
+</Project>

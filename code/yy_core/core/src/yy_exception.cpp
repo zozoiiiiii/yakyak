@@ -137,7 +137,7 @@ std::string StackInfo()
 NS_YY_BEGIN
 AssertFailureException::AssertFailureException(const std::string& expression, const std::string& file, int line, const std::string& msg)
 {
-    //assert(false);
+    assert(false);
     std::ostringstream outputStream;
     if (!msg.empty())
     {

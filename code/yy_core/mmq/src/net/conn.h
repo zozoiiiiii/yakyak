@@ -16,11 +16,11 @@ struct ConnInfo
     //socket
     int socket;
 
-    //¶Á»º´æ
+	// read
     char r_buf[MAX_MSG_LEN];
     int r_size;
 
-    //Ð´»º´æ
+	// write
     char w_buf[MAX_MSG_LEN];
     int w_size;
 

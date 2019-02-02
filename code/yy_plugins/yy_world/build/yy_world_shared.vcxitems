@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{FCA6DF09-CE1F-497E-B906-7EBAD783E6B1}</ItemsProjectGuid>
+    <ItemsProjectName>yy_world_shared</ItemsProjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_comp_camera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_comp_mesh_render.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_edit_axis.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_edit_map.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_show_camera_preview.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_show_depth_map.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_event_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_game_obj.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_transform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_world.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\primitive\lines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\event\event_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\game_obj.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\shadow_map.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\weather\weather.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\world.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world_main.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\primitive\lines.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\event\event_mgr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gameobj\game_obj.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\shadow_map.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\weather\weather.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world.cpp" />
+  </ItemGroup>
+</Project>

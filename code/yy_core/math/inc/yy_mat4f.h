@@ -94,10 +94,10 @@ https://github.com/tangziwen/Cube-Engine/tree/master/CubeEngine/EngineSrc/Math
 /************************************************************************/
 #pragma once
 
-#include "../inc/yy_Vec2f.h"
-#include "../inc/yy_Vec3f.h"
-#include "../inc/yy_Vec4f.h"
-#include "../inc/yy_Quaternion.h"
+#include "../inc/yy_vec2f.h"
+#include "../inc/yy_vec3f.h"
+#include "../inc/yy_vec4f.h"
+#include "../inc/yy_quaternion.h"
 
 NS_YY_BEGIN
 

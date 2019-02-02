@@ -1,24 +1,24 @@
 #include "yy_core.h"
-#include "core/src/entitymgr.h"
+#include "core/src/object_mgr.h"
 #include "core/src/reflection_mgr.h"
-#include "util/inc/yy_string.h"
+#include "core/inc/yy_string.h"
 
-YY::IEntityMgr* g_pEntMgr=NULL;
+YY::IObjectMgr* g_pEntMgr=NULL;
 
 
-YY::IEntityMgr* CreateEntMgr()
+YY::IObjectMgr* CreateEntMgr()
 {
-    return new YY::EntityMgr;
+    return new YY::ObjectMgr;
 }
 
-YY::IEntityMgr* GetGlobalEntMgr()
+YY::IObjectMgr* GetGlobalEntMgr()
 {
     throw_assert(NULL!=g_pEntMgr, "null check.");
     return g_pEntMgr;
 }
 
 
-void SetGlobalEntMgr(YY::IEntityMgr* pEntMgr)
+void SetGlobalEntMgr(YY::IObjectMgr* pEntMgr)
 {
     g_pEntMgr = pEntMgr;
 }

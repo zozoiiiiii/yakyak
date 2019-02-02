@@ -2,7 +2,7 @@
 /*
 @author:  junliang
 @time:    20130308
-@brief:   任意类型的变量数组, 使用范围是短小精悍方便，所以使用栈空间
+@brief:   variant list.
 */
 /************************************************************************/
 #ifndef _yy_Var_list_h_
@@ -57,12 +57,8 @@ public:
     Var GetVar(uint32 index) const;
     Var& GetVar(uint32 index);
 
-	// 序列化到文件时无法查看数据，并且序列化后，反序列化失败，用json来做序列化。
-    // 此处参数用string 而不是const char*, 因为字符串中间可能会有空格
     std::string SerializeTo() const;
 	void ParseFrom(const std::string& str);
-
-    // 追加
     void Append(const YY::VarList& src, uint32 nstart, uint32 ncnt);
 private:
     void AddVar(const Var& Var);

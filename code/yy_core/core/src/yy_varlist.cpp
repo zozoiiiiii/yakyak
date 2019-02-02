@@ -206,10 +206,7 @@ std::string VarList::SerializeTo() const
 
 void VarList::ParseFrom(const std::string& buf)
 {
-    // ¿½±´ÄÚÈÝ
     //char* pbuf = (char*)&m_data;
-
-    // Ç¿×ª
     //memcpy(pbuf, buf, len);
 
     uint32 nReadIndex=0;

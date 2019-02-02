@@ -31,6 +31,7 @@ typedef signed __int64                  sint64;
 typedef unsigned __int64                uint64;
 
 #elif __ANDROID__
+#include <stdint.h>
 typedef int8_t                          sint8;
 typedef uint8_t                         uint8;
 typedef int16_t                         sint16;
@@ -54,7 +55,8 @@ enum YVarType
     YVT_DOUBLE,
     YVT_STRING,
     YVT_WSTRING,
-    YVT_CLASS,
+    YVT_CLASS,  // simple class like vec3f vv, transform aa, varlist()<<vv<<aa;
+    //YVT_POINTER, use BaseObject id instead, more safe, more simple.  IScene* pScene;varlist()<<pScene->getid()
     YVT_MAX,
 };
 

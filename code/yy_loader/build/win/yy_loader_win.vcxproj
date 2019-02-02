@@ -11,13 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\public\app\app.cpp" />
+    <ClCompile Include="..\..\..\public\device\egl_device.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\public\app\app.h" />
+    <ClInclude Include="..\..\..\public\device\egl_device.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BDD16134-A53C-4CD4-8BDA-D588B3EF49F0}</ProjectGuid>
     <RootNamespace>svr_logic</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>yy_loader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -34,9 +41,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
-    <Import Project="..\..\..\yy_core\build\yy_core_shared.vcxitems" Label="Shared" />
-  </ImportGroup>
+  <ImportGroup Label="Shared" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -49,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\..\bin\$(Configuration)\</OutDir>
-    <IntDir>..\..\..\tmp</IntDir>
+    <IntDir>..\..\..\tmp\$(ProjectName)</IntDir>
     <LinkIncremental />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -60,22 +65,23 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\yy_core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\yy_core;..\..\..\;..\..\..\external\amd_ogles\include;..\..\..\yy_plugins;..\..\..\external\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader />
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;yy_core_d.lib;yy_demo_d.lib;yy_render_d.lib;yy_ui_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\external\amd_ogles\lib;..\..\..\external\freetype\lib;..\..\..\yy_core\lib;..\..\..\yy_plugins\yy_render\lib;..\..\..\yy_plugins\yy_world\lib;..\..\..\yy_plugins\yy_demo\lib;..\..\..\yy_plugins\yy_ui\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

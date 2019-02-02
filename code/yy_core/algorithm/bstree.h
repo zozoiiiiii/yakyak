@@ -1,7 +1,7 @@
 /************************************************************************/
 /*
 @author:  junliang
-@brief:   二叉排序树
+@brief:   bstree
 @time:    20130401
 */
 /************************************************************************/
@@ -20,7 +20,7 @@ public:
 };
 
 
-//二叉树节点, 右节点最小，左节点最大
+// right < left
 template<class KEY, class VALUE>
 struct CBsTreeNode
 {
@@ -30,12 +30,9 @@ struct CBsTreeNode
     CBsTreeNode<KEY, VALUE>* left;
     CBsTreeNode<KEY, VALUE>* right;
 
-    CBsTreeNode():parent(NULL), left(NULL), right(NULL)
-    {}
-    CBsTreeNode(const KEY& pKey, const VALUE& pVal):key(pKey), val(pVal), parent(NULL), left(NULL), right(NULL)
-    {}
-    CBsTreeNode(const KEY& pKey, const VALUE& pVal, CBsTreeNode* pParent):key(pKey), val(pVal), parent(pParent), left(NULL), right(NULL)
-    {}
+    CBsTreeNode():parent(NULL), left(NULL), right(NULL){}
+    CBsTreeNode(const KEY& pKey, const VALUE& pVal):key(pKey), val(pVal), parent(NULL), left(NULL), right(NULL){}
+    CBsTreeNode(const KEY& pKey, const VALUE& pVal, CBsTreeNode* pParent):key(pKey), val(pVal), parent(pParent), left(NULL), right(NULL){}
 
     void clear()
     {
@@ -49,7 +46,7 @@ struct CBsTreeNode
 };
 
 
-//key结构体要重载<, ==运算符
+//key struct should reimplement <, ==
 template<class KEY, class VALUE, class CmpFunc=less<KEY>>
 class CBsTree
 {
@@ -64,7 +61,7 @@ public:
     void insert(const KEY& pKey, const VALUE& pVal);
     void remove(const KEY& pKey);
 
-    //如果不存在，则插入默认值
+	// if not exist, will insert default vaule.
     VALUE& get(const KEY& pKey);
     CBsTreeNode<KEY, VALUE>* searchNode(const KEY& pKey);
 private:

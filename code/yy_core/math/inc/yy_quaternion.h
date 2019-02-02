@@ -6,7 +6,7 @@
 #ifndef Quaternion_h
 #define Quaternion_h
 #include "reflection/yy_type.h"
-#include "../inc/yy_Vec3f.h"
+#include "../inc/yy_vec3f.h"
 
 NS_YY_BEGIN
 

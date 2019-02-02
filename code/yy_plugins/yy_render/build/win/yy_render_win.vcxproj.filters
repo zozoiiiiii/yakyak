@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="external">
+      <UniqueIdentifier>{8318cacc-d342-4b1b-a1f3-79191a11571b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\texture">
+      <UniqueIdentifier>{f2f1377e-e659-4a9a-b8ff-4da67c28b962}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\texture\stb_image_aug.h">
+      <Filter>external\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\texture\stbi_DDS_aug.h">
+      <Filter>external\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\texture\stbi_DDS_aug_c.h">
+      <Filter>external\texture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\texture\stb_image_aug.cpp">
+      <Filter>external\texture</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

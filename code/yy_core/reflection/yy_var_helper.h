@@ -120,7 +120,7 @@ struct VarHelper<const T&>{ \
 
 using namespace std;
 
-//fundamental type
+//fundamental type, like Q_DECLARE_METATYPE
 YY_TYPEHELPER(bool, YVT_BOOL);
 YY_TYPEHELPER(int, YVT_SINT32);
 YY_TYPEHELPER(sint64, YVT_SINT64);

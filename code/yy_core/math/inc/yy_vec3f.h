@@ -77,6 +77,6 @@ Vec3f operator - (const Vec3f& v);
 NS_YY_END
 
 using namespace YY;
-YY_TYPEHELPER(Vec3f, YVT_UNKNOWN); 
+YY_TYPEHELPER(Vec3f, YVT_CLASS);
 
 #endif

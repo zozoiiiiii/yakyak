@@ -1,0 +1,52 @@
+#include "camera_view.h"
+#include "scene.h"
+#include "world/inc/i_world.h"
+#include "world/inc/components/i_comp_camera.h"
+
+
+#define GL_GLEXT_PROTOTYPES
+#include <GLES2/gl2.h>
+#include <EGL/egl.h>
+
+void CameraView::OnCreate()
+{
+	Scene* pScene = (Scene*)IWorld::Instance()->GetScene();
+    int nWidth = pScene->GetRenderCxt()->GetWinWidth();
+    int nHeight = pScene->GetRenderCxt()->GetWinHeight();
+    nWidth = nHeight = 200;
+
+    // camera
+    IGameObj* pObj_Camera = pScene->CreateObj();
+    pObj_Camera->SetName("Camera2");
+
+    pObj_Camera->GetTransform()->SetPos(0.0f, 2.0f, 10.0f);
+    pObj_Camera->GetTransform()->SetAngle(0.0f,0.0f,0.0f);
+    pObj_Camera->GetTransform()->SetScale(1.0f, 1.0f, 1.0f);
+
+    Component* pComp_Camera = pObj_Camera->AddComp("Comp_Camera");
+
+    float aspect = (float) nWidth / (float) nHeight;
+    float fov = 45.0f;
+    float nearZ = 0.1f;
+    float farZ = 1000.0f;
+    pComp_Camera->Invoke(NULL, "SetPersp", &fov, &aspect, &nearZ, &farZ);
+
+    m_ri.camera = pObj_Camera->GetID();
+    m_ri.x=m_ri.y=0;
+    m_ri.w=200;
+    m_ri.h=200;
+    m_ri.bClearBuffer = false;
+    m_ri.nPriority = NORMAL_RENDER_PRIORITY+1;
+    pScene->AddRender(&m_ri);
+
+
+    IEventMgr* pEventMgr = IWorld::Instance()->GetEventMgr();
+    pEventMgr->ConnectGlobals("OnEvent_Device_Resize",  fastdelegate::MakeDelegate(this, &CameraView::OnEvent_Resize));
+}
+
+void CameraView::OnEvent_Resize(const char* name, const YY::VarList& args)
+{
+    int w = args.GetInt(0);
+    int h = args.GetInt(1);
+
+}

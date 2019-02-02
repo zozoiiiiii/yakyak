@@ -5,29 +5,29 @@
 @time:    20180528
 */
 /************************************************************************/
-//#include "yy_core.h"
-#include <string>
-#include "reflection/yy_type.h"
-#include "util/inc/yy_time.h"
-#include "core/inc/yy_exception.h"
-int main()
-{
-	std::string strTimeStamp = YY::StrTimeStamp();
-	throw_assert(false, "hi");
-	return 0;
-}
-
-
-
-
-/*
-
+#include "yy_core.h"
 #include <iostream>
 #include <windows.h>
 #include "public/app/app.h"
+#include "public/device/egl_device.h"
+#include "algorithm/algorithm.h"
 
+EGLDevice g_eglDevice;
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
+	if (!App::Instance()->IsOpened())
+		return TRUE;
+
+	if (message == WM_SIZE)
+	{
+		g_eglDevice.ResetSurface();
+
+		int fwSizeType = wParam; // resizing flag
+		int nWidth = LOWORD(lParam); // width of client area
+		int nHeight = HIWORD(lParam); // height of client area
+		App::Instance()->Resize(nWidth, nHeight);
+	}
+
     bool ret = App::Instance()->OnMsg(message,(unsigned int) wParam, (unsigned int)lParam);
     if(!ret)
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -65,9 +65,10 @@ HWND CreateMyWindow(int width, int height, const std::string& title, WNDPROC fun
     windowRect.right = width;
     windowRect.bottom = height;
 
-    //AdjustWindowRect ( &windowRect, wStyle, FALSE );
+	DWORD wsStyle = WS_VISIBLE | WS_SYSMENU | WS_CAPTION;
+    AdjustWindowRect ( &windowRect, wsStyle, FALSE );
 
-    HWND hWnd = CreateWindow("WINCLASS1",title.c_str(),WS_VISIBLE | WS_SYSMENU | WS_CAPTION,0,0,
+    HWND hWnd = CreateWindow("WINCLASS1",title.c_str(), wsStyle,0,0,
         windowRect.right - windowRect.left,
         windowRect.bottom - windowRect.top,
         NULL,
@@ -81,13 +82,35 @@ HWND CreateMyWindow(int width, int height, const std::string& title, WNDPROC fun
     return hWnd;
 }
 
+
+bool checkNumber(int* nums, int length)
+{
+	if (length % 2 == 0)
+		return false;
+
+	int midIndex = length / 2;
+	for (int i = midIndex+1; i < length; i++)
+	{
+		int gap = i - midIndex;
+		if (nums[i] != nums[midIndex - gap])
+			return false;
+	}
+	return true;
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
                    LPSTR lpCmdLine, int iCmdShow)
 {
     int width=1024;
     int height=768;
     HWND nHwnd = CreateMyWindow(width,height, "hello", &WndProc);
-    App::Instance()->Open(width, height, nHwnd);
+
+	g_eglDevice.InitDevice(nHwnd);
+
+	std::string exe_path = YY::ExePath();
+	std::string pre_exe_path = YY::GetPrePath(exe_path);
+	std::string res = pre_exe_path + "\\res\\";
+    App::Instance()->Open(width, height, res);
 
     MSG	msg;
     for (;;)
@@ -103,7 +126,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 
         App::Instance()->Excute();
+
+		// in the past, one framebuffer show to one display, use the raster-scan, this would result tearing, in which the sceen shows parts of the old frame and the parts of the new frame;
+		// now, there are two framebuffers, the display reads from the front buffer, while we can write the next frame to back buffer. when we finish, we signal to GPU to swap the front and back buffer.
+		g_eglDevice.SwapBuffers();
     }
     return 0;
 }
-*/

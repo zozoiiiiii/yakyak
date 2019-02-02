@@ -20,6 +20,7 @@ qt
 #include "yy_meta_method_void.h"
 #include <string>
 
+#ifndef YY_BEGIN
 #define YY_BEGIN(cls, parent_)                                     \
 private:                                                           \
     static void* Create_##cls() { return new cls(); }              \
@@ -34,8 +35,11 @@ public:                                                            \
         s_MetaClass.destroy_func = &Destroy_##cls;                 \
         MetaField* pField = NULL;                                  \
         MetaMethod* pMethod = NULL;
+#endif
 
+#ifndef YY_END
 #define YY_END  return &s_MetaClass; }
+#endif
 
 #define YY_VIRTUAL_BEGIN(cls, parent_)                             \
 public:                                                            \

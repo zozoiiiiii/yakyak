@@ -2,9 +2,8 @@
 /* 
 @author:    junliang
 @brief:     
-1. 利用实参来模板推导，c++ auto也是类似实现
-2. 用纯虚函数基类作为对外统一接口，子类用模板实现
-(模板是编译时编译器生成代码， 虚函数是运行时调用)
+1. like c++ auto, use parameter to generate from template
+2. virtual function used in runtime, template function used in compile time
 http://www.artima.com/cppsource/type_erasure.html
 
 @time:      2017-5-25
@@ -22,8 +21,8 @@ struct MetaField
 
     std::string name;
     std::string desc;
-    int var_type;
-    std::string type_name;  // class name
+    int var_type;		// YVarType
+    std::string type_name;  // "bool", or class name
 };
 
 template<class ClassType, class FieldType>
@@ -64,11 +63,11 @@ void* MetaMemberField<ClassType, FieldType>::Get(void* obj) const
     return &(((ClassType*)obj)->*f);
 }
 
-// 通过实参(类成员变量指针)来推导出类成员变量类型
+// get the member type from the instance member
 template<class ClassType, class FieldType>
 MetaField* MakeField(FieldType ClassType::* field)
 {
-    // 把推导出来的信息保存到实例化的类里
+	// save the class type information
     return new MetaMemberField<ClassType, FieldType>(field);
 }
 

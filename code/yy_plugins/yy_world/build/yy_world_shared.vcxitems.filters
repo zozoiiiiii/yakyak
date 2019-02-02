@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="inc">
+      <UniqueIdentifier>{fe0f83d5-f990-4dfe-89f3-3d9e0c4f9582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{17c1c1c7-9ca0-46f9-91cf-375e9014c256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\components">
+      <UniqueIdentifier>{73909a5a-c0ac-426d-b4cd-9ef9240abee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\components">
+      <UniqueIdentifier>{96fc59a0-251b-4e8a-8e4b-f1b0d23f1083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\event">
+      <UniqueIdentifier>{f4b6218f-3b6f-47b4-9eef-2aa424665b5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gameobj">
+      <UniqueIdentifier>{d1ea3278-cbc2-4751-bf06-7a0ac8712117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{8f551314-cf47-46a5-a67a-d511e69ec376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\weather">
+      <UniqueIdentifier>{cb2fda02-f8a7-4ed8-9fe8-11d11054603f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\components\mesh_render">
+      <UniqueIdentifier>{85e9c3f4-60f6-43e6-873c-4bb3755ae459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\components\terrain">
+      <UniqueIdentifier>{59c0f622-3324-4d68-9976-364efca92cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\components\primitive">
+      <UniqueIdentifier>{1d7fb129-3037-4017-9ece-81485e56f323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\components\camera">
+      <UniqueIdentifier>{e9fdf00e-7fa0-424d-baf7-43ccb0d82418}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_event_mgr.h">
+      <Filter>inc\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_game_obj.h">
+      <Filter>inc\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_scene.h">
+      <Filter>inc\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_transform.h">
+      <Filter>inc\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_world.h">
+      <Filter>inc\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_comp_camera.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_comp_mesh_render.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_edit_axis.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_edit_map.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_show_camera_preview.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\components\i_show_depth_map.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\scene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\shadow_map.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\weather\weather.h">
+      <Filter>src\weather</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\game_obj.h">
+      <Filter>src\gameobj</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\event\event_mgr.h">
+      <Filter>src\event</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.h">
+      <Filter>src\components\mesh_render</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.h">
+      <Filter>src\components\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\world.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.h">
+      <Filter>src\components\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\primitive\lines.h">
+      <Filter>src\components\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.h">
+      <Filter>src\gameobj</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\scene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\shadow_map.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\weather\weather.cpp">
+      <Filter>src\weather</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gameobj\game_obj.cpp">
+      <Filter>src\gameobj</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.cpp">
+      <Filter>src\gameobj</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\event\event_mgr.cpp">
+      <Filter>src\event</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.cpp">
+      <Filter>src\components\mesh_render</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.cpp">
+      <Filter>src\components\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.cpp">
+      <Filter>src\components\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\primitive\lines.cpp">
+      <Filter>src\components\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world_main.cpp" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root class="Entity" name="">
+	<components>
+		<node class="ItemTransformComponent" height="100.000000" left="0.000000" top="0.000000" width="100.000000"/>
+	</components>
+</root>
+

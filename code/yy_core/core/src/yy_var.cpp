@@ -1,5 +1,6 @@
 #include "../inc/yy_var.h"
 #include "../inc/yy_exception.h"
+#include "../inc/yy_string.h"
 #include <math.h>
 NS_YY_BEGIN
 
@@ -155,5 +156,90 @@ void Var::SetWstr(const std::wstring& wstr)
 	m_wstr = wstr;
 }
 
+
+
+std::string Var::SerializeTo()
+{
+	switch (m_type)
+	{
+	case YVT_BOOL:
+	{
+		if (GetBool())
+			return "true";
+		else
+			return "false;";
+	}
+	break;
+	case YVT_SINT32:
+		return Int32ToStr(GetInt());
+	case YVT_SINT64:
+		return Int64ToStr(GetInt64());
+	case YVT_FLOAT:
+		return FloatToStr(GetFloat());
+	case YVT_DOUBLE:
+		return DoubleToStr(GetDouble());
+	case YVT_STRING:
+		return  GetStr();
+	case YVT_WSTRING:
+		return WStrToUtf8(GetWstr());
+	default:
+		throw_assert(false, "not support");
+	}
+}
+
+void Var::ParseFrom(const std::string& str)
+{
+	switch (m_type)
+	{
+	case YVT_BOOL:
+	{
+		bool bValue = true;
+		if (str == "true" || str == "TRUE")
+			bValue = true;
+		else
+			bValue = false;
+		SetBool(bValue);
+		return;
+	}
+	break;
+	case YVT_SINT32:
+	{
+		sint32 iValue = StrToInt32(str);
+		SetInt(iValue);
+		return;
+	}
+	case YVT_SINT64:
+	{
+		sint64 i64Value = StrToInt64(str);
+		SetInt64(i64Value);
+		return;
+	}
+	case YVT_FLOAT:
+	{
+		float fValue = StrToFloat(str);
+		SetFloat(fValue);
+		return;
+	}
+	case YVT_DOUBLE:
+	{
+		double dValue = StrToFloat(str);
+		SetDouble(dValue);
+		return;
+	}
+	case YVT_STRING:
+	{
+		SetStr(str);
+		return;
+	}
+	case YVT_WSTRING:
+	{
+		std::wstring wstr = Utf8ToWStr(str);
+		SetWstr(wstr);
+		return;
+	}
+	default:
+		throw_assert(false, "not support");
+	}
+}
 
 NS_YY_END

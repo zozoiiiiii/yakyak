@@ -1,104 +1,162 @@
 /************************************************************************/
 /*
-@author:    junliang
-@brief:     entity
-1. create/destroy
-2. parent/child
-3. meta class
+@author:  junliang
+@brief:   
+			1. hierarchy feature.
+			2. render feature, position is in Item(2d), VisObj(3d)
+			3. component manager
 
-http://gad.qq.com/article/detail/96
-// rtti: http://flipcode.com/archives/Simple_RTTI_For_C.shtml
-@time:      20160120
+			base object   : create/destroy, meta
+			    |
+			  entity      : parent/children, component, serialize
+
+			ui: entity+ item transform component + item render component
+			3d: entity+ transform component + render component
+
+
+			// xml file format
+
+
+
+
+
+@time:    2018/08/14
 */
 /************************************************************************/
 #pragma once
 
-#include <string>
-#include <map>
-#include <vector>
-#include "reflection/yy_type.h"
-#include "reflection/yy_reflection.h"
-#include "core/inc/yy_var.h"
-#include "core/inc/yy_varlist.h"
-#include "core/inc/yy_exception.h"
+#include "core/inc/yy_object.h"
+#include "core/inc/yy_objectmgr.h"
+#include "core/inc/yy_event_mgr.h"
 
-// guid
-#ifndef YY_ENTITYID
-#define  YY_ENTITYID sint64
-#define YY_INVALID_ENTITYID 0
-#endif
+#include "rapidxml/rapidxml.hpp"
+#include "rapidxml/rapidxml_print.hpp"
+typedef rapidxml::xml_document<char> xml_document;
+typedef rapidxml::xml_node<char> xml_node;
+typedef rapidxml::xml_attribute<char> xml_attribute;
 
 NS_YY_BEGIN
 
-class IEntityMgr;
-class Entity
+// entity properties
+#define PROP_BASEOBJECT_DATA "Prop_BaseObject_Data"	// serialized data
+#define PROP_BASEOBJECT_FILE "Prop_BaseObject_File"	// serilized file
+#define PROP_ENTITY_PARENT "Prop_Entity_Parent"
+#define PROP_ENTITY_PREV "Prop_Entity_Prev"
+#define PROP_ENTITY_NEXT "Prop_Entity_Next"
+
+class Component;
+class Entity : public BaseObject
+{
+	YY_BEGIN(Entity, BaseObject);
+	YY_FIELD(&Entity::m_name, "name", "");
+	YY_END
+public:
+	static Entity* parseFrom(IObjectMgr* pObjMgr, const std::string& data, YY_OBJECTID parent = YY_INVALID_OBJECTID, YY_OBJECTID prev = YY_INVALID_OBJECTID, YY_OBJECTID next = YY_INVALID_OBJECTID);
+	static Entity* ParseFromFile(IObjectMgr* pObjMgr, const std::string& file, YY_OBJECTID parent = YY_INVALID_OBJECTID, YY_OBJECTID prev = YY_INVALID_OBJECTID, YY_OBJECTID next = YY_INVALID_OBJECTID);
+	virtual std::string SerializeTo();
+	virtual void SerializeToFile(const std::string& file);
+
+	Entity() {}
+	virtual void OnCreate(const VariantMap& args);
+	virtual void OnDestroyed();
+
+	Entity* Duplicate();
+	void SetName(const std::string& name) { m_name = name; }
+	std::string GetName() { return m_name; }
+
+	// parent/children
+	void SetParent(Entity* pEntity);
+	Entity* FindParent();
+	void ClearChildren();
+	VarList GetChildren();
+	int GetChildCount();
+	YY_OBJECTID GetChildByIndex(int index);
+	bool IsChildExist(Entity* pEntity);
+	void AddChild(Entity* pEntity);
+	Entity* FindChild(const std::string& name);
+	void RemoveChild(Entity* pEntity);
+	void InsertAfter(Entity* pEntity, Entity* after);
+	void InsertBefore(Entity* pEntity, Entity* before);
+	//virtual void OnAddBatch(IBatchGroup* pBatchGroup);
+	//virtual void OnRender(RenderContext* pCxt) {}
+	//virtual void OnRenderBefore(RenderContext* pCxt);
+	//virtual void OnRenderAfter(RenderContext* pCxt);
+	//IRender* GetRender();
+
+	// component
+	std::vector<Component*> GetAllComponents();
+	Component* FindComponent(const std::string& strClassName);
+	Component* AddComponent(const std::string& strClassName);
+	void RemoveComponent(YY_OBJECTID id);
+	virtual void OnComponentAdded(Component* pComponent) {}
+	virtual void OnComponentRemoved(Component* pComponent) {}
+
+
+	void InvokeEvent(const std::string& event, const YY::VarList& args = YY::VarList());
+	virtual void OnEvent(const std::string& event, const YY::VarList& args = YY::VarList()) {}
+
+
+	// whether the first time to render.
+	//virtual bool FirstRender() { return m_bFirstRender; }
+
+private:
+	static Entity* parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode);
+	bool parseProperties(const xml_node* pNode, BaseObject* pObject);
+	bool parseChildren(const xml_node* pNode);
+	bool parseComponents(const xml_node* pNode);
+
+	bool serializeToNode(xml_document* pDoc, xml_node* pObjectNode);
+	bool serializeComponents(xml_document* pDoc, xml_node* pObjectNode);
+	bool serializeChildren(xml_document* pDoc, xml_node* pObjectNode);
+	bool serializeProperties(BaseObject* pObject, xml_document* pDoc, xml_node* pObjectNode);
+private:
+	//bool m_bFirstRender;
+	std::string m_name;
+	//IRender* m_pRender;
+	YY_OBJECTID m_parent;
+	std::vector<YY_OBJECTID> m_children;
+	std::map<std::string, Component*> m_components;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Component : public BaseObject
+{
+	YY_BEGIN(Component, BaseObject);
+	YY_END
+public:
+	Entity * GetOwner() { return m_pOwner; }
+	virtual void OnAdded() {}
+	virtual void OnRemoved() {}
+//	virtual void OnRenderBefore(RenderContext* pCxt) {}
+//	virtual void OnRenderAfter(RenderContext* pCxt) {}
+	virtual void OnEvent(const std::string& event, const YY::VarList& args = YY::VarList()) {};
+private:
+	void SetOwner(Entity* pOwner) { m_pOwner = pOwner; }
+private:
+	Entity * m_pOwner;
+	friend class Entity;
+};
+
+
+class System : public BaseObject
 {
 public:
-    Entity():m_pEntityMgr(NULL), m_parent(YY_INVALID_ENTITYID){}
-    virtual ~Entity(){}
-    // oncreate without parameters, to help the serializer.
-    virtual void OnCreate(){}
-    virtual void OnDestroy(){}
-    virtual void OnExcute(float sec){}
-    virtual bool SerializeTo(YY::VarList& args);
-    virtual bool ParseFrom(const YY::VarList& args, int& read_index);
-
-    IEntityMgr* GetMgr(){return m_pEntityMgr;}
-    YY_ENTITYID GetID(){return m_id;}
-    MetaClass* GetCreator(){return m_pMetaClass;};
-
-    void AddChild(YY_ENTITYID id);
-    void RemoveChild(YY_ENTITYID id);
-    bool IsChildExist(YY_ENTITYID id);
-    YY::VarList GetChildList();
-    void SetParent(YY_ENTITYID id);
-    YY_ENTITYID GetParent();
-
-    // custom prop: SetCustomProp("test", 11); SetCustomProp("test1", true);
-    void SetCustomProp(const std::string& name, const YY::Var& val);
-    int GetCustomPropInt(const std::string& name);
-    float GetCustomPropFloat(const std::string& name);
-    std::string GetCustomPropString(const std::string& name);
-
-    // reflection
-//     int GetPropInt(const std::string& name);
-//     void SetPropInt(const std::string& name, int val);
-//     float GetPropFloat(const std::string& name);
-//     void SetPropFloat(const std::string& name, float val);
-//     std::string GetPropString(const std::string& name);
-//     void SetPropString(const std::string& name, const std::string& val);
-
-    void Invoke(void* result, const char* name);
-
-    // varlist not support class, so use void* better.
-    //void Invoke(void* result, const char* name, const YY::VarList& args);
-    void Invoke(void* result, const char* name, void* p1);
-    void Invoke(void* result, const char* name, void* p1, void* p2);
-    void Invoke(void* result, const char* name, void* p1, void* p2, void* p3);
-	void Invoke(void* result, const char* name, void* p1, void* p2, void* p3, void* p4);
-	void Invoke(void* result, const char* name, void* p1, void* p2, void* p3, void* p4, void* p5);
-
-
-    // put into input module in future.
-    // use default msg proc.
-    virtual bool OnMsg(uint32 msg_id, uint32 p1, uint32 p2) { return false; }
-private:
-    void SetEntMgr(IEntityMgr* pMgr){m_pEntityMgr=pMgr;}
-    void SetID(YY_ENTITYID id){m_id = id;}
-    void SetCreator(MetaClass* creator){ m_pMetaClass = creator;}
-
-    void Invoke(void* result, const char* name, void* parameters[]);
-    bool IsCustomPropExist(const std::string& name);
-protected:
-    std::vector<YY_ENTITYID> m_children;
-private:
-    YY_ENTITYID m_id;
-    MetaClass* m_pMetaClass;
-    IEntityMgr* m_pEntityMgr;
-    YY_ENTITYID m_parent;
-    friend class EntityMgr;
-    std::map<std::string, YY::Var> m_custom_props;
+	virtual void onComponentAdded(YY_OBJECTID id) {}
+	virtual void onComponentRemoved(YY_OBJECTID id) {}
+	virtual void onComponentUpdated(YY_OBJECTID id) {}
 };
+
 NS_YY_END
 
 

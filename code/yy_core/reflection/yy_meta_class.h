@@ -29,5 +29,23 @@ struct MetaClass
     std::string parent;
     std::map<std::string, MetaMethod*> methods;
     std::map<std::string, MetaField*> fields;
+
+	MetaField* FindMetaField(const char* name)
+	{
+		auto itor = fields.find(name);
+		if (itor == fields.end())
+			return nullptr;;
+
+		return itor->second;
+	}
+
+	MetaMethod* FindMetaMethod(const char* name)
+	{
+		auto itor = methods.find(name);
+		if (itor == methods.end())
+			return nullptr;;
+
+		return itor->second;
+	}
 };
 

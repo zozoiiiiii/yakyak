@@ -1,11 +1,10 @@
-/************************************************************************/
+ï»¿/************************************************************************/
 /*
 @author:  junliang
-@brief:   ÅÅĞòÏà¹Ø
+@brief:   sort
 
-    ±È½ÏÅÅĞò:Í¨¹ı¶ÔÊı×éÖĞÔªËØ½øĞĞ±È½ÏÀ´ÅÅĞò.
-            ²åÈëÅÅĞò£¬¶ÑÅÅĞò£¬Ñ¡ÔñÅÅĞò£¬¹é²¢ÅÅĞòºÍ¿ìËÙÅÅĞò£¬Ã°ÅİÅÅĞò
-    ·Ç±È½ÏÅÅĞò: ¼ÆÊıÅÅĞò£¬»ùÊıÅÅĞò£¬Í°ÅÅĞò
+	sort by compare:æ’å…¥æ’åºï¼Œå †æ’åºï¼Œé€‰æ‹©æ’åºï¼Œå½’å¹¶æ’åºå’Œå¿«é€Ÿæ’åºï¼Œå†’æ³¡æ’åº
+	sort not by compare: è®¡æ•°æ’åºï¼ŒåŸºæ•°æ’åºï¼Œæ¡¶æ’åº
 
 sample:
     int num[5]={5,8,1,4,7};
@@ -20,7 +19,7 @@ sample:
 
 
 
-//Ã°ÅİÅÅĞò, ±éÀúÒ»ÌË£¬Á½Á½±È½Ï£¬¸ù¾İË³Ğò»¥»», O(n^2)
+//O(n*n)
 void BubbleSort(int arr[], int n)
 {
     for(int i=0; i<n; i++)
@@ -28,7 +27,7 @@ void BubbleSort(int arr[], int n)
     {
         if(arr[i]>arr[j])
         {
-            //»¥»»
+			// swap
             arr[i]^=arr[j];
             arr[j]^=arr[i];
             arr[i]^=arr[j];
@@ -36,24 +35,43 @@ void BubbleSort(int arr[], int n)
     }
 }
 
+//better than BubbleSort, O(n^2)
+void SelectSort(int* arr, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		int min = i;
+		for (int j = i + 1; j < n; j++)
+		{
+			if (arr[min] > arr[j])
+				min = j;
+		}
 
-//¿ìËÙÅÅĞò, Ã°ÅİËã·¨µÄ¸Ä½ø£¬Í¨¹ıÒ»ÌËÅÅĞò°ÑÒªÅÅĞòµÄÊı¾İ·Ö¸î³É¶ÀÁ¢µÄÁ½²¿·Ö£¬ÆäÖĞÒ»²¿·Ö±ÈÁíÒ»²¿·Ö¶¼Ğ¡£¬·Ö¶øÖÎÖ®£¬µİ¹é¡£O(nlogn)
+		if (min != i)
+		{
+			//swap
+			arr[i] ^= arr[min];
+			arr[min] ^= arr[i];
+			arr[i] ^= arr[min];
+		}
+	}
+}
+
+
+//use recursive, O(nlogn)
 void QuickSort(int* arr, int left, int right)
 {
-    //°ÑÒª±È½ÏµÄÊıÔİ´æ, ÏÂ±êÎªleftµÄ¿ÉÒÔÈÎÒâĞŞ¸ÄÁË
     int key=arr[left];
     int i=left;
     int j=right;
     while(i<j)
     {
-        //´ÓÊı×éÎ²ÕÒµ½µÚÒ»¸ö±ÈkeyĞ¡µÄ
+		// find from the end, the first value which smaller than key
         while(arr[j]>key&&i<j)j--;
-        //¸³Öµ¸ø×ó±ß
         arr[i]=arr[j];
 
-        //´ÓÊı×éÍ·ÕÒµ½µÚÒ»¸ö±Èkey´óµÄ
+		// find from front, the first value which bigger than key.
         while(arr[i]<key&&i<j)i++;
-        //¸³Öµ¸øÓÒ±ß
         arr[j]=arr[i];
     }
 
@@ -66,55 +84,12 @@ void QuickSort(int* arr, int left, int right)
         QuickSort(arr, j+1, right);
 }
 
-//ÔÚ100000000¸ö¸¡µãÊıÖĞÕÒ³ö×î´óµÄ10000¸ö£¬ÒªÇóÊ±¼ä¸´ÔÓ¶ÈÓÅ¡£
+// find the biggest 1000 floats from 1million floats
+// all the floats is not possible to load ram, so we need to seperate into some files, then read these files
+// keep the top 10000 values.   
 void QuickSortT(int* arr, int left, int right)
 {
-    //°ÑÒª±È½ÏµÄÊıÔİ´æ, ÏÂ±êÎªleftµÄ¿ÉÒÔÈÎÒâĞŞ¸ÄÁË
-    int key=arr[left];
-    int i=left;
-    int j=right;
-    while(i<j)
-    {
-        //´ÓÊı×éÎ²ÕÒµ½µÚÒ»¸ö±Èkey´óµÄ
-        while(arr[j]<key&&i<j)j--;
-        //¸³Öµ¸ø×ó±ß
-        arr[i]=arr[j];
-
-        //´ÓÊı×éÍ·ÕÒµ½µÚÒ»¸ö±ÈkeyĞ¡µÄ
-        while(arr[i]<key&&i<j)i++;
-        //¸³Öµ¸øÓÒ±ß
-        arr[j]=arr[i];
-    }
-
-    arr[i]=key;
-
-    if(i-1>left && i>10000 && left<10000)
-        QuickSort(arr, left, i-1);
-
-    if(i-1<right && i<10000 && right>10000)
-        QuickSort(arr, i+1, right);
 }
 
-//Ñ¡ÔñÅÅĞò£¬Ã°ÅİÅÅĞòµÄ¸Ä½ø£¬±éÀúÒ»ÌË£¬ÕÒ³öÒ»¸ö×îĞ¡Öµ£¬×îĞ¡ÖµºÍ¶ÔÓ¦Î»ÖÃ»¥»», O(n^2)
-void SelectSort(int* arr, int n)
-{
-    for(int i=0; i<n; i++)
-    {
-        int min=i;
-        for(int j=i+1; j<n; j++)
-        {
-            if(arr[min]>arr[j])
-                min=j;
-        }
-
-        if(min!=i)
-        {
-            //»¥»»
-            arr[i]^=arr[min];
-            arr[min]^=arr[i];
-            arr[i]^=arr[min];
-        }
-    }
-}
-
-//¶ÑÅÅĞò£¬ Ñ¡ÔñÅÅĞòµÄ¸Ä½ø£¬±éÀúÒ»ÌËÕÒ³ö×îĞ¡ÖµµÄ¹ı³ÌÖĞ£¬±£Áô±È½Ï½á¹û£¬¼õÉÙ±È½Ï´ÎÊı, O(nlogn)
+// äºŒå‰æ ‘æ’åº, bstree.h
+//å †æ’åº,heapsort, O(nlogn)

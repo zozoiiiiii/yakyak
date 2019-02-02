@@ -33,6 +33,8 @@ public:
 
     int GetType() const;
     void SetType(int type);
+	std::string SerializeTo();
+	void ParseFrom(const std::string& str);
 
     bool GetBool() const;
     int GetInt() const;

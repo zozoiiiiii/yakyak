@@ -3,25 +3,13 @@
 #include <algorithm>
 //#include <Windows.h>
 #include "core/inc/yy_var.h"
-#include "serializer.h"
 
 NS_YY_BEGIN
 
 ReflectionMgr::ReflectionMgr()
-{
-    Serializer* pSerializer = new Serializer;
-    pSerializer->SetReflectionMgr(this);
-    m_pSerializer = pSerializer;
-}
+{}
 
-MetaClass* ReflectionMgr::GetCreator(const std::string& strClassName)
-{
-    MetaClass* pMetaClass = FindCreator(strClassName);
-    throw_assert(NULL != pMetaClass, "null check.");
-    return pMetaClass;
-}
-
-MetaClass* ReflectionMgr::FindCreator(const std::string& strClassName)
+MetaClass* ReflectionMgr::FindMetaClass(const std::string& strClassName)
 {
     std::map<std::string, MetaClass*>::iterator itor = m_creatorClasses.find(strClassName);
     if (itor == m_creatorClasses.end())
@@ -42,7 +30,7 @@ void ReflectionMgr::RegCreator(MetaClass* pCreator)
 
 MetaField* ReflectionMgr::FindMetaField(const std::string& strClassName, const std::string& strFieldName)
 {
-    MetaClass* pMetaClass = FindCreator(strClassName);
+    MetaClass* pMetaClass = FindMetaClass(strClassName);
     if(NULL == pMetaClass)
         return NULL;
 
@@ -53,11 +41,35 @@ MetaField* ReflectionMgr::FindMetaField(const std::string& strClassName, const s
     return itor->second;
 }
 
-MetaField* ReflectionMgr::GetMetaField(const std::string& strClassName, const std::string& strFieldName)
+MetaField* ReflectionMgr::FindMetaFieldFromAll(const std::string& strClassName, const std::string& strFieldName)
 {
-    MetaField* pMetaField = FindMetaField(strClassName, strFieldName);
-    throw_assert(NULL != pMetaField, "null check.");
-    return pMetaField;
+	MetaClass* pMetaClass = FindMetaClass(strClassName);
+	if (NULL == pMetaClass)
+		return NULL;
+
+
+	std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.find(strFieldName);
+	if (itor == pMetaClass->fields.end())
+	{
+		return FindMetaFieldFromAll(pMetaClass->parent, strFieldName);
+	}
+
+	return itor->second;
+}
+
+void ReflectionMgr::GetAllMetaField(const std::string& strClassName, std::vector<MetaField*>& fields)
+{
+	MetaClass* pMetaClass = FindMetaClass(strClassName);
+	if (NULL == pMetaClass)
+		return;
+
+	GetAllMetaField(pMetaClass->parent, fields);
+
+	std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.begin();
+	for (; itor != pMetaClass->fields.end(); itor++)
+	{
+		fields.push_back(itor->second);
+	}
 }
 
 bool ReflectionMgr::IsInstanceOf(MetaClass* pCreator, const std::string& strClassName)
@@ -68,10 +80,10 @@ bool ReflectionMgr::IsInstanceOf(MetaClass* pCreator, const std::string& strClas
 
 	// end of loop
     const std::string& strParent = pCreator->parent;
-    if(strParent=="Entity" && strParent != strClassName)
+    if(strParent=="BaseObject" && strParent != strClassName)
         return false;
 
-    MetaClass* pCreator_Parent = FindCreator(strParent);
+    MetaClass* pCreator_Parent = FindMetaClass(strParent);
     if(NULL==pCreator_Parent)
     {
         return false;
@@ -80,35 +92,8 @@ bool ReflectionMgr::IsInstanceOf(MetaClass* pCreator, const std::string& strClas
     return IsInstanceOf(pCreator_Parent, strClassName);
 }
 
-
-void ReflectionMgr::SetPropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName, const void* pPropVal)
+void ReflectionMgr::SetBaseFieldVal(void* pClassInstance, MetaField* pMetaField, const YY::Var& val)
 {
-    MetaClass* pMetaClass = GetCreator(pClassName);
-    std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.find(pPropName);
-    throw_assert(itor != pMetaClass->fields.end(), "can not find prop.");
-
-    MetaField* pMetaField = itor->second;
-    pMetaField->Set(pClassInstance, pPropVal);
-}
-
-const void* ReflectionMgr::GetPropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName)
-{
-    MetaClass* pMetaClass = GetCreator(pClassName);
-    std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.find(pPropName);
-    throw_assert(itor != pMetaClass->fields.end(), "can not find prop.");
-
-    MetaField* pMetaField = itor->second;
-    void* pPropVal = pMetaField->Get(pClassInstance);
-    return pPropVal;
-}
-
-void ReflectionMgr::SetBasePropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName, const YY::Var& val)
-{
-    MetaClass* pMetaClass = GetCreator(pClassName);
-    std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.find(pPropName);
-    throw_assert(itor != pMetaClass->fields.end(), "can not find prop.");
-
-    MetaField* pMetaField = itor->second;
     int nType = pMetaField->var_type;
     switch(nType)
     {
@@ -160,13 +145,8 @@ void ReflectionMgr::SetBasePropVal(void* pClassInstance, const std::string& pCla
     }
 }
 
-YY::Var ReflectionMgr::GetBasePropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName)
+YY::Var ReflectionMgr::GetBaseFieldVal(void* pClassInstance, MetaField* pMetaField)
 {
-    MetaClass* pMetaClass = GetCreator(pClassName);
-    std::map<std::string, MetaField*>::iterator itor = pMetaClass->fields.find(pPropName);
-    throw_assert(itor != pMetaClass->fields.end(), "can not find prop.");
-
-    MetaField* pMetaField = itor->second;
     void* pPropVal = pMetaField->Get(pClassInstance);
     int nType = pMetaField->var_type;
     switch(nType)

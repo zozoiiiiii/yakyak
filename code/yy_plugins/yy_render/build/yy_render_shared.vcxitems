@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{3ac70e55-b5dd-4c14-9caa-94e0d87bdc33}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_batch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_render.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_render_context.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_anim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_model_res.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\model\i_skeleton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_framebuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_renderbuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_res.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_res_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_shader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\res\i_texture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\batch\batch_group.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\anim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\model_res.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\model\skeleton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\platform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\render.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\framebuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\renderbuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\res_mgr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\shader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\res\texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\batch\batch_group.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\anim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\mesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\model_res.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\model\skeleton.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_deferred.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_forward.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\render_main.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\framebuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\renderbuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\res_mgr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\shader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\res\texture.cpp" />
+  </ItemGroup>
+</Project>

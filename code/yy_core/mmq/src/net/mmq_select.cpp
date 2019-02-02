@@ -23,12 +23,11 @@ CONN_ID MMQ_Select::Connect(const char* addr)
     int port;
     parse_addr(addr, ip, port);
 
-    //连接指定ip
     int socketfd =SW_ConnectTo(ip.c_str(), port);
     if(socketfd == INVALID_SOCKET)
 		return INVALID_CONN_ID;
 
-    //记录该连接信息
+	// save this connection information
     CONN_ID new_id=m_conn_manager.Create(socketfd);
     ConnInfo* p=m_conn_manager.Get(new_id);
     strcpy_s(p->remote_ip, sizeof(p->remote_ip), ip.c_str());
@@ -50,11 +49,10 @@ void MMQ_Select::Listen(const char* addr)
 void MMQ_Select::Send(CONN_ID connID, const char* buf, int len)
 {
     throw_assert(m_nRoleType != RT_UNKNOWN, "role type is unknown.");
-    throw_assert(len <= MAX_MSG_LEN, "超过最大网络消息长度");
+    throw_assert(len <= MAX_MSG_LEN, "msg max len");
 
     ConnInfo* p=m_conn_manager.Get(connID);
 
-    // 消息前面加上长度
     YY::Msg m;
     m.len = len;
     memcpy(m.body, buf, len);
@@ -77,8 +75,6 @@ void MMQ_Select::Close(CONN_ID connID)
         m_CBFunc_Discon(connID, p->remote_ip, p->remote_port);
 
     SW_CloseSocket(p->socket);
-
-    //销毁连接
     m_conn_manager.Destroy(connID);
 }
 
@@ -90,7 +86,6 @@ void MMQ_Select::OnRead(CONN_ID connID)
     ret= ::recv(p->socket, p->r_buf, MAX_MSG_LEN, 0);
     if(ret==0)
     {
-        //断开连接
         Close(connID);
         return;
     }
@@ -100,29 +95,25 @@ void MMQ_Select::OnRead(CONN_ID connID)
 
     if(ret<0)
     {
-        //断开连接
         Close(connID);
         return;
     }
 
     p->r_size+=ret;
 
-    //读了多少个字节
     int readNum=0;
-
-    //调用回调
     if(m_CBFunc_Msg)
         parse_one_msg(connID, p->r_buf, p->r_size, readNum, m_CBFunc_Msg);
 
-    //读了多少个字节, 则清理掉
-    p->r_size-=readNum;
+	p->r_size -= readNum;
+	memcpy(p->r_buf, p->r_buf+readNum, p->r_size);
 }
 
 void MMQ_Select::OnWrite(CONN_ID connID)
 {
     ConnInfo* p=m_conn_manager.Get(connID);
 
-    //写缓冲中有数据需要发送
+    // has data writable
     if(p->w_size>0)
     {
         int bytes=0;

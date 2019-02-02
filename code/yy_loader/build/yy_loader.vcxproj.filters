@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="tinyxml">
+      <UniqueIdentifier>{d9c8969c-0f95-4be7-b6e6-1123927d1d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{799f385c-02c0-4ae0-856f-da8d462c4034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public">
+      <UniqueIdentifier>{7b407485-c82e-4fa3-a9a7-571615a1d3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\app">
+      <UniqueIdentifier>{3c610818-fc59-40b4-adbc-ecaf11496e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\device">
+      <UniqueIdentifier>{6743f450-e7c4-49db-ab08-4db1c879f1bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\external\tinyxml\tinystr.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\tinyxml\tinyxml.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\tinyxml\tinyxmlerror.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\tinyxml\tinyxmlparser.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\public\app\app.cpp">
+      <Filter>public\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\public\app\dll_mgr.cpp">
+      <Filter>public\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\public\device\egl_device.cpp">
+      <Filter>public\device</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\external\tinyxml\tinystr.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\tinyxml\tinyxml.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\app\app.h">
+      <Filter>public\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\app\dll_mgr.h">
+      <Filter>public\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\device\egl_device.h">
+      <Filter>public\device</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

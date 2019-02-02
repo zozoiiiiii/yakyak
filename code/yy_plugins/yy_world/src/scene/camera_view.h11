@@ -1,0 +1,30 @@
+/************************************************************************/
+/* 
+@author:    junliang
+@brief:     camera view, like unity3d , show the camera view if choose the camera gameobj.
+@time:      2017-6-16
+*/
+/************************************************************************/
+#pragma once
+
+#include "world/inc/i_render_target.h"
+#include "world/inc/i_render_context.h"
+#include "world/inc/i_batch.h"
+#include "rt/render_target.h"
+#include "world/inc/i_scene.h"
+#include "rt/render_target.h"
+
+class CameraView : public YY::Entity
+{
+    YY_BEGIN(CameraView, "Entity");
+    YY_END
+public:
+    virtual void OnCreate();
+    virtual void OnDestroy(){}
+
+private:
+    void OnEvent_Resize(const char* name, const YY::VarList& args);
+private:
+    RenderInfo m_ri;
+    RenderTarget* m_offScreenBuffer;
+};

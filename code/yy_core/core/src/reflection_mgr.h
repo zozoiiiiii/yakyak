@@ -16,27 +16,20 @@ class ReflectionMgr : public YY::IReflectionMgr
 public:
     ReflectionMgr();
     virtual ~ReflectionMgr(){}
-    virtual MetaClass* GetCreator(const std::string& strClassName);
-    virtual MetaClass* FindCreator(const std::string& strClassName);
+    virtual MetaClass* FindMetaClass(const std::string& strClassName);
     virtual void RegCreator(MetaClass* pCreator);
 
-    virtual MetaField* FindMetaField(const std::string& strClassName, const std::string& strFieldName);
-    virtual MetaField* GetMetaField(const std::string& strClassName, const std::string& strFieldName);
+	virtual MetaField* FindMetaField(const std::string& strClassName, const std::string& strFieldName);
+	virtual MetaField* FindMetaFieldFromAll(const std::string& strClassName, const std::string& strFieldName);
+	virtual void GetAllMetaField(const std::string& strClassName, std::vector<MetaField*>& fields);
 
     virtual bool IsInstanceOf(MetaClass* pCreator, const std::string& strClassName);
 
+	virtual void SetBaseFieldVal(void* pClassInstance, MetaField* pMetaField, const YY::Var& val);
+	virtual YY::Var GetBaseFieldVal(void* pClassInstance, MetaField* pMetaField);
 
-
-    virtual void SetPropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName, const void* pPropVal);
-    virtual const void* GetPropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName);
-    virtual void SetBasePropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName, const YY::Var& val);
-    virtual YY::Var GetBasePropVal(void* pClassInstance, const std::string& pClassName, const std::string& pPropName);
-
-    ISerializer* GetSerializer(){return m_pSerializer;}
-private:
 
 private:
-    ISerializer* m_pSerializer;
     std::map<std::string, MetaClass*> m_creatorClasses;
 };
 NS_YY_END

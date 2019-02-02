@@ -17,9 +17,7 @@
 #include <sstream>
 #include <iostream>
 
-
 NS_YY_BEGIN
-
 class ExceptionStreamFormatter
 {
 public:

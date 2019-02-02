@@ -13,11 +13,10 @@
 NS_YY_BEGIN
 
 
-// 消息大小上限
-#define MAX_MSG_LEN 1024*50
+#define MAX_MSG_LEN 1024
 struct Msg
 {
-    int len;
+	int len;
     char body[MAX_MSG_LEN - 4];
 };
 NS_YY_END

@@ -29,16 +29,14 @@ private:
     void OnRead(CONN_ID connID);
     void OnWrite(CONN_ID connID);
 private:
-    fd_set read_set_;        //读队列
-    fd_set write_set_;        //写队列
+    fd_set read_set_;
+    fd_set write_set_;
     int m_listen_sd;
 
-    //事件接口
     CB_OnCon m_CBFunc_Con;
     CB_OnDiscon m_CBFunc_Discon;
     CB_OnRead m_CBFunc_Msg;
 
-    //连接管理
     ConnManager m_conn_manager;
 };
 
