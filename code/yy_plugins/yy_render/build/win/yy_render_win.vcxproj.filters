@@ -20,7 +20,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\external\texture\stb_image_aug.cpp">
+    <ClCompile Include="..\..\..\..\external\texture\stb_image_aug.c">
       <Filter>external\texture</Filter>
     </ClCompile>
   </ItemGroup>

@@ -16,7 +16,7 @@
     <ClInclude Include="..\..\..\..\external\texture\stb_image_aug.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\external\texture\stb_image_aug.cpp" />
+    <ClCompile Include="..\..\..\..\external\texture\stb_image_aug.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C951AC66-0AE3-4DAC-8E74-82611F241C7B}</ProjectGuid>
