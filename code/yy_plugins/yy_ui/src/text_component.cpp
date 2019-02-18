@@ -1,44 +1,49 @@
-#include "text.h"
+#include "text_component.h"
+#include "item_transform_component.h"
 #include "yy_core/core/inc/yy_string.h"
 #include <algorithm>
+#include "yy_core/math/inc/yy_vec2f.h"
 
-NS_YY_BEGIN
+//NS_YY_BEGIN
 
-void Text::OnCreate(const VariantMap& args)
+TextComponent::TextComponent():m_pTransform(nullptr), m_atlas(nullptr), m_pFont(nullptr){}
+void TextComponent::OnEvent(const std::string& event, const YY::VarList& args)
 {
-	m_nMaxY = 0;
-	Item::OnCreate(args);
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_EBO);
-	m_pFont = FontManager::Instance()->GetDefaultFont();
+	if (event == "addComponent")
+	{
+		m_pTransform = (ItemTransformComponent*)GetOwner()->FindComponent("ItemTransformComponent");
+		m_nMaxY = 0;
+		glGenBuffers(1, &m_VBO);
+		glGenBuffers(1, &m_EBO);
+		m_pFont = FontManager::Instance()->GetDefaultFont();
+
+		if (m_pTransform)
+			m_pTransform->SetTransformChanged(true);
+	}
 }
 
-void Text::OnDestroy()
-{
-
-}
 
 
-void Text::OnAddRender(IBatchGroup* pBatchGroup)
+void TextComponent::OnAddBatch(IBatchGroup* pBatchGroup)
 {
 	pBatchGroup->AddGUIBatch(this);
 }
 
-void Text::OnRender(RenderContext* pCxt)
+void TextComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 {
 	if (pCxt->nRenderType != RT_Normal)
 		return;
 
-
-	if (IsTransformChanged() ||  FirstRender())
+	if (m_pTransform->IsTransformChanged())
 		genMesh();
+	m_pTransform->SetTransformChanged(false);
 
 	static IShader* pShader = NULL;
 	if (NULL == pShader)
 	{
-		std::string vsh = GetRender()->GetResPath() + "shader\\painter_font.vsh";
-		std::string fsh = GetRender()->GetResPath() + "shader\\painter_font.fsh";
-		pShader = GetRender()->GetResMgr()->LoadShader(vsh, fsh);
+		std::string vsh = pRender->GetResPath() + "shader\\painter_font.vsh";
+		std::string fsh = pRender->GetResPath() + "shader\\painter_font.fsh";
+		pShader = pRender->GetResMgr()->LoadShader(vsh, fsh);
 	}
 
 
@@ -55,7 +60,7 @@ void Text::OnRender(RenderContext* pCxt)
 	pShader->SetUniform1i("texture", 0);
 
 
-	YY::Mat4f topLeftMatrix = IGUI::Instance()->GetTopLeftMatrix();
+	YY::Mat4f topLeftMatrix = pRender->GetTopLeftMatrix();
 	pShader->SetUniformMat4fv("c_topLeftMatrix", 1, topLeftMatrix.m_data);
 
 	// active vbo
@@ -86,8 +91,11 @@ void Text::OnRender(RenderContext* pCxt)
 
 }
 
-void Text::genMesh()
+void TextComponent::genMesh()
 {
+	if (!m_pTransform)
+		return;
+
 	initAtlas();
 	//m_mesh->clear();
 	m_vertices.clear();
@@ -100,7 +108,8 @@ void Text::genMesh()
 
 
 	// without m_nMaxY, then penY will consider as bottom in freetype.
-	int penX = GetAbsLeft(), penY = GetAbsTop() + m_nMaxY;
+	int penX = m_pTransform->GetAbsLeft();
+	int penY = m_pTransform->GetAbsTop() + m_nMaxY;
 	int preMaxWidth = 0;
 	auto wideCharStr = YY::Utf8ToWStr(m_string);
 
@@ -183,7 +192,7 @@ void Text::genMesh()
 
 
 
-void Text::initAtlas()
+void TextComponent::initAtlas()
 {
 	//m_atlas = m_pFont->getGlyphAtlas();
 	//return;
@@ -207,4 +216,4 @@ void Text::initAtlas()
 	m_atlas->generate();
 	m_atlas->generateGLTexture(GetMgr());
 }
-NS_YY_END
+//NS_YY_END

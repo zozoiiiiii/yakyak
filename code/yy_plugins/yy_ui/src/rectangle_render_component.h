@@ -11,7 +11,7 @@
 #include "yy_render/inc/i_render.h"
 #include <vector>
 
-NS_YY_BEGIN
+//NS_YY_BEGIN
 class ItemTransformComponent;
 class RectangleComponent;
 class RectangleRenderComponent : public RenderComponent
@@ -39,4 +39,4 @@ private:
 };
 
 
-NS_YY_END
+//NS_YY_END

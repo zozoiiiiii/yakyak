@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{19b6d4c7-f0e6-40be-b32a-f3c2e6e74869}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\font">
+      <UniqueIdentifier>{08baaab9-c145-4948-9e1c-1a914642ed5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\ui_main.cpp">
@@ -24,21 +27,30 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\font.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\font_manager.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\GlyphAtlas.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\image_component.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\text_component.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_mouse_area.h">
-      <Filter>inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_rectangle.h">
-      <Filter>inc</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gui.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_gui.h">
-      <Filter>inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_painter.h">
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.h">
@@ -48,6 +60,24 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\font.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\font_manager.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\GlyphAtlas.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\text_component.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\image_component.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

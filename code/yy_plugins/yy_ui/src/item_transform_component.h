@@ -31,8 +31,8 @@
 #define COLOR_EDITOR 0xFF535353
 #define COLOR_TREEITEM_HIGHLIGHT 0xFF3A3A3A
 
-NS_YY_BEGIN
-class ItemTransformComponent : public Component
+//NS_YY_BEGIN
+class ItemTransformComponent : public YY::Component
 {
 	YY_BEGIN(ItemTransformComponent, Component);
 	YY_FIELD(&ItemTransformComponent::m_top, "top", "");
@@ -88,4 +88,4 @@ private:
 	//Component* m_pAnchorLayout;
 };
 
-NS_YY_END
+//NS_YY_END

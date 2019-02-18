@@ -1,9 +1,9 @@
 #include "gui.h"
-//#include "font/font_manager.h"
+#include "font/font_manager.h"
 
 void GUI::OnCreate(const VariantMap& args)
 {
-	//FontManager::Instance()->Init(GetMgr());
+	FontManager::Instance()->Init(GetMgr());
 
 	m_pRender = IRender::Instance();
 	m_pUIBatchGroup = m_pRender->GetUIBatchGroup();

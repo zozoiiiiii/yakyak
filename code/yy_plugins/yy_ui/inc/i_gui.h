@@ -63,7 +63,7 @@ onButtonClicked(){}
 
 
 ///////////////////////////////////////////////
-how to descrip one view: use xml best
+how to describ one view: use xml best
 1. xml, html5+css(electron)
 2. json
 3. qml
@@ -125,7 +125,7 @@ pForm->AddChild(pRectangle);
 pForm->ShowModal();
 
 
-help: 
+reference: 
 1. Johnny Wu, the cocos creator writer
    consider javascript as the cocos2dx engine script(can be web app, can use the brower)
    use electron in order to render the ui by cocos creator
@@ -140,6 +140,8 @@ help:
 
 #include "yy_core.h"
 #include "core/inc/yy_entity.h"
+
+class IRender;
 
 NS_YY_BEGIN
 class IGUI : public BaseObject
@@ -164,5 +166,6 @@ public:
 	virtual void AddModalForm(YY_OBJECTID control) = 0;
 	virtual void RemoveModalForm(YY_OBJECTID control) = 0;
 	virtual void ReSize(float w, float h) = 0;
+	virtual IRender* GetRender() = 0;
 };
 NS_YY_END

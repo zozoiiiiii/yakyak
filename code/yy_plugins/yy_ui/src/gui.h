@@ -12,8 +12,6 @@
 #include "yy_render/inc/i_render_context.h"
 
 NS_YY_BEGIN
-class Item;
-class IPainter;
 class GUI : public IGUI
 {
     YY_BEGIN(GUI, IGUI);
@@ -27,6 +25,7 @@ public:
 	YY_OBJECTID GetDesktopForm() const;
 	void AddModalForm(YY_OBJECTID control);
 	void RemoveModalForm(YY_OBJECTID control);
+	virtual IRender* GetRender() { return m_pRender; }
 
 private:
 	void onEvent_AddBatch(const char* name, const YY::VarList& args);

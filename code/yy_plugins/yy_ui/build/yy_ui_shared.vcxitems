@@ -15,20 +15,29 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\font.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\font_manager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\GlyphAtlas.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gui.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\image_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\text_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\ui_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_gui.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_mouse_area.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_painter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_rectangle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\font.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\font_manager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\GlyphAtlas.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gui.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\image_component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\text_component.h" />
   </ItemGroup>
 </Project>

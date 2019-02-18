@@ -1,31 +1,38 @@
-#include "image.h"
+#include "image_component.h"
+#include "item_transform_component.h"
+#include "yy_render/inc/res/i_texture.h"
+#include "yy_ui/inc/i_gui.h"
 
-
-void Image::OnCreate(const VariantMap& args)
+//NS_YY_BEGIN
+ImageComponent::ImageComponent()
+	: m_pTransform(nullptr), m_pTexture(nullptr) {}
+void ImageComponent::OnEvent(const std::string& event, const YY::VarList& args)
 {
-	Item::OnCreate(args);
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_EBO);
+	if (event == "addComponent")
+	{
+		m_pTransform = (ItemTransformComponent*)GetOwner()->FindComponent("ItemTransformComponent");
+		glGenBuffers(1, &m_VBO);
+		glGenBuffers(1, &m_EBO);
+	}
 
 }
 
-void Image::OnDestroy()
-{
 
-}
-
-void Image::OnAddRender(IBatchGroup* pBatchGroup)
+void ImageComponent::OnAddBatch(IBatchGroup* pBatchGroup)
 {
 	pBatchGroup->AddGUIBatch(this);
 }
 
 
-void Image::Setup()
+void ImageComponent::Setup()
 {
-	float x1 = GetAbsLeft();
-	float y1 = GetAbsTop();
-	float x2 = x1 + GetWidth();
-	float y2 = y1 + GetHeight();
+	if (!m_pTransform)
+		return;
+
+	float x1 = m_pTransform->GetAbsLeft();
+	float y1 = m_pTransform->GetAbsTop();
+	float x2 = x1 + m_pTransform->GetWidth();
+	float y2 = y1 + m_pTransform->GetHeight();
 
 	m_vertices[0].pos = YY::Vec3f(x1, y1, 0);
 	m_vertices[1].pos = YY::Vec3f(x1, y2, 0);
@@ -48,29 +55,36 @@ void Image::Setup()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 }
 
-void Image::OnRender(RenderContext* pCxt)
+void ImageComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 {
-	if (nullptr == m_pTexture)
+	if (!m_pTransform)
 		return;
+
+	if (nullptr == m_pTexture)
+	{
+		return;
+	}
 
 	if (pCxt->nRenderType != RT_Normal)
 		return;
 
-	if (GetWidth() == 0 || GetHeight() == 0)
+	if (m_pTransform->GetWidth() == 0 || m_pTransform->GetHeight() == 0)
 	{
-		SetWidth(m_pTexture->GetWidth());
-		SetHeight(m_pTexture->GetHeight());
+		m_pTransform->SetWidth(m_pTexture->GetWidth());
+		m_pTransform->SetHeight(m_pTexture->GetHeight());
 	}
 
-	if (IsTransformChanged())
+	if (m_pTransform->IsTransformChanged())
 		Setup();
+	m_pTransform->SetTransformChanged(false);
+
 
 	static IShader* pShader = NULL;
 	if (NULL == pShader)
 	{
-		std::string vsh = GetRender()->GetResPath() + "shader\\painter_image.vsh";
-		std::string fsh = GetRender()->GetResPath() + "shader\\painter_image.fsh";
-		pShader = GetRender()->GetResMgr()->LoadShader(vsh, fsh);
+		std::string vsh = pRender->GetResPath() + "shader\\painter_image.vsh";
+		std::string fsh = pRender->GetResPath() + "shader\\painter_image.fsh";
+		pShader = pRender->GetResMgr()->LoadShader(vsh, fsh);
 	}
 
 
@@ -87,7 +101,7 @@ void Image::OnRender(RenderContext* pCxt)
 	pShader->SetUniform1i("texture", 0);
 
 
-	YY::Mat4f topLeftMatrix = IGUI::Instance()->GetTopLeftMatrix();
+	YY::Mat4f topLeftMatrix = pRender->GetTopLeftMatrix();
 	pShader->SetUniformMat4fv("c_topLeftMatrix", 1, topLeftMatrix.m_data);
 
 	// active vbo
@@ -118,8 +132,14 @@ void Image::OnRender(RenderContext* pCxt)
 }
 
 
-void Image::SetImageSource(const std::string& url)
+void ImageComponent::SetImageSource(const std::string& url)
 {
-	IResMgr* pResMgr = GetRender()->GetResMgr();
+	IRender* pRender = IGUI::Instance()->GetRender();
+	if (!pRender)
+		return;
+
+	IResMgr* pResMgr = pRender->GetResMgr();
 	m_pTexture = pResMgr->LoadTexture(url);
 }
+
+//NS_YY_END

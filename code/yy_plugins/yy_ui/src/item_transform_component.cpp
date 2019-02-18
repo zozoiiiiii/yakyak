@@ -2,7 +2,7 @@
 //#include "anchor_fill_component.h"
 #include "yy_ui/inc/i_gui.h"
 
-NS_YY_BEGIN
+//NS_YY_BEGIN
 ItemTransformComponent::ItemTransformComponent()
 	:m_top(0.0f),m_left(0.0f),m_width(0.0f),m_height(0.0f),m_opacity(1),m_visible(false),m_bTransformChanged(false)
 {}
@@ -216,4 +216,4 @@ void ItemTransformComponent::SetTransformChanged(bool bChanged)
 	m_bTransformChanged = bChanged;
 }
 
-NS_YY_END
+//NS_YY_END

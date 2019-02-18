@@ -25,6 +25,8 @@ buttom control= entity(transform,sprint,button)
 #include "rectangle_component.h"
 #include "rectangle_render_component.h"
 #include "item_transform_component.h"
+#include "text_component.h"
+#include "image_component.h"
 #include "positioner/column_component.h"
 #include "positioner/row_component.h"
 
@@ -57,8 +59,8 @@ void plugin_main_ui(YY::IObjectMgr* pEntMgr)
 	//YY_REG(ColumnComponent);
 	//YY_REG(RowComponent);
 
-	//YY_REG(Image);
-	//YY_REG(Text);
+	YY_REG(ImageComponent);
+	YY_REG(TextComponent);
 
 //	YY_REG(ItemGeneratorComponent);
 //	YY_REG(AnchorFillComponent);

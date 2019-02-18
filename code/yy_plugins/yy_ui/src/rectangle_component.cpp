@@ -3,7 +3,7 @@
 
 
 
-NS_YY_BEGIN
+//NS_YY_BEGIN
 
 RectangleComponent::RectangleComponent():m_color(0)
 {}
@@ -21,4 +21,4 @@ unsigned int  RectangleComponent::GetColor()
 }
 
 
-NS_YY_END
+//NS_YY_END

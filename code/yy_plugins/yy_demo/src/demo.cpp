@@ -14,6 +14,8 @@
 #include "yy_ui/src/item_transform_component.h"
 #include "yy_ui/src/rectangle_component.h"
 #include "yy_ui/src/rectangle_render_component.h"
+#include "yy_ui/src/text_component.h"
+#include "yy_ui/src/image_component.h"
 //#include "yy_ui/src/positioner/row_component.h"
 //#include "yy_ui/src/positioner/column_component.h"
 
@@ -22,7 +24,6 @@ using namespace YY;
 void Demo::OnCreate(const VariantMap& args)
 {
 	YY::Entity* pMainEntity = (YY::Entity*)GetMgr()->Create("Entity");
-	//RowComponent* pRow = (RowComponent*)pMainEntity->AddComponent("RowComponent");
 
 	{
 		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
@@ -39,9 +40,8 @@ void Demo::OnCreate(const VariantMap& args)
 	{
 		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
 		ItemTransformComponent* pTransform = (ItemTransformComponent*)pEntity->AddComponent("ItemTransformComponent");
-		RectangleComponent* pRectangle = (RectangleComponent*)pEntity->AddComponent("RectangleComponent");
-		RectangleRenderComponent* pRender = (RectangleRenderComponent*)pEntity->AddComponent("RectangleRenderComponent");
-		pRectangle->SetColor(COLOR_BLUE);
+		TextComponent* pText = (TextComponent*)pEntity->AddComponent("TextComponent");
+		pText->SetText("hello, world");
 		pTransform->SetLeft(100);
 		pTransform->SetWidth(100);
 		pTransform->SetHeight(100);
@@ -52,12 +52,11 @@ void Demo::OnCreate(const VariantMap& args)
 	{
 		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
 		ItemTransformComponent* pTransform = (ItemTransformComponent*)pEntity->AddComponent("ItemTransformComponent");
-		RectangleComponent* pRectangle = (RectangleComponent*)pEntity->AddComponent("RectangleComponent");
-		RectangleRenderComponent* pRender = (RectangleRenderComponent*)pEntity->AddComponent("RectangleRenderComponent");
-		pRectangle->SetColor(COLOR_RED);
-		pTransform->SetLeft(200);
-		pTransform->SetWidth(100);
-		pTransform->SetHeight(100);
+		ImageComponent* pImage = (ImageComponent*)pEntity->AddComponent("ImageComponent");
+		pImage->SetImageSource("ui_image/grass.bmp");
+		pTransform->SetLeft(500);
+		//pTransform->SetWidth(100);
+		//pTransform->SetHeight(100);
 		pTransform->SetVisible(true);
 		pMainEntity->AddChild(pEntity);
 	}

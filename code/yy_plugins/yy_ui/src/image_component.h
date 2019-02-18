@@ -7,20 +7,22 @@
 /************************************************************************/
 #pragma once
 
-#include "item.h"
-
+#include "yy_render/inc/i_batch.h"
+#include "yy_render/inc/i_render.h"
+//NS_YY_BEGIN
+class ItemTransformComponent;
 class ITexture;
-class Image : public Item
+class ImageComponent : public RenderComponent
 {
-    YY_BEGIN(Image, Item);
+    YY_BEGIN(ImageComponent, RenderComponent);
     YY_END
 
 
 public:
-	virtual void OnCreate(const VariantMap& args);
-	virtual void OnDestroy();
-	virtual void OnAddRender(IBatchGroup* pBatchGroup);
-	virtual void OnRender(RenderContext* pCxt);
+	ImageComponent();
+	virtual void OnEvent(const std::string& event, const YY::VarList& args = YY::VarList());
+	virtual void OnAddBatch(IBatchGroup* pBatchGroup);
+	virtual void OnRender(IRender* pRender, RenderContext* pCxt);
 
 	void SetImageSource(const std::string& url);
 private:
@@ -35,4 +37,6 @@ private:
 	Vertex m_vertices[4];
 	unsigned int m_VBO, m_EBO;
 	ITexture* m_pTexture;
+	ItemTransformComponent* m_pTransform;
 };
+//NS_YY_END
