@@ -14,7 +14,7 @@
 
 class World : public IWorld
 {
-    YY_BEGIN(World, "BaseObject");
+    YY_BEGIN(World, IWorld);
     YY_END
 public:
     virtual void OnCreate();
@@ -24,10 +24,10 @@ public:
     YY_OBJECTID GetSceneID(){return m_scene_id;}
     IScene* GetScene();
     void SetSceneID(YY_OBJECTID scene_id){m_scene_id = scene_id;}
-    IEventMgr* GetEventMgr(){return m_pEventMgr;}
-    virtual IRender* GetRender(){return m_pRender;}
+    //IEventMgr* GetEventMgr(){return m_pEventMgr;}
+    //virtual IRender* GetRender(){return m_pRender;}
 private:
     YY_OBJECTID m_scene_id;
-    IEventMgr* m_pEventMgr;
-    IRender* m_pRender;
+    //IEventMgr* m_pEventMgr;
+    //IRender* m_pRender;
 };

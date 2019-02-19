@@ -1,16 +1,14 @@
 #include "image_component.h"
-#include "item_transform_component.h"
 #include "yy_render/inc/res/i_texture.h"
 #include "yy_ui/inc/i_gui.h"
 
 //NS_YY_BEGIN
 ImageComponent::ImageComponent()
-	: m_pTransform(nullptr), m_pTexture(nullptr) {}
+	: m_pTexture(nullptr) {}
 void ImageComponent::OnEvent(const std::string& event, const YY::VarList& args)
 {
 	if (event == "addComponent")
 	{
-		m_pTransform = (ItemTransformComponent*)GetOwner()->FindComponent("ItemTransformComponent");
 		glGenBuffers(1, &m_VBO);
 		glGenBuffers(1, &m_EBO);
 	}
@@ -26,13 +24,14 @@ void ImageComponent::OnAddBatch(IBatchGroup* pBatchGroup)
 
 void ImageComponent::Setup()
 {
-	if (!m_pTransform)
+	Item* pItem = FindItem();
+	if (!pItem)
 		return;
 
-	float x1 = m_pTransform->GetAbsLeft();
-	float y1 = m_pTransform->GetAbsTop();
-	float x2 = x1 + m_pTransform->GetWidth();
-	float y2 = y1 + m_pTransform->GetHeight();
+	float x1 = pItem->GetAbsLeft();
+	float y1 = pItem->GetAbsTop();
+	float x2 = x1 + pItem->GetWidth();
+	float y2 = y1 + pItem->GetHeight();
 
 	m_vertices[0].pos = YY::Vec3f(x1, y1, 0);
 	m_vertices[1].pos = YY::Vec3f(x1, y2, 0);
@@ -57,7 +56,8 @@ void ImageComponent::Setup()
 
 void ImageComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 {
-	if (!m_pTransform)
+	Item* pItem = FindItem();
+	if (!pItem)
 		return;
 
 	if (nullptr == m_pTexture)
@@ -68,15 +68,15 @@ void ImageComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 	if (pCxt->nRenderType != RT_Normal)
 		return;
 
-	if (m_pTransform->GetWidth() == 0 || m_pTransform->GetHeight() == 0)
+	if (pItem->GetWidth() == 0 || pItem->GetHeight() == 0)
 	{
-		m_pTransform->SetWidth(m_pTexture->GetWidth());
-		m_pTransform->SetHeight(m_pTexture->GetHeight());
+		pItem->SetWidth(m_pTexture->GetWidth());
+		pItem->SetHeight(m_pTexture->GetHeight());
 	}
 
-	if (m_pTransform->IsTransformChanged())
+	if (pItem->IsTransformChanged())
 		Setup();
-	m_pTransform->SetTransformChanged(false);
+	pItem->SetTransformChanged(false);
 
 
 	static IShader* pShader = NULL;

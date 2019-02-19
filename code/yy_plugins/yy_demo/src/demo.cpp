@@ -11,9 +11,9 @@
 //#include "views/design_view.h"
 //#include "views/main_view.h"
 //#include "yy_ui/src/rectangle.h"
-#include "yy_ui/src/item_transform_component.h"
+//#include "yy_ui/src/item_transform_component.h"
 #include "yy_ui/src/rectangle_component.h"
-#include "yy_ui/src/rectangle_render_component.h"
+//#include "yy_ui/src/rectangle_render_component.h"
 #include "yy_ui/src/text_component.h"
 #include "yy_ui/src/image_component.h"
 //#include "yy_ui/src/positioner/row_component.h"
@@ -26,39 +26,35 @@ void Demo::OnCreate(const VariantMap& args)
 	YY::Entity* pMainEntity = (YY::Entity*)GetMgr()->Create("Entity");
 
 	{
-		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
-		ItemTransformComponent* pTransform = (ItemTransformComponent*)pEntity->AddComponent("ItemTransformComponent");
-		RectangleComponent* pRectangle = (RectangleComponent*)pEntity->AddComponent("RectangleComponent");
-		RectangleRenderComponent* pRender = (RectangleRenderComponent*)pEntity->AddComponent("RectangleRenderComponent");
+		Item* pItem = (Item*)GetMgr()->Create("Item");
+		RectangleComponent* pRectangle = (RectangleComponent*)pItem->AddComponent("RectangleComponent");
 		pRectangle->SetColor(COLOR_GREE);
-		pTransform->SetWidth(100);
-		pTransform->SetHeight(100);
-		pTransform->SetVisible(true);
-		pMainEntity->AddChild(pEntity);
+		pItem->SetWidth(100);
+		pItem->SetHeight(100);
+		pItem->SetVisible(true);
+		pMainEntity->AddChild(pItem);
 	}
 
 	{
-		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
-		ItemTransformComponent* pTransform = (ItemTransformComponent*)pEntity->AddComponent("ItemTransformComponent");
-		TextComponent* pText = (TextComponent*)pEntity->AddComponent("TextComponent");
+		Item* pItem = (Item*)GetMgr()->Create("Item");
+		TextComponent* pText = (TextComponent*)pItem->AddComponent("TextComponent");
 		pText->SetText("hello, world");
-		pTransform->SetLeft(100);
-		pTransform->SetWidth(100);
-		pTransform->SetHeight(100);
-		pTransform->SetVisible(true);
-		pMainEntity->AddChild(pEntity);
+		pItem->SetLeft(100);
+		pItem->SetWidth(100);
+		pItem->SetHeight(100);
+		pItem->SetVisible(true);
+		pMainEntity->AddChild(pItem);
 	}
 
 	{
-		YY::Entity* pEntity = (YY::Entity*)GetMgr()->Create("Entity");
-		ItemTransformComponent* pTransform = (ItemTransformComponent*)pEntity->AddComponent("ItemTransformComponent");
-		ImageComponent* pImage = (ImageComponent*)pEntity->AddComponent("ImageComponent");
+		Item* pItem = (Item*)GetMgr()->Create("Item");
+		ImageComponent* pImage = (ImageComponent*)pItem->AddComponent("ImageComponent");
 		pImage->SetImageSource("ui_image/grass.bmp");
-		pTransform->SetLeft(500);
+		pItem->SetLeft(500);
 		//pTransform->SetWidth(100);
 		//pTransform->SetHeight(100);
-		pTransform->SetVisible(true);
-		pMainEntity->AddChild(pEntity);
+		pItem->SetVisible(true);
+		pMainEntity->AddChild(pItem);
 	}
 
 	pMainEntity->SerializeToFile("ttt.xml");

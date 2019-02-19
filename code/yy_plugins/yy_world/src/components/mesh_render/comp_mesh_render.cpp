@@ -13,9 +13,9 @@ void Comp_MeshRender::OnDestroy()
 
 void Comp_MeshRender::OnRender(RenderContext* pCxt)
 {
-    std::string vsh = GetRender()->GetResPath() + "shader/mesh.vsh";
-    std::string fsh = GetRender()->GetResPath() + "shader/mesh.fsh";
-    IShader* pMeshShader = GetRender()->GetResMgr()->LoadShader(vsh, fsh);
+    std::string vsh = IRender::Instance()->GetResPath() + "shader/mesh.vsh";
+    std::string fsh = IRender::Instance()->GetResPath() + "shader/mesh.fsh";
+    IShader* pMeshShader = IRender::Instance()->GetResMgr()->LoadShader(vsh, fsh);
 
     // 如果是渲染阴影，则用对应的shader
     IShader* pShader = pMeshShader;
@@ -58,8 +58,12 @@ void Comp_MeshRender::OnRender(RenderContext* pCxt)
     //----------
     throw_assert(NULL!=m_mesh, "null check.");
 
+	IGameObj* pGameObj = FindGameObj();
+	if (!pGameObj)
+		return;
+
     YY::Mat4f model;
-    GetOwner()->GetTransform()->GetTMMatrix(&model);
+    pGameObj->GetTransform()->GetTMMatrix(&model);
 
     //YY::Mat4f mvp = pCxt->projM * pCxt->viewM * model;
 
@@ -126,7 +130,7 @@ void Comp_MeshRender::SetMesh(const std::string& path, const std::string& mesh_f
 {
     throw_assert(NULL == m_mesh, "only support one mesh.");
 
-    IModelRes* pModelRes = GetOwner()->GetRender()->GetModelResMgr();
+    IModelRes* pModelRes = IRender::Instance()->GetModelResMgr();
 
     //m_path = YY::SlashTrim(path, true);
 	m_path = path;
@@ -142,12 +146,14 @@ void Comp_MeshRender::SetMesh(const std::string& path, const std::string& mesh_f
     m_active_anim = -1;
 
     // aabb
-    GetOwner()->SetAABB(m_mesh->GetAABB());
+	IGameObj* pGameObj = FindGameObj();
+	if(pGameObj)
+		pGameObj->SetAABB(m_mesh->GetAABB());
 }
 
 int Comp_MeshRender::AddAnim(const std::string& anim_file, float fEnterTime, float fLeaveTime)
 {
-    IModelRes* pModelRes = GetOwner()->GetRender()->GetModelResMgr();
+    IModelRes* pModelRes = IRender::Instance()->GetModelResMgr();
     YY::IAnim* am =  pModelRes->LoadAnimFile(m_skele, m_path + anim_file);
     m_anims.push_back(am);
 	m_anims_name.push_back(anim_file);

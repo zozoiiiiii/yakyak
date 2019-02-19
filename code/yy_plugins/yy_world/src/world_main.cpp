@@ -28,7 +28,7 @@
 //#include "components/model_obj/quad.h"
 #include "gameobj/game_obj.h"
 #include "gameobj/transform.h"
-#include "event/event_mgr.h"
+//#include "event/event_mgr.h"
 
 //#include "components/primitive/edit_map.h"
 
@@ -56,12 +56,12 @@ void plugin_main_world(YY::IObjectMgr* pEntMgr)
 //     YY_REG(Cube);
 //     YY_REG(EditQuard);
 
-    YY_REG(Comp_Terrain);
+    //YY_REG(Comp_Terrain);
     YY_REG(Comp_MeshRender);
     YY_REG(Comp_Camera);
 //    YY_REG(Comp_Model_Obj);
     //YY_REG(ShowDepthMap);
     YY_REG(GameObj);
+	YY_REG(GameObjComponent);
 	YY_REG(Transform);
-    YY_REG(EventMgr);
 }

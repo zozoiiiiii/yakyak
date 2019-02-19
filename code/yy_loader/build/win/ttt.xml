@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <node class="Entity" name="">
 	<children>
-		<node class="Entity" name="">
+		<node class="Item" name="" height="100.000000" left="0.000000" top="0.000000" width="100.000000">
 			<components>
-				<node class="ItemTransformComponent" height="100.000000" left="0.000000" top="0.000000" width="100.000000"/>
-				<node class="RectangleComponent" color="-16711936"/>
-				<node class="RectangleRenderComponent"/>
+				<node class="RectangleComponent"/>
 			</components>
 		</node>
-		<node class="Entity" name="">
+		<node class="Item" name="" height="100.000000" left="100.000000" top="0.000000" width="100.000000">
 			<components>
-				<node class="ItemTransformComponent" height="100.000000" left="100.000000" top="0.000000" width="100.000000"/>
 				<node class="TextComponent"/>
 			</components>
 		</node>
-		<node class="Entity" name="">
+		<node class="Item" name="" height="0.000000" left="500.000000" top="0.000000" width="0.000000">
 			<components>
 				<node class="ImageComponent"/>
-				<node class="ItemTransformComponent" height="0.000000" left="500.000000" top="0.000000" width="0.000000"/>
 			</components>
 		</node>
 	</children>

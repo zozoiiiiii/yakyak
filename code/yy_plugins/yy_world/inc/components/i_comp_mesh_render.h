@@ -12,7 +12,7 @@
 #include "../i_game_obj.h"
 
 
-class IComp_MeshRender : public IComponent
+class IComp_MeshRender : public GameObjComponent
 {
 public:
     virtual void SetMesh(const std::string& path, const std::string& mesh_file, const std::string& Skeleton_file=std::string()) = 0;

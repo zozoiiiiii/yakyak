@@ -8,16 +8,9 @@ void GUI::OnCreate(const VariantMap& args)
 	m_pRender = IRender::Instance();
 	m_pUIBatchGroup = m_pRender->GetUIBatchGroup();
 	m_pRenderContext = m_pUIBatchGroup->GetRenderContext();
-	m_pDeskTop = (Entity*)GetMgr()->Create("Entity");
+	m_pDeskTop = (Item*)GetMgr()->Create("Item");
 	if (nullptr == m_pDeskTop)
 		return;
-
-	Component* pComponent = m_pDeskTop->AddComponent("ItemTransformComponent");
-	if (!pComponent)
-	{
-		GetMgr()->Destroy(m_pDeskTop->GetID());
-		return;
-	}
 
 	m_pDeskTop->SetName("DeskTopForm");
 
@@ -121,16 +114,16 @@ void GUI::onEvent_AddBatch(const char* name, const YY::VarList& args)
 		if(nullptr == pObject)
 			continue;
 
-		if(!pObject->IsInstanceOf("Entity"))
+		if(!pObject->IsInstanceOf("Item"))
 			continue;
 
-		Entity* pForm = (Entity*)pObject;
+		Item* pForm = (Item*)pObject;
 		visitEntities(pForm);
 	}
 }
 
 
-void GUI::visitEntities(Entity* pEntity)
+void GUI::visitEntities(Item* pEntity)
 {
 	// components
 	std::vector<Component*> components = pEntity->GetAllComponents();
@@ -157,7 +150,7 @@ void GUI::visitEntities(Entity* pEntity)
 		if (!pObject->IsInstanceOf("Entity"))
 		 	continue;
 		 
-		Entity* pChildEntity = (Entity*)pObject;
+		Item* pChildEntity = (Item*)pObject;
 		visitEntities(pChildEntity);
 	}
 }

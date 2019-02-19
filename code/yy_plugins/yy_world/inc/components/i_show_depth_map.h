@@ -11,7 +11,7 @@
 #include "i_comp_mesh_render.h"
 #include <string>
 
-class IShowDepthMap : public IComponent
+class IShowDepthMap : public YY::Component
 {
 public:
     virtual void Load(const std::string& model_name, const std::string& model_path) = 0;

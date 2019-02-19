@@ -21,8 +21,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\image_component.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\text_component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\ui_main.cpp" />
@@ -35,8 +34,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\GlyphData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gui.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\image_component.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\text_component.h" />
   </ItemGroup>

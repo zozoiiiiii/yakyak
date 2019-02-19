@@ -12,8 +12,8 @@ IScene* World::GetScene()
 
 void World::OnCreate()
 {
-    m_pEventMgr = (IEventMgr*)GetMgr()->Create("EventMgr");
-    m_pRender = (IRender*)GetMgr()->Create("Render");
+    //m_pEventMgr = (IEventMgr*)GetMgr()->Create("EventMgr");
+    //m_pRender = (IRender*)GetMgr()->Create("Render");
     GetMgr()->AddExcute(this);
 }
 
@@ -32,5 +32,5 @@ void World::OnExcute(float sec)
 	// paint render
 
     // render batch groups and clear all.
-    m_pRender->RenderAll();
+    //m_pRender->RenderAll();
 }

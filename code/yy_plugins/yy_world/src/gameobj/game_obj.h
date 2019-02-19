@@ -35,19 +35,19 @@ public:
     virtual void SetName(const std::string& name){m_name = name;}
     virtual IRender* GetRender();
     virtual ITransform* GetTransform(){return &m_transform;}
-    virtual void GetComps(std::vector<IComponent*>& comps){comps=m_comps;}
-    virtual IComponent* FindComp(const std::string& name);
-    virtual IComponent* GetComp(const std::string& name);
-    virtual IComponent* AddComp(const std::string& name);
+    //virtual void GetComps(std::vector<IComponent*>& comps){comps=m_comps;}
+    //virtual IComponent* FindComp(const std::string& name);
+    //virtual IComponent* GetComp(const std::string& name);
+    //virtual IComponent* AddComp(const std::string& name);
 
     virtual void OnUpdate(float sec);
     virtual void OnAddRender(IBatchGroup* pBatchGroup);
     virtual void OnRender(RenderContext* pCxt);
 
-    virtual void SetParent(IGameObj* pObj);
-    virtual IGameObj* FindParent();
-    virtual void GetChildren(std::vector<IGameObj*>& objs);
-    virtual void AddChild(IGameObj* pObj);
+    //virtual void SetParent(IGameObj* pObj);
+    //virtual IGameObj* FindParent();
+    //virtual void GetChildren(std::vector<IGameObj*>& objs);
+    //virtual void AddChild(IGameObj* pObj);
 
     // shadow
     virtual void SetCastShadow(bool flag){m_cast_shadow = flag;}

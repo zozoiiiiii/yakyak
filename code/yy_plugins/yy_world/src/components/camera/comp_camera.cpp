@@ -1,8 +1,8 @@
 #include "comp_camera.h"
 #include "yy_world/inc/i_world.h"
 #include "yy_world/inc/i_scene.h"
-#include "../primitive/lines.h"
-#include "yy_world/inc/i_event_mgr.h"
+//#include "../primitive/lines.h"
+//#include "yy_world/inc/i_event_mgr.h"
 
 void Comp_Camera::OnCreate()
 {
@@ -112,20 +112,20 @@ void Comp_Camera::GetRayDirection(float mouseX, float mouseY, float& x, float& y
     // draw ray line.
     if(draw_ray)
     {
-        static IGameObj* pTestLine=NULL;
-        Lines* pComp_Lines=NULL;
-        if(NULL == pTestLine)
-        {
-            IScene* pScene = IWorld::Instance()->GetScene();
-            pTestLine = pScene->CreateObj();
-			pTestLine->SetName("dray_ray_line");
-            pScene->AddObj(pTestLine);
-            pComp_Lines = (Lines*)pTestLine->AddComp("Lines");
-        }
-
-        pComp_Lines = (Lines*)pTestLine->GetComp("Lines");
-        YY::Vec3f ray_dst(ray_world.x, ray_world.y, ray_world.z);
-        pComp_Lines->DrawSingleLine(ray_orig, ray_dst, 0xFF00FF00);
+//         static IGameObj* pTestLine=NULL;
+//         Lines* pComp_Lines=NULL;
+//         if(NULL == pTestLine)
+//         {
+//             IScene* pScene = IWorld::Instance()->GetScene();
+//             pTestLine = pScene->CreateObj();
+// 			pTestLine->SetName("dray_ray_line");
+//             pScene->AddObj(pTestLine);
+//             pComp_Lines = (Lines*)pTestLine->AddComp("Lines");
+//         }
+// 
+//         pComp_Lines = (Lines*)pTestLine->GetComp("Lines");
+//         YY::Vec3f ray_dst(ray_world.x, ray_world.y, ray_world.z);
+//         pComp_Lines->DrawSingleLine(ray_orig, ray_dst, 0xFF00FF00);
     }
 }
 
@@ -134,7 +134,11 @@ bool Comp_Camera::isOutOfFrustum(YY::AABB aabb)
 {
     // »ñµÃfrustum.
     YY::Mat4f view;
-    GetOwner()->GetTransform()->GetTMMatrix(&view);
+	IGameObj* pGameObj = FindGameObj();
+	if (!pGameObj)
+		return false;
+
+    pGameObj->GetTransform()->GetTMMatrix(&view);
     view.Inverse();
 
     YY::Mat4f proj = GetPersp();

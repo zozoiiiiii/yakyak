@@ -1,6 +1,5 @@
 #include "transform.h"
 
-NS_YY_BEGIN
 Transform::Transform()
 {
     m_pos.x = m_pos.y = m_pos.z = 0.0f;
@@ -71,60 +70,58 @@ void Transform::AddAngleZ(float z)
 {
     m_angle.z += z;
 }
-
-void Transform::SetParent(YY_OBJECTID id)
-{
-	m_parent = id;
-}
-
-ITransform* Transform::FindParent()
-{
-	BaseObject* pObject = GetMgr()->Find(m_parent);
-	if (NULL == pObject)
-		return NULL;
-
-	if (!pObject->IsInstanceOf("Transform"))
-		return NULL;
-
-	return (ITransform*)pObject;
-}
-
-VarList Transform::GetChildren()
-{
-	VarList args;
-	for (int i = 0; i < m_children.size(); i++)
-	{
-		args << m_children[i];
-	}
-	return args;
-}
-
-void Transform::AddChild(YY_OBJECTID id)
-{
-	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
-	if (itor != m_children.end())
-		return;
-
-	m_children.push_back(id);
-}
-
-void Transform::RemoveChild(YY_OBJECTID id)
-{
-	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
-	if (itor == m_children.end())
-		return;
-
-	m_children.erase(itor);
-}
-
-bool Transform::IsChildExist(YY_OBJECTID id)
-{
-	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
-	if (itor == m_children.end())
-		return false;
-
-	return true;
-
-}
-
-NS_YY_END
+// 
+// void Transform::SetParent(YY_OBJECTID id)
+// {
+// 	m_parent = id;
+// }
+// 
+// ITransform* Transform::FindParent()
+// {
+// 	BaseObject* pObject = GetMgr()->Find(m_parent);
+// 	if (NULL == pObject)
+// 		return NULL;
+// 
+// 	if (!pObject->IsInstanceOf("Transform"))
+// 		return NULL;
+// 
+// 	return (ITransform*)pObject;
+// }
+// 
+// VarList Transform::GetChildren()
+// {
+// 	VarList args;
+// 	for (int i = 0; i < m_children.size(); i++)
+// 	{
+// 		args << m_children[i];
+// 	}
+// 	return args;
+// }
+// 
+// void Transform::AddChild(YY_OBJECTID id)
+// {
+// 	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
+// 	if (itor != m_children.end())
+// 		return;
+// 
+// 	m_children.push_back(id);
+// }
+// 
+// void Transform::RemoveChild(YY_OBJECTID id)
+// {
+// 	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
+// 	if (itor == m_children.end())
+// 		return;
+// 
+// 	m_children.erase(itor);
+// }
+// 
+// bool Transform::IsChildExist(YY_OBJECTID id)
+// {
+// 	std::vector<YY_OBJECTID>::iterator itor = std::find(m_children.begin(), m_children.end(), id);
+// 	if (itor == m_children.end())
+// 		return false;
+// 
+// 	return true;
+// 
+// }

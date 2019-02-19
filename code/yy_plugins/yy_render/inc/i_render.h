@@ -40,6 +40,10 @@ class IRender : public YY::BaseObject
 public:
 	static IRender* Instance()
 	{
+		static IRender* s_pRender = nullptr;
+		if (s_pRender)
+			return s_pRender;
+
 		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("Render");
 		if (NULL == pObject)
 		{
@@ -48,7 +52,8 @@ public:
 			pObject = pBaseObject;
 		}
 
-		return (IRender*)pObject;
+		s_pRender = (IRender*)pObject;
+		return s_pRender;
 	}
 
     virtual IResMgr* GetResMgr() = 0;

@@ -22,13 +22,12 @@ buttom control= entity(transform,sprint,button)
 
 #include "yy_core.h"
 #include "gui.h"
+#include "item.h"
 #include "rectangle_component.h"
-#include "rectangle_render_component.h"
-#include "item_transform_component.h"
 #include "text_component.h"
 #include "image_component.h"
-#include "positioner/column_component.h"
-#include "positioner/row_component.h"
+//#include "positioner/column_component.h"
+//#include "positioner/row_component.h"
 
 
 //#include "views/scroll_bar.h"
@@ -52,9 +51,9 @@ void plugin_main_ui(YY::IObjectMgr* pEntMgr)
 
 	YY_REG(IGUI);
 	YY_REG(GUI);
-	YY_REG(ItemTransformComponent);
+	YY_REG(Item);
+	YY_REG(ItemComponent);
 	YY_REG(RectangleComponent);
-	YY_REG(RectangleRenderComponent);
 
 	//YY_REG(ColumnComponent);
 	//YY_REG(RowComponent);

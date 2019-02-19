@@ -14,7 +14,7 @@
 
 class Transform : public ITransform
 {
-	YY_BEGIN(Transform, "ITransform");
+	YY_BEGIN(Transform, ITransform);
     YY_FIELD(&Transform::m_pos, "position", "");
     YY_FIELD(&Transform::m_angle, "angle", "");
     YY_FIELD(&Transform::m_scale, "scale", "");

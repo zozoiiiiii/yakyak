@@ -13,7 +13,7 @@
 #include "../i_game_obj.h"
 #include "math/inc/yy_aabb.h"
 
-class IComp_Camera : public IComponent
+class IComp_Camera : public GameObjComponent
 {
 public:
     // perspective projection£¨Õ∏ ”Õ∂”∞

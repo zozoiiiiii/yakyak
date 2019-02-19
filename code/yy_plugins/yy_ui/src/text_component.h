@@ -15,12 +15,12 @@ use freetype library: https://learnopengl-cn.github.io/06%20In%20Practice/02%20T
 #include "font/font_manager.h"
 #include "font/font.h"
 #include "yy_render/inc/model/i_mesh.h"
+#include "item.h"
 
 //NS_YY_BEGIN
-class ItemTransformComponent;
-class TextComponent : public RenderComponent
+class TextComponent : public ItemComponent
 {
-    YY_BEGIN(TextComponent, RenderComponent);
+    YY_BEGIN(TextComponent, ItemComponent);
     YY_END
 
 
@@ -36,7 +36,6 @@ private:
 	void initAtlas();
 
 private:
-	ItemTransformComponent* m_pTransform;
 	YY::Font* m_pFont;
 	GlyphAtlas * m_atlas;
 	std::string m_string;

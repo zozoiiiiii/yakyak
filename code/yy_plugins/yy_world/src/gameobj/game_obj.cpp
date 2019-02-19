@@ -17,39 +17,39 @@ IRender* GameObj::GetRender()
 {
     return GetScene()->GetRender();
 }
-
-IComponent* GameObj::AddComp(const std::string& name)
-{
-    throw_assert(NULL == FindComp(name), "already exist.");
-
-    YY::BaseObject* pBaseObject = GetMgr()->Create(name);
-    throw_assert(NULL!=pBaseObject, "null check.");
-    throw_assert(pBaseObject->IsInstanceOf(name), "type check.");
-    IComponent* pComp = (IComponent*)pBaseObject;
-    pComp->SetOwner(this);
-    m_comps.push_back(pComp);
-    return pComp;
-}
-
-IComponent* GameObj::FindComp(const std::string& name)
-{
-    int nCompSize = (int)m_comps.size();
-    for (int i = 0; i < nCompSize; i++)
-    {
-        IComponent* pComp = m_comps[i];
-        if (pComp->GetMetaClass()->name == name)
-            return pComp;
-    }
-
-    return NULL;
-}
-
-IComponent* GameObj::GetComp(const std::string& name)
-{
-    IComponent* pComp = FindComp(name);
-    throw_assert(NULL != pComp, "cannot find " << name);
-    return pComp;
-}
+// 
+// IComponent* GameObj::AddComp(const std::string& name)
+// {
+//     throw_assert(NULL == FindComp(name), "already exist.");
+// 
+//     YY::BaseObject* pBaseObject = GetMgr()->Create(name);
+//     throw_assert(NULL!=pBaseObject, "null check.");
+//     throw_assert(pBaseObject->IsInstanceOf(name), "type check.");
+//     IComponent* pComp = (IComponent*)pBaseObject;
+//     pComp->SetOwner(this);
+//     m_comps.push_back(pComp);
+//     return pComp;
+// }
+// 
+// IComponent* GameObj::FindComp(const std::string& name)
+// {
+//     int nCompSize = (int)m_comps.size();
+//     for (int i = 0; i < nCompSize; i++)
+//     {
+//         IComponent* pComp = m_comps[i];
+//         if (pComp->GetMetaClass()->name == name)
+//             return pComp;
+//     }
+// 
+//     return NULL;
+// }
+// 
+// IComponent* GameObj::GetComp(const std::string& name)
+// {
+//     IComponent* pComp = FindComp(name);
+//     throw_assert(NULL != pComp, "cannot find " << name);
+//     return pComp;
+// }
 
 
 
@@ -59,7 +59,7 @@ void GameObj::OnUpdate(float sec)
     for(int i=0; i<nSize; i++)
     {
         IComponent* pIComponent = m_comps[i];
-        pIComponent->OnUpdate(sec);
+       // pIComponent->OnUpdate(sec);
     }
 }
 
@@ -69,7 +69,7 @@ void GameObj::OnAddRender(IBatchGroup* pBatchGroup)
     for(int i=0; i<nSize; i++)
     {
         IComponent* pIComponent = m_comps[i];
-        pIComponent->OnAddRender(pBatchGroup);
+        //pIComponent->OnAddRender(pBatchGroup);
     }
 }
 
@@ -79,30 +79,30 @@ void GameObj::OnRender(RenderContext* pCxt)
     for(int i=0; i<nSize; i++)
     {
         IComponent* pIComponent = m_comps[i];
-        pIComponent->OnRender(pCxt);
+        //pIComponent->OnRender(pCxt);
     }
 }
 
-
-void GameObj::SetParent(IGameObj* pObj)
-{
-    m_pParent = pObj;
-}
-
-IGameObj* GameObj::FindParent()
-{
-    return m_pParent;
-}
-void GameObj::GetChildren(std::vector<IGameObj*>& objs)
-{
-    objs = m_childrens;
-}
-
-
-void GameObj::AddChild(IGameObj* pObj)
-{
-    m_childrens.push_back(pObj);
-}
+// 
+// void GameObj::SetParent(IGameObj* pObj)
+// {
+//     m_pParent = pObj;
+// }
+// 
+// IGameObj* GameObj::FindParent()
+// {
+//     return m_pParent;
+// }
+// void GameObj::GetChildren(std::vector<IGameObj*>& objs)
+// {
+//     objs = m_childrens;
+// }
+// 
+// 
+// void GameObj::AddChild(IGameObj* pObj)
+// {
+//     m_childrens.push_back(pObj);
+// }
 
 
 bool GameObj::SerializeTo(YY::VarList& args)
@@ -127,7 +127,7 @@ bool GameObj::SerializeTo(YY::VarList& args)
             return false;
 
         int comp_args_cnt = comp_args.GetCount();
-        args<< pComp->GetMetaClass()->name <<comp_args_cnt;
+       ///// args<< pComp->GetMetaClass()->name <<comp_args_cnt;
         args.Append(comp_args, 0, comp_args_cnt);
     }
 
@@ -164,7 +164,7 @@ bool GameObj::ParseFrom(const YY::VarList& args, int& read_index__)
         std::string comp_name = args.GetStr(read_index);
         read_index += 1;
 
-        IComponent* pComp = AddComp(comp_name);
+       ///// IComponent* pComp = AddComp(comp_name);
         int comp_args_cnt = args.GetInt(read_index);
         read_index+=1;
 

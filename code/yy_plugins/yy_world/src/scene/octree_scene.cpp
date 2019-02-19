@@ -242,7 +242,7 @@ static int compare(const void * a, const void * b)
 
 void OctreeScene::cullingByCamera_R(OctreeNode *node, IGameObj *camera)
 {
-    IComp_Camera* pCameraComponent = (IComp_Camera*)camera->GetComp("Comp_Camera");
+    IComp_Camera* pCameraComponent = (IComp_Camera*)camera->FindComponent("Comp_Camera");
     if(pCameraComponent->isOutOfFrustum(node->aabb))
     {
         //set In drawable

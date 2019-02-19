@@ -90,7 +90,7 @@ RenderContext* Scene::GetRenderCxt()
 
 IRender* Scene::GetRender()
 {
-    return IWorld::Instance()->GetRender();
+	return IRender::Instance();
 }
 
 IGameObj* Scene::CreateObj(IGameObj* pParent)
@@ -129,7 +129,7 @@ bool Scene::RemoveObj(IGameObj* pObj)
 void Scene::UpdateRenderContext()
 {
     IGameObj* pCamera = GetMainCamera();
-    IComp_Camera* pComp_Camera = (IComp_Camera*)pCamera->GetComp("Comp_Camera");
+    IComp_Camera* pComp_Camera = (IComp_Camera*)pCamera->FindComponent("Comp_Camera");
     m_pCurRenderText->projMatrix = pComp_Camera->GetPersp();
 
     // view matrix is camera tm inverse.

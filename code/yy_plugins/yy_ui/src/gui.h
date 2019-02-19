@@ -10,6 +10,7 @@
 #include "yy_render/inc/i_render.h"
 #include "yy_render/inc/i_batch.h"
 #include "yy_render/inc/i_render_context.h"
+#include "item.h"
 
 NS_YY_BEGIN
 class GUI : public IGUI
@@ -29,12 +30,12 @@ public:
 
 private:
 	void onEvent_AddBatch(const char* name, const YY::VarList& args);
-	void visitEntities(Entity* pEntity);
+	void visitEntities(Item* pEntity);
 private:
 	IRender* m_pRender;
 	IBatchGroup* m_pUIBatchGroup;
 	RenderContext* m_pRenderContext;
-	Entity* m_pDeskTop;	// canvas node
+	Item* m_pDeskTop;	// canvas node
 	std::vector<YY_OBJECTID> m_modalForms; // pop up form
 };
 NS_YY_END

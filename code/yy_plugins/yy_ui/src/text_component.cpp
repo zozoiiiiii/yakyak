@@ -1,24 +1,25 @@
 #include "text_component.h"
-#include "item_transform_component.h"
+#include "item.h"
 #include "yy_core/core/inc/yy_string.h"
 #include <algorithm>
 #include "yy_core/math/inc/yy_vec2f.h"
 
 //NS_YY_BEGIN
 
-TextComponent::TextComponent():m_pTransform(nullptr), m_atlas(nullptr), m_pFont(nullptr){}
+TextComponent::TextComponent():m_atlas(nullptr), m_pFont(nullptr){}
 void TextComponent::OnEvent(const std::string& event, const YY::VarList& args)
 {
 	if (event == "addComponent")
 	{
-		m_pTransform = (ItemTransformComponent*)GetOwner()->FindComponent("ItemTransformComponent");
 		m_nMaxY = 0;
 		glGenBuffers(1, &m_VBO);
 		glGenBuffers(1, &m_EBO);
 		m_pFont = FontManager::Instance()->GetDefaultFont();
 
-		if (m_pTransform)
-			m_pTransform->SetTransformChanged(true);
+		Item* pItem = FindItem();
+		if (!pItem)
+			return;
+		pItem->SetTransformChanged(true);
 	}
 }
 
@@ -34,9 +35,13 @@ void TextComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 	if (pCxt->nRenderType != RT_Normal)
 		return;
 
-	if (m_pTransform->IsTransformChanged())
+	Item* pItem = FindItem();
+	if (!pItem)
+		return;
+
+	if (pItem->IsTransformChanged())
 		genMesh();
-	m_pTransform->SetTransformChanged(false);
+	pItem->SetTransformChanged(false);
 
 	static IShader* pShader = NULL;
 	if (NULL == pShader)
@@ -93,7 +98,8 @@ void TextComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 
 void TextComponent::genMesh()
 {
-	if (!m_pTransform)
+	Item* pItem = FindItem();
+	if (!pItem)
 		return;
 
 	initAtlas();
@@ -108,8 +114,8 @@ void TextComponent::genMesh()
 
 
 	// without m_nMaxY, then penY will consider as bottom in freetype.
-	int penX = m_pTransform->GetAbsLeft();
-	int penY = m_pTransform->GetAbsTop() + m_nMaxY;
+	int penX = pItem->GetAbsLeft();
+	int penY = pItem->GetAbsTop() + m_nMaxY;
 	int preMaxWidth = 0;
 	auto wideCharStr = YY::Utf8ToWStr(m_string);
 

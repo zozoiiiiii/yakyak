@@ -9,12 +9,13 @@
 
 #include "yy_render/inc/i_batch.h"
 #include "yy_render/inc/i_render.h"
+#include "item.h"
+
 //NS_YY_BEGIN
-class ItemTransformComponent;
 class ITexture;
-class ImageComponent : public RenderComponent
+class ImageComponent : public ItemComponent
 {
-    YY_BEGIN(ImageComponent, RenderComponent);
+    YY_BEGIN(ImageComponent, ItemComponent);
     YY_END
 
 
@@ -37,6 +38,5 @@ private:
 	Vertex m_vertices[4];
 	unsigned int m_VBO, m_EBO;
 	ITexture* m_pTexture;
-	ItemTransformComponent* m_pTransform;
 };
 //NS_YY_END

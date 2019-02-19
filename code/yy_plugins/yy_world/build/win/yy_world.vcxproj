@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0AAB41D6-2434-4D1B-8918-7C5469AD3847}</ProjectGuid>
+    <ProjectGuid>{86D1D157-4D7F-4440-AE68-7005852251A1}</ProjectGuid>
     <RootNamespace>component_base</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>yy_world</ProjectName>

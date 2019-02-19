@@ -29,34 +29,33 @@ BaseObject manager
 
 #include "yy_core.h"
 #include "i_scene.h"
-#include "i_event_mgr.h"
+//#include "i_event_mgr.h"
 #include "yy_render/inc/i_render.h"
 
 class IWorld : public YY::BaseObject
 {
 public:
     static IWorld* Instance()
-    {
-        YY_OBJECTID id= YY_INVALID_OBJECTID;
-        if(GetGlobalEntMgr()->FindGlobal("World"))
-        {
-            id = GetGlobalEntMgr()->GetGlobal("World").GetInt64();
-        }
+	{
+		static IWorld* s_pWorld = nullptr;
+		if (s_pWorld)
+			return s_pWorld;
 
-        IWorld* pWorld = (IWorld*)GetGlobalEntMgr()->Find(id);
-        if(NULL == pWorld)
-        {
-            IWorld* pBaseObject = (IWorld*)GetGlobalEntMgr()->Create("World");
-            GetGlobalEntMgr()->SetGlobal("World", pBaseObject->GetID());
-            pWorld = pBaseObject;
-        }
+		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("World");
+		if (NULL == pObject)
+		{
+			BaseObject* pBaseObject = GetGlobalEntMgr()->Create("World");
+			GetGlobalEntMgr()->SetGlobal("World", pBaseObject->GetID());
+			pObject = pBaseObject;
+		}
 
-        return pWorld;
+		s_pWorld = (IWorld*)pObject;
+		return s_pWorld;
     }
 
     virtual YY_OBJECTID GetSceneID() = 0;
     virtual IScene* GetScene() = 0;
     virtual void SetSceneID(YY_OBJECTID scene_id) = 0;
-    virtual IEventMgr* GetEventMgr() = 0;
-    virtual IRender* GetRender() = 0;
+//    virtual IEventMgr* GetEventMgr() = 0;
+    //virtual IRender* GetRender() = 0;
 };

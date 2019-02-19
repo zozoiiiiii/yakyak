@@ -151,6 +151,10 @@ class IGUI : public BaseObject
 public:
 	static IGUI* Instance()
 	{
+		static IGUI* s_pGUI = nullptr;
+		if (s_pGUI)
+			return s_pGUI;
+
 		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("GUI");
 		if (NULL == pObject)
 		{
@@ -159,7 +163,8 @@ public:
 			pObject = pBaseObject;
 		}
 
-		return (IGUI*)pObject;
+		s_pGUI = (IGUI*)pObject;
+		return s_pGUI;
 	}
 
 	virtual YY_OBJECTID GetDesktopForm() const = 0;

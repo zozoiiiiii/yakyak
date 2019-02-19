@@ -18,15 +18,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\gui.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\font\font.cpp">
       <Filter>src\font</Filter>
     </ClCompile>
@@ -45,6 +36,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\text_component.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\item.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gui.h">
@@ -52,15 +49,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_gui.h">
       <Filter>inc</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item_transform_component.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_render_component.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\font\font.h">
       <Filter>src\font</Filter>
@@ -78,6 +66,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\image_component.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\item.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\rectangle_component.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
