@@ -23,7 +23,7 @@
     <ProjectGuid>{BDD16134-A53C-4CD4-8BDA-D588B3EF49F0}</ProjectGuid>
     <RootNamespace>svr_logic</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>yy_loader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
