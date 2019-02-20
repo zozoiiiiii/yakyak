@@ -30,7 +30,7 @@ void Cube::OnDestroy()
 }
 
 
-void Cube::SetColor(unsigned int color)
+void Cube::SetColor(sint32 color)
 {
     m_color = color;
     SetupMesh();
@@ -40,7 +40,7 @@ void Cube::SetupMesh()
 {
     throw_assert(NULL == m_pMesh, "only setup one time.");
 
-    IModelRes* pModelRes = GetOwner()->GetRender()->GetModelResMgr();
+    IModelRes* pModelRes = IRender::Instance()->GetModelResMgr();
     m_pMesh = pModelRes->CreateMesh();
 
     float halfWidth = m_width/2.0f;
@@ -121,18 +121,19 @@ void Cube::SetupMesh()
 
 
     // aabb
-    GetOwner()->SetAABB(m_pMesh->GetAABB());
+	IGameObj* pGameObj = FindGameObj();
+	if(pGameObj)
+		pGameObj->SetAABB(m_pMesh->GetAABB());
 }
 
-void Cube::OnRender(RenderContext* pCxt)
+void Cube::OnRender(IRender* pRender, RenderContext* pCxt)
 {
     static IShader* pMeshShader = NULL;
     if(!pMeshShader)
     {
-        pMeshShader = GetOwner()->GetRender()->CreateShader();
-        std::string vsh = IWorld::Instance()->GetResPath() + "shader\\mesh.vsh";
-        std::string fsh = IWorld::Instance()->GetResPath() + "shader\\mesh.fsh";
-        pMeshShader->Load(vsh.c_str(), fsh.c_str());
+        std::string vsh = pRender->GetResPath() + "shader\\mesh.vsh";
+		std::string fsh = pRender->GetResPath() + "shader\\mesh.fsh";
+		pMeshShader = IRender::Instance()->GetResMgr()->LoadShader(vsh, fsh);
     }
 
     // 如果是渲染阴影，则用对应的shader
@@ -146,15 +147,15 @@ void Cube::OnRender(RenderContext* pCxt)
 
     if(pCxt->nRenderType == RT_Normal)
     {
-        YY::Vec3f color = pCxt->GetColor(ambient_color);
+        YY::Vec3f color = pCxt->ambient_color;
         pShader->SetUniform3f("ambient.color", color.x, color.y, color.z);
-        pShader->SetUniform1f("ambient.intensity", pCxt->GetFloat(ambient_intensity));
+        pShader->SetUniform1f("ambient.intensity", pCxt->ambient_intensity);
 
         // direction light
-        color = pCxt->GetColor(directionLight_color);
+        color = pCxt->directionLight_color;
         pShader->SetUniform3f("directionLight.color", color.x, color.y, color.z);
-        pShader->SetUniform1f("directionLight.intensity", pCxt->GetFloat(directionLight_intensity));
-        YY::Vec3f direction = pCxt->GetVector(directionLight_direction);
+        pShader->SetUniform1f("directionLight.intensity", pCxt->directionLight_intensity);
+        YY::Vec3f direction = pCxt->directionLight_direction;
         pShader->SetUniform3f("directionLight.direction", direction.x, direction.y, direction.z);
 
         // LightVPMatrix
@@ -176,8 +177,11 @@ void Cube::OnRender(RenderContext* pCxt)
     //----------
     throw_assert(NULL!=m_pMesh, "null check.");
 
+	IGameObj* pGameObj = FindGameObj();
+	if (!pGameObj)
+		return;
     YY::Mat4f model;
-    GetOwner()->GetTransform()->GetTMMatrix(&model);
+	pGameObj->GetTransform()->GetTMMatrix(&model);
 
     //YY::Mat4f mvp = pCxt->projM * pCxt->viewM * model;
 
@@ -185,22 +189,12 @@ void Cube::OnRender(RenderContext* pCxt)
 
     // matrix
     //pShader->SetUniformMat4fv("u_mvp", 1, &mvp.m_data );
-    pShader->SetUniformMat4fv("u_view", 1, pCxt->GetViewMatrix().m_data );
-    pShader->SetUniformMat4fv("u_proj", 1, pCxt->GetProjMatrix().m_data );
+    pShader->SetUniformMat4fv("u_view", 1, pCxt->viewMatrix.m_data );
+    pShader->SetUniformMat4fv("u_proj", 1, pCxt->projMatrix.m_data );
     pShader->SetUniformMat4fv("u_model", 1, model.m_data );
 
     m_pMesh->draw(pShader);
 
     // 告诉gpu结束该命令
     pShader->End();
-}
-
-
-bool Cube::ParseFrom(const YY::VarList& args, int& read_index)
-{
-	if(!YY::Entity::ParseFrom(args, read_index))
-		return false;
-
-	SetupMesh();
-	return true;
 }

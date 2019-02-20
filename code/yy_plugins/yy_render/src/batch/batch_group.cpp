@@ -35,8 +35,8 @@ void BatchGroup::AddGUIBatch(RenderComponent* pBatch)
 void BatchGroup::RenderAllBatch(IRender* pRender)
 {
     // 按顺序渲染所有可视对象
-    //DrawSolidBatchs(m_pRenderContext);
-    //DrawTopmostBatchs(m_pRenderContext);
+    DrawSolidBatchs(pRender, m_pRenderContext);
+    DrawTopmostBatchs(pRender, m_pRenderContext);
 	DrawGUIBatches(pRender, m_pRenderContext);
 	
 }
@@ -51,32 +51,32 @@ void BatchGroup::ClearAllBatch()
 
 void BatchGroup::DrawSolidBatchs(IRender* pRender, RenderContext* pCxt)
 {
-//     glEnable(GL_DEPTH_TEST);
-// 
-//     int nSize = m_SolidBatchs.size();
-//     for(int j=0; j<nSize; j++)
-//     {
-//         RenderComponent* pBatch = m_SolidBatchs[j];
-// 		pBatch->OnRenderBefore(pCxt);
-//         pBatch->OnRender(pCxt);
-// 		pBatch->OnRenderAfter(pCxt);
-//     }
+     glEnable(GL_DEPTH_TEST);
+ 
+     int nSize = m_SolidBatchs.size();
+     for(int j=0; j<nSize; j++)
+     {
+         RenderComponent* pBatch = m_SolidBatchs[j];
+ 		//pBatch->OnRenderBefore(pCxt);
+         pBatch->OnRender(pRender, pCxt);
+ 		//pBatch->OnRenderAfter(pCxt);
+     }
 }
 
 void BatchGroup::DrawTopmostBatchs(IRender* pRender, RenderContext* pCxt)
 {
-//     glDisable(GL_DEPTH_TEST);
-// 
-//     int nSize = m_TopmostBatchs.size();
-//     for(int j=0; j<nSize; j++)
-//     {
-// 		RenderComponent* pBatch = m_TopmostBatchs[j];
-// 		pBatch->OnRenderBefore(pCxt);
-// 		pBatch->OnRender(pCxt);
-// 		pBatch->OnRenderAfter(pCxt);
-//     }
-// 
-//     glEnable(GL_DEPTH_TEST);
+     glDisable(GL_DEPTH_TEST);
+ 
+     int nSize = m_TopmostBatchs.size();
+     for(int j=0; j<nSize; j++)
+     {
+ 		RenderComponent* pBatch = m_TopmostBatchs[j];
+ 		//pBatch->OnRenderBefore(pCxt);
+ 		pBatch->OnRender(pRender, pCxt);
+ 		//pBatch->OnRenderAfter(pCxt);
+     }
+ 
+     glEnable(GL_DEPTH_TEST);
 }
 
 void BatchGroup::DrawGUIBatches(IRender* pRender, RenderContext* pCxt)

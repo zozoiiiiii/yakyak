@@ -4,18 +4,24 @@
 #include "yy_world/inc/i_world.h"
 
 
-void Comp_MeshRender::OnCreate()
+void Comp_MeshRender::OnCreate(const VariantMap& args)
 {}
 
 void Comp_MeshRender::OnDestroy()
 {
 }
 
-void Comp_MeshRender::OnRender(RenderContext* pCxt)
+void Comp_MeshRender::OnRender(IRender* pRender, RenderContext* pCxt)
 {
-    std::string vsh = IRender::Instance()->GetResPath() + "shader/mesh.vsh";
-    std::string fsh = IRender::Instance()->GetResPath() + "shader/mesh.fsh";
-    IShader* pMeshShader = IRender::Instance()->GetResMgr()->LoadShader(vsh, fsh);
+
+	static IShader* pMeshShader = NULL;
+	if (NULL == pMeshShader)
+	{
+		std::string vsh = IRender::Instance()->GetResPath() + "shader\\mesh.vsh";
+		std::string fsh = IRender::Instance()->GetResPath() + "shader\\mesh.fsh";
+		pMeshShader = IRender::Instance()->GetResMgr()->LoadShader(vsh, fsh);
+	}
+
 
     // 如果是渲染阴影，则用对应的shader
     IShader* pShader = pMeshShader;
@@ -88,43 +94,6 @@ void Comp_MeshRender::OnRender(RenderContext* pCxt)
     pShader->End();
 }
 
-
-bool Comp_MeshRender::SerializeTo(YY::VarList& args)
-{
-//	if(!YY::BaseObject::SerializeTo(args))
-		return false;
-
-	int anim_cnt = m_anims_name.size();
-	args<<anim_cnt;
-	for(int i=0; i<anim_cnt; i++)
-	{
-		args<<m_anims_name[i];
-	}
-
-    return true;
-}
-
-bool Comp_MeshRender::ParseFrom(const YY::VarList& args, int& read_index)
-{
-//	if(!YY::BaseObject::ParseFrom(args, read_index))
-		return false;
-
-	SetMesh(m_path, m_mesh_file, m_skeleton_file);
-
-	int args_cnt = args.GetCount();
-	YY::VarList anim_args;
-	anim_args.Append(args, read_index, args_cnt-read_index);
-	int anim_cnt = anim_args.GetInt(0);
-	for(int i=0; i<anim_cnt; i++)
-	{
-		std::string anim_name = anim_args.GetStr(i+1);
-		int nAnim1=AddAnim(anim_name);
-		if(i==0)
-			SetDefaultAnim(nAnim1);
-	}
-
-	return true;
-}
 
 void Comp_MeshRender::SetMesh(const std::string& path, const std::string& mesh_file, const std::string& Skeleton_file)
 {

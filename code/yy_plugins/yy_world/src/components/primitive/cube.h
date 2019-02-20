@@ -9,14 +9,14 @@
 
 #include "yy_core.h"
 #include "yy_world/inc/i_game_obj.h"
-#include "render/inc/model/i_mesh.h"
+#include "yy_render/inc/model/i_mesh.h"
 
 
-class Cube : public IComponent
+class Cube : public GameObjComponent
 {
-    YY_BEGIN(Cube, "Component");
-	YY_METHOD(&Cube::SetColor, "");
-	YY_METHOD(&Cube::Init, "");
+    YY_BEGIN(Cube, GameObjComponent);
+	YY_METHOD(&Cube::SetColor, "SetColor", "");
+	YY_METHOD(&Cube::Init, "Init", "");
     YY_FIELD(&Cube::m_width, "width", "");
 	YY_FIELD(&Cube::m_height, "height", "");
 	YY_FIELD(&Cube::m_depth, "depth", "");
@@ -24,11 +24,10 @@ class Cube : public IComponent
 public:
     virtual void OnCreate();
     virtual void OnDestroy();
-	virtual void OnRender(RenderContext* pCxt);
-	virtual bool ParseFrom(const YY::VarList& args, int& read_index);
+	virtual void OnRender(IRender* pRender, RenderContext* pCxt);
 
 	void Init(int width, int height, int depth);
-    void SetColor(unsigned int color);
+    void SetColor(sint32 color);
 private:
     void SetupMesh();
 private:

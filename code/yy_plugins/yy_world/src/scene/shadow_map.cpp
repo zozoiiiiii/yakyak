@@ -6,7 +6,7 @@
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 
-void ShadowMap::OnCreate()
+void ShadowMap::OnCreate(const VariantMap& args)
 {
     // disable shadow default.
     m_bEnableShadow = false;
@@ -71,6 +71,17 @@ void ShadowMap::GenerateShadowMap(std::vector<YY_OBJECTID>& objs, RenderContext*
         projM.OrthoRh(-25,25,-25,25,0.1f,20.0f);
         tmp.projMatrix = projM;
 
-        pGameObj->OnRender(&tmp);
+		//pGameObj->OnRender(&tmp);
+		std::vector<Component*> components = pGameObj->GetAllComponents();
+		int nCnt = components.size();
+		for (int j = 0; j < nCnt; j++)
+		{
+			Component* pComponent = components[j];
+			if (!pComponent->IsInstanceOf("RenderComponent"))
+				continue;
+
+			RenderComponent* pRenderComponent = (RenderComponent*)pComponent;
+			pRenderComponent->OnRender(IRender::Instance(), &tmp);
+		}
     }
 }

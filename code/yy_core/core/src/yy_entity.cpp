@@ -521,7 +521,8 @@ void Entity::InsertBefore(Entity* pEntity, Entity* before)
 
 void Entity::SetParent(Entity* pEntity)
 {
-	m_parent = pEntity->GetID();
+	if(pEntity)
+		m_parent = pEntity->GetID();
 }
 
 Entity* Entity::FindParent()

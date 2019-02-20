@@ -27,6 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_world.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\game_obj.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\world.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world_main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\camera\comp_camera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\mesh_render\comp_mesh_render.cpp" />

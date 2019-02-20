@@ -15,6 +15,8 @@
 
 class IComp_Camera : public GameObjComponent
 {
+	YY_VIRTUAL_BEGIN(IComp_Camera, GameObjComponent);
+	YY_END
 public:
     // perspective projection£¨Õ∏ ”Õ∂”∞
     virtual YY::Mat4f GetPersp() = 0;

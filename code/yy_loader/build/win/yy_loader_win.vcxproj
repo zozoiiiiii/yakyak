@@ -76,7 +76,7 @@
       <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;yy_core_d.lib;yy_demo_d.lib;yy_render_d.lib;yy_ui_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;yy_core_d.lib;yy_demo_d.lib;yy_render_d.lib;yy_ui_d.lib;yy_world_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\external\amd_ogles\lib;..\..\..\external\freetype\lib;..\..\..\yy_core\lib;..\..\..\yy_plugins\yy_render\lib;..\..\..\yy_plugins\yy_world\lib;..\..\..\yy_plugins\yy_demo\lib;..\..\..\yy_plugins\yy_ui\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>

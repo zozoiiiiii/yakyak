@@ -28,6 +28,9 @@
     <Filter Include="src\components\camera">
       <UniqueIdentifier>{e9fdf00e-7fa0-424d-baf7-43ccb0d82418}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\components\terrain">
+      <UniqueIdentifier>{5ae3b5f6-962c-410b-88c3-6471354dfe3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\inc\i_game_obj.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\src\gameobj\transform.h">
       <Filter>src\gameobj</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.h">
+      <Filter>src\components\terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\scene\octree_scene.cpp">
@@ -117,5 +123,8 @@
       <Filter>src\components\camera</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\src\world_main.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\src\components\terrain\comp_terrain.cpp">
+      <Filter>src\components\terrain</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -22,6 +22,8 @@ enum
 class IWorld;
 class IScene : public YY::BaseObject
 {
+	YY_VIRTUAL_BEGIN(IScene, BaseObject);
+	YY_END
 public:
     virtual void Update(float sec) = 0;
     virtual void Render() = 0;

@@ -22,7 +22,7 @@ class ShadowMap : public YY::BaseObject
     YY_BEGIN(ShadowMap, "BaseObject");
     YY_END
 public:
-    virtual void OnCreate();
+    virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy(){}
     void EnableShadow(bool flag){m_bEnableShadow=flag;}
     bool GetEnable(){return m_bEnableShadow;}

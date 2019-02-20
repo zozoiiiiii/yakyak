@@ -16,12 +16,12 @@
 
 class Comp_Camera : public IComp_Camera
 {
-    YY_BEGIN(Comp_Camera, "IComp_Camera");
+    YY_BEGIN(Comp_Camera, IComp_Camera);
     YY_METHOD(&Comp_Camera::SetPersp, "SetPersp", "");
     YY_END
 public:
     ~Comp_Camera(){}
-    virtual void OnCreate();
+    virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy();
 
     // perspective projection£¨Õ∏ ”Õ∂”∞

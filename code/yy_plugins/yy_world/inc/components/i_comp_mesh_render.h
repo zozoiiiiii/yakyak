@@ -14,6 +14,8 @@
 
 class IComp_MeshRender : public GameObjComponent
 {
+	YY_VIRTUAL_BEGIN(IComp_MeshRender, GameObjComponent);
+	YY_END
 public:
     virtual void SetMesh(const std::string& path, const std::string& mesh_file, const std::string& Skeleton_file=std::string()) = 0;
     virtual int AddAnim(const std::string& anim_file, float fEnterTime=0.0f, float fLeaveTime=0.0f) = 0;

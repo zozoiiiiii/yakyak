@@ -34,6 +34,8 @@ BaseObject manager
 
 class IWorld : public YY::BaseObject
 {
+	YY_VIRTUAL_BEGIN(IWorld, BaseObject);
+	YY_END
 public:
     static IWorld* Instance()
 	{

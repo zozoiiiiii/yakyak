@@ -13,10 +13,10 @@
 //#include "freeimage/include/freeimage.h"
 
 
-void Scene::OnCreate()
+void Scene::OnCreate(const VariantMap& args)
 {
     //FreeImage_Initialise();
-
+	m_pMainCamera = nullptr;
 	IWorld* pWorld = IWorld::Instance();
 	pWorld->SetSceneID(this->GetID());
 
@@ -154,13 +154,26 @@ void Scene::VisitAllObjs()
 		bool bRet = pBaseObject->IsInstanceOf("GameObj");
 		throw_assert(bRet, "type check.");
 		IGameObj* pGameObj = (IGameObj*)pBaseObject;
-		pGameObj->OnAddRender(m_pBatchGroup);
+
+		//pGameObj->OnAddRender(m_pBatchGroup);
+		// components
+		std::vector<Component*> components = pGameObj->GetAllComponents();
+		int nCnt = components.size();
+		for (int j = 0; j < nCnt; j++)
+		{
+			Component* pComponent = components[j];
+			if (!pComponent->IsInstanceOf("RenderComponent"))
+				continue;
+
+			RenderComponent* pRenderComponent = (RenderComponent*)pComponent;
+			pRenderComponent->OnAddBatch(m_pBatchGroup);
+		}
 	}
 }
 
 void Scene::Render()
 {
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
 
     VisitAllObjs();
 

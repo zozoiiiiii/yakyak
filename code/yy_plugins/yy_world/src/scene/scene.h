@@ -22,11 +22,11 @@
 class World;
 class Scene : public IScene
 {
-    YY_BEGIN(Scene, "BaseObject");
+    YY_BEGIN(Scene, IScene);
     YY_END
 public:
     Scene(){}
-    virtual void OnCreate();
+    virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy();
     virtual void OnExcute(float sec){}
 

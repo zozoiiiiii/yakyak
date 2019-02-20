@@ -30,7 +30,7 @@ struct RenderContext
     int nRenderType;
 
     // viewport
-    int x,y,w,h;
+    //int x,y,w,h;
 
     IFrameBuffer* pFBO;
     IRenderTexture* pRenderTexture;

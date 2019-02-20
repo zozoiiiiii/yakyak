@@ -17,7 +17,7 @@ class World : public IWorld
     YY_BEGIN(World, IWorld);
     YY_END
 public:
-    virtual void OnCreate();
+    virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy();
     virtual void OnExcute(float sec);
 
@@ -26,6 +26,8 @@ public:
     void SetSceneID(YY_OBJECTID scene_id){m_scene_id = scene_id;}
     //IEventMgr* GetEventMgr(){return m_pEventMgr;}
     //virtual IRender* GetRender(){return m_pRender;}
+private:
+	void onEvent_AddBatch(const char* name, const YY::VarList& args);
 private:
     YY_OBJECTID m_scene_id;
     //IEventMgr* m_pEventMgr;

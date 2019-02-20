@@ -19,7 +19,7 @@
 
 class Comp_MeshRender : public IComp_MeshRender
 {
-    YY_BEGIN(Comp_MeshRender, "Component");
+    YY_BEGIN(Comp_MeshRender, IComp_MeshRender);
 	YY_METHOD(&Comp_MeshRender::SetMesh, "SetMesh", "");
 	YY_FIELD(&Comp_MeshRender::m_path, "path", "");
 	YY_FIELD(&Comp_MeshRender::m_mesh_file, "mesh_file", "");
@@ -28,11 +28,10 @@ class Comp_MeshRender : public IComp_MeshRender
 public:
     Comp_MeshRender():m_mesh(NULL),m_skele(NULL){}
     ~Comp_MeshRender(){}
-    virtual void OnCreate();
+    virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy();
-	virtual void OnRender(RenderContext* pCxt);
-	virtual bool SerializeTo(YY::VarList& args);
-	virtual bool ParseFrom(const YY::VarList& args, int& read_index);
+	virtual void OnRender(IRender* pRender, RenderContext* pCxt);
+	//virtual void OnRender(RenderContext* pCxt);
 
     virtual void SetMesh(const std::string& path, const std::string& mesh_file, const std::string& Skeleton_file=std::string());
     virtual int AddAnim(const std::string& anim_file, float fEnterTime=0.0f, float fLeaveTime=0.0f);

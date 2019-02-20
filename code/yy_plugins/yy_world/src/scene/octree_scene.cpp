@@ -185,6 +185,9 @@ IGameObj* OctreeScene::hitByRay(const Ray &ray, Vec3f &hitPoint)
 
 void OctreeScene::cullingByCamera(IGameObj *camera)
 {
+	if (nullptr == camera)
+		return;
+
     //clear visible List;
     m_visibleList.clear ();
 

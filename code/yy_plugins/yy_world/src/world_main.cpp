@@ -15,7 +15,7 @@
 
 // #include "components/primitive/lines.h"
 // #include "components/primitive/gridlines.h"
-// #include "components/primitive/cube.h"
+ //#include "components/primitive/cube.h"
 // #include "components/primitive/edit_axis.h"
 // #include "components/primitive/edit_quard.h"
 
@@ -38,13 +38,10 @@
 void plugin_main_world(YY::IObjectMgr* pEntMgr)
 {
     SetGlobalEntMgr(pEntMgr);
-    // yy_core begin
-    YY_REG(Vec3f);
-
-    // yy_core end.
-
-    YY_REG(World);
-    YY_REG(Scene);
+	YY_REG(IWorld);
+	YY_REG(World);
+	YY_REG(IScene);
+	YY_REG(Scene);
     YY_REG(OctreeScene);
     YY_REG(ShadowMap);
 	//YY_REG(CameraView);
@@ -53,10 +50,12 @@ void plugin_main_world(YY::IObjectMgr* pEntMgr)
     // primitive
 //     YY_REG(GridLines);
 //     YY_REG(Lines);
-//     YY_REG(Cube);
+     //YY_REG(Cube);
 //     YY_REG(EditQuard);
 
-    //YY_REG(Comp_Terrain);
+	YY_REG(Comp_Terrain);
+	YY_REG(IComp_MeshRender);
+	YY_REG(IComp_Camera);
     YY_REG(Comp_MeshRender);
     YY_REG(Comp_Camera);
 //    YY_REG(Comp_Model_Obj);

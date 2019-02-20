@@ -4,7 +4,7 @@
 //#include "../primitive/lines.h"
 //#include "yy_world/inc/i_event_mgr.h"
 
-void Comp_Camera::OnCreate()
+void Comp_Camera::OnCreate(const VariantMap& args)
 {
     IEventMgr* pEventMgr = IWorld::Instance()->GetEventMgr();
     pEventMgr->ConnectGlobals("OnEvent_RenderWindow_Resize",  fastdelegate::MakeDelegate(this, &Comp_Camera::OnEvent_Resize));
@@ -56,8 +56,8 @@ void Comp_Camera::GetRayDirection(float mouseX, float mouseY, float& x, float& y
     YY::Mat4f view_inverse = view;
     view_inverse.Inverse();
 
-    float width = pRenderCxt->w;
-    float height = pRenderCxt->h;
+	float width = 0;// pRenderCxt->w;
+	float height = 0;// pRenderCxt->h;
 
     /* screen space -> ndc space
     xndc = (xw-x)/(width/2)-1

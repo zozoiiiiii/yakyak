@@ -20,7 +20,7 @@ raypick计算时假设地形是一个四方形
 
 class Comp_Terrain : public Comp_MeshRender
 {
-    YY_BEGIN(Comp_Terrain, "Comp_MeshRender");
+    YY_BEGIN(Comp_Terrain, Comp_MeshRender);
 	YY_METHOD(&Comp_Terrain::LoadTex, "LoadTex", "");
     YY_END
 public:

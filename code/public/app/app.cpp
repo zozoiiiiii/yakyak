@@ -9,7 +9,7 @@
 
 extern void plugin_main_demo(YY::IObjectMgr* pEntMgr);
 extern void plugin_main_render(YY::IObjectMgr* pEntMgr);
-//extern void plugin_main_world(YY::IObjectMgr* pEntMgr);
+extern void plugin_main_world(YY::IObjectMgr* pEntMgr);
 extern void plugin_main_ui(YY::IObjectMgr* pEntMgr);
 
 App::App()
@@ -27,10 +27,12 @@ App* App::Instance()
 
 void App::Open(float width, float height, const std::string& resPath)
 {
-
-	plugin_main_demo(m_pEntMgr);
 	plugin_main_render(m_pEntMgr);
 	plugin_main_ui(m_pEntMgr);
+	plugin_main_world(m_pEntMgr);
+
+	// logic module always in the last step
+	plugin_main_demo(m_pEntMgr);
 
 	if(!resPath.empty())
 		setPath(resPath);
@@ -56,6 +58,8 @@ void App::Open(float width, float height, const std::string& resPath)
         // create game
         m_pEntMgr->Create("Demo");
         m_bOpened = true;
+
+		m_pEntMgr->GetEventMgr()->Invoke(YY_INVALID_OBJECTID, "OnEvent_RenderWindow_Resize", YY::VarList() << (int)width << (int)height);
         
 
     //}catch(YY::AssertFailureException& err)
@@ -119,5 +123,7 @@ bool App::OnMsg(unsigned int msg, size_t param1, size_t param2)
 
 void App::Resize(float width, float height)
 {
+
 	IGUI::Instance()->ReSize(width, height);
+	m_pEntMgr->GetEventMgr()->Invoke(YY_INVALID_OBJECTID, "OnEvent_RenderWindow_Resize", YY::VarList() << (int)width << (int)height);
 }

@@ -112,6 +112,9 @@ public:
     virtual void OnCreate(const VariantMap& args);
     virtual void OnDestroy();
     virtual void OnExcute(float sec);
+private:
+	void CreateTestUI();
+	void CreateTestScene();
 };
 
 
