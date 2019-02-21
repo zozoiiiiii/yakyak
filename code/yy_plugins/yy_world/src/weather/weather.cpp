@@ -16,7 +16,7 @@ void Weather::OnCreate(const VariantMap& args)
         m_pLight_Ambient = new AmbientLight;
         m_pDirLight = new DirLight;
 
-        // 只有直射光的话，会导致阴影黑色。加个环境光，使黑色阴影的模型也能显示
+        // if only direction light, will cause the shadow black.  ambient will let the black shadow be seen
         m_pLight_Ambient->m_color = YY::Vec3f(1,1,1);    //white
         m_pLight_Ambient->m_intensity = 0.5f;
 

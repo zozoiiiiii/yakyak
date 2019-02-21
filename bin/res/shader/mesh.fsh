@@ -29,12 +29,17 @@ varying vec3 v_normal_line;
 
 vec4 calculateAmbient(Ambient light , vec3 normal)
 {
+    vec3 ambient = light.color * light.intensity;
+	return vec4(ambient,1.0);
+	
+	
+	// if normal is small, return white? seems not good
     if(length(normal) <= 0.5)
     {   
         return vec4(1.0,1.0,1.0,1.0);
     }else
     {
-        return vec4(light.color,1.0) * light.intensity;
+        return vec4(ambient,1.0);
     }
 }
 

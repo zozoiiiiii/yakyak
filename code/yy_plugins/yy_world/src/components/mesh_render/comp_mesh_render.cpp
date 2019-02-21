@@ -23,12 +23,10 @@ void Comp_MeshRender::OnRender(IRender* pRender, RenderContext* pCxt)
 	}
 
 
-    // 如果是渲染阴影，则用对应的shader
     IShader* pShader = pMeshShader;
     if(pCxt->nRenderType == RT_Shadow)
         pShader = pCxt->pShader_ShadowMap;
 
-    //告诉gpu一次要执行的命令
     pShader->Begin();
 
 
@@ -55,9 +53,6 @@ void Comp_MeshRender::OnRender(IRender* pRender, RenderContext* pCxt)
         YY::Mat4f lightPV = lightProj * lightView;
         pShader->SetUniformMat4fv("LightVPMatrix", 1, lightPV.m_data);
 
-
-
-        // 使用深度图的纹理，对应前面BindForReading的纹理索引（考虑放到scene类里面）
         pShader->SetUniform1i("ShadowMap", 2);
     }
 
@@ -83,14 +78,12 @@ void Comp_MeshRender::OnRender(IRender* pRender, RenderContext* pCxt)
 
     if(m_anims.size() > 0 && m_active_anim >=0)
     {
-        //移动骨骼
         YY::IAnim* active_anim = m_anims[m_active_anim];
         active_anim->render(pShader);
     }
 
     m_mesh->draw(pShader);
 
-    // 告诉gpu结束该命令
     pShader->End();
 }
 

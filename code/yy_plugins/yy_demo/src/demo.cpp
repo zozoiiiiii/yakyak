@@ -195,7 +195,8 @@ void Demo::CreateTestScene()
 	// 		pComp_Camera->Invoke(NULL, "SetPersp", &fov, &aspect, &nearZ, &farZ);
 	// 	}
 
-		// terrain
+	
+	// terrain
 	{
  		IGameObj* pObj_Terrain = pScene->CreateObj();
  		pObj_Terrain->SetName("Terrain");

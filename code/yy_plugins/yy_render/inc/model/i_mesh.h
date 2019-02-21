@@ -16,16 +16,16 @@
 NS_YY_BEGIN
 struct Vertex
 {
-    YY::Vec3f position;            // 模型空间下的顶点位置
+    YY::Vec3f position;            // model space
     YY::Vec2f tex_coords;
-    unsigned int color;            // if no diffuse texture, will use this color.
     YY::Vec3f normal;
     //YY::Vec3f tangent;
 
     // skinning
     int count;
     float bone_weight[4];
-    float bone_id[4];
+	float bone_id[4];
+	unsigned int color;            // if no diffuse texture, will use this color.
 
     Vertex()
     {

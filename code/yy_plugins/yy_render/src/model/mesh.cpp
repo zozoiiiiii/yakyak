@@ -36,22 +36,20 @@ void InitVertex(Vertex* pVertex)
 
 void SubMeshDraw(SubMesh* pSM, int nTexID, IShader* tri_Shader)
 {
-    // 选择显卡中当前活跃的纹理单元
+    // choose one active texture from gpu
     glActiveTexture(GL_TEXTURE0);
 
-    // 绑定纹理目标，作用于前面选择的活跃的纹理单元
+    // bind texture
     if(nTexID>0)
     {
         glBindTexture(GL_TEXTURE_2D, nTexID);
         tri_Shader->SetUniform1i("texture", 0);
     }
 
-    // 该subMesh是否有动画
+    // check animation exist
     int u_hasAnimation=glGetUniformLocation(tri_Shader->GetProgramHandle(), "u_hasAnimation");
     if(u_hasAnimation>=0)
     {
-        // 取消骨骼动画
-         //hasAnim = false;
         if(pSM->hasAnim)
             glUniform1i(u_hasAnimation, 1);
         else
@@ -59,11 +57,11 @@ void SubMeshDraw(SubMesh* pSM, int nTexID, IShader* tri_Shader)
     }
 
 
-    //移动骨骼
+    //move bone
     //m_anim->setAnimateTime(m_anim->animateTime()+0.01);
     //m_anim->render(tri_Shader);
 
-    // 激活vbo对象
+    // active vbo object
     glBindBuffer(GL_ARRAY_BUFFER, pSM->VBO);
 
     // position
@@ -75,15 +73,6 @@ void SubMeshDraw(SubMesh* pSM, int nTexID, IShader* tri_Shader)
         glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offset);
     }
 
-    // normal line
-    offset = offsetof(Vertex, normal);
-    int normalLineLocation = glGetAttribLocation (tri_Shader->GetProgramHandle(),"a_normal_line");
-    if(normalLineLocation>=0)
-    {
-        glEnableVertexAttribArray(normalLineLocation);
-        glVertexAttribPointer(normalLineLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offset);
-    }
-
     // texture coordinate
     offset = offsetof(Vertex, tex_coords);
     int texcoordLocation = glGetAttribLocation (tri_Shader->GetProgramHandle(),"i_texcoord");
@@ -92,6 +81,17 @@ void SubMeshDraw(SubMesh* pSM, int nTexID, IShader* tri_Shader)
         glEnableVertexAttribArray(texcoordLocation);
         glVertexAttribPointer(texcoordLocation, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offset);
     }
+
+
+	// normal line
+	offset = offsetof(Vertex, normal);
+	int normalLineLocation = glGetAttribLocation(tri_Shader->GetProgramHandle(), "a_normal_line");
+	if (normalLineLocation >= 0)
+	{
+		glEnableVertexAttribArray(normalLineLocation);
+		glVertexAttribPointer(normalLineLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offset);
+	}
+
 
     //bone id
     offset = offsetof(Vertex, bone_id);
@@ -122,12 +122,12 @@ void SubMeshSetup(SubMesh* pSM)
     glGenBuffers(1, &pSM->VBO);
     glGenBuffers(1, &pSM->EBO);
 
-    // 结构体内部变量连续，所以可以直接把一个作为缓冲数据的一大列Vertex结构体的指针传递过去
+    // the vertex struct should not contain pointer.
 
-    // 绑定顶点数组缓冲
+    // get one vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, pSM->VBO);
 
-    // 分配内存空间，并且存入数据
+    // allocate memory and copy data to this vertex buffer
     glBufferData(GL_ARRAY_BUFFER, pSM->vertices.size() * sizeof(Vertex), 
         &pSM->vertices[0], GL_STATIC_DRAW);  
 
@@ -265,8 +265,8 @@ void Mesh::draw(IShader* tri_Shader)
         SubMesh* sm = &m_subMeshes[i];
 
 
-        ///////////////////// 材质
-        // 材质暂时只考虑diffuse. 没有材质的时候，用默认贴图 sm->material.diffuse = "texture/default.png";
+        ///////////////////// material
+        // here only consider diffuse, if empty, use sm->material.diffuse = "texture/default.png";
         int texID = -1;
         if(!sm->material.diffuse.empty())
         {
@@ -284,7 +284,8 @@ void Mesh::CalNormalLines(SubMesh* pSM)
 {
     // generate normal line
     int indices_count = pSM->indices.size();
-    for (unsigned int i = 0 ; i < indices_count ; i += 3) {
+    for (unsigned int i = 0 ; i < indices_count ; i += 3)
+	{
         unsigned int Index0 = pSM->indices[i];
         unsigned int Index1 = pSM->indices[i + 1];
         unsigned int Index2 = pSM->indices[i + 2];
@@ -295,7 +296,7 @@ void Mesh::CalNormalLines(SubMesh* pSM)
         YY::Vec3f v10 = v1->position - v0->position;
         YY::Vec3f v20 = v2->position - v0->position;
 
-        // 俩向量叉乘获得法线
+        // normal = v1 cross v2
         YY::Vec3f Normal = v10.cross(v20);
         Normal.norm();
         v0->normal += Normal;
@@ -304,7 +305,8 @@ void Mesh::CalNormalLines(SubMesh* pSM)
     }
 
     int vertices_count = pSM->vertices.size();
-    for (unsigned int i = 0 ; i < vertices_count ; i++) {
+    for (unsigned int i = 0 ; i < vertices_count ; i++)
+	{
 
         YY::Vertex* v0 = &pSM->vertices[i];
         v0->normal.norm();
