@@ -18,27 +18,6 @@ void GUI::OnCreate(const VariantMap& args)
 
 
 	m_pRenderContext->nRenderType = RT_Normal;
-
-	// color texture
-	IRenderTexture* pRenderTexture = (IRenderTexture*)m_pRender->GetResMgr()->CreateRes("ColorTexture");
-	pRenderTexture->SetFormat(TEX_FORMAT_rgb_alpha);
-	pRenderTexture->SetSizeType(TEX_TYPE_DEVICE);
-	pRenderTexture->Generate();
-	m_pRenderContext->pRenderTexture = pRenderTexture;
-
-
-	IRenderBuffer* pRenderBuffer = (IRenderBuffer*)m_pRender->GetResMgr()->CreateRes("DepthRenderBuffer");
-	pRenderBuffer->SetFormat(TEX_FORMAT_DEPTH_DEFAULT);
-	pRenderBuffer->SetSizeType(TEX_TYPE_DEVICE);
-	pRenderBuffer->Generate();
-	m_pRenderContext->pDepthRenderBuffer = pRenderBuffer;
-
-	// offscreen frame buffer
-	IFrameBuffer* pFBO = (IFrameBuffer*)m_pRender->GetResMgr()->CreateRes("FrameBuffer");
-	pFBO->Open();
-	pFBO->AttachTexture(pRenderTexture, AT_COLOR);
-	pFBO->AttackRenderBuffer(pRenderBuffer, AT_DEPTH);
-	m_pRenderContext->pFBO = pFBO;
 }
 
 void GUI::OnDestroy()
@@ -56,18 +35,6 @@ void GUI::ReSize(float w, float h)
 	m_pRender->SetDeviceWidth(w);
 	m_pRender->SetDeviceHeight(h);
 	m_pRender->ResetDevice();
-
-	// 后期做再resetdevice函数里
-	//ITexture* pDepthTexture = m_pShadowMap->GetDepthTexture();
-	//pDepthTexture->Generate();
-	//IFrameBuffer* pFrameBuffer = m_pShadowMap->GetFrameBuffer();
-	//pFrameBuffer->AttachTexture(pDepthTexture, AT_DEPTH);
-
-	//m_pRenderContext->pDepthRenderBuffer->Generate();
-	//m_pRenderContext->pFBO->AttackRenderBuffer(m_pCurRenderText->pDepthRenderBuffer, AT_DEPTH);
-
-	m_pRenderContext->pRenderTexture->Generate();
-	m_pRenderContext->pFBO->AttachTexture(m_pRenderContext->pRenderTexture, AT_COLOR);
 }
 
 YY_OBJECTID GUI::GetDesktopForm() const

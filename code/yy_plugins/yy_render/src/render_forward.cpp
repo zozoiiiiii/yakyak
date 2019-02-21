@@ -15,10 +15,17 @@ void Render::ForwardRendering()
 		pGroup->ClearAllBatch();
     }
 
-	// error here,  gui will overwrite the 3d models.///////////
-	// paint ui
-	//ForwardRenderPass(m_pUIBatchGroup);
-	//m_pUIBatchGroup->ClearAllBatch();
+	// gui render on the default fbo:0
+	//RenderContext* pRenderContext = m_pUIBatchGroup->GetRenderContext();
+
+	// RenderSceneToTexture
+	//pRenderContext->pFBO->BindForWriting();
+
+	throw_assert(NULL != m_pQuad, "null check.");
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	m_pUIBatchGroup->RenderAllBatch(this);
+	m_pUIBatchGroup->ClearAllBatch();
+
 }
 
 void Render::ForwardRenderPass(IBatchGroup* pGroup)

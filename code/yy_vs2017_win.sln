@@ -9,7 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yy_core_shared", "yy_core\b
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yy_loader", "yy_loader\build\win\yy_loader_win.vcxproj", "{BDD16134-A53C-4CD4-8BDA-D588B3EF49F0}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C951AC66-0AE3-4DAC-8E74-82611F241C7B} = {C951AC66-0AE3-4DAC-8E74-82611F241C7B}
 		{F67AF393-8195-445B-AD05-8DC493235435} = {F67AF393-8195-445B-AD05-8DC493235435}
 	EndProjectSection
 EndProject
@@ -51,6 +50,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yy_world_shared", "yy_plugins\yy_world\build\yy_world_shared.vcxitems", "{FCA6DF09-CE1F-497E-B906-7EBAD783E6B1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yy_world", "yy_plugins\yy_world\build\win\yy_world.vcxproj", "{86D1D157-4D7F-4440-AE68-7005852251A1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C951AC66-0AE3-4DAC-8E74-82611F241C7B} = {C951AC66-0AE3-4DAC-8E74-82611F241C7B}
+		{F67AF393-8195-445B-AD05-8DC493235435} = {F67AF393-8195-445B-AD05-8DC493235435}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

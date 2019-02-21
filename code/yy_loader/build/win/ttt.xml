@@ -11,7 +11,7 @@
 				<node class="TextComponent"/>
 			</components>
 		</node>
-		<node class="Item" name="" height="0.000000" left="500.000000" top="0.000000" width="0.000000">
+		<node class="Item" name="" height="100.000000" left="500.000000" top="0.000000" width="100.000000">
 			<components>
 				<node class="ImageComponent"/>
 			</components>

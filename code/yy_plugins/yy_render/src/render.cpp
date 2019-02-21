@@ -137,8 +137,6 @@ void Render::RenderAll()
     m_groups.clear();
 }
 
-
-
 void Render::RenderTexture(IRenderTexture* pRes)
 {
     throw_assert(NULL!=m_pQuad, "null check.");

@@ -69,7 +69,7 @@ void App::Open(float width, float height, const std::string& resPath)
 
 void App::Close()
 {
-    
+	m_bOpened = false;
 }
 
 void App::Excute()

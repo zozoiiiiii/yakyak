@@ -61,8 +61,8 @@ void Demo::CreateTestUI()
 		ImageComponent* pImage = (ImageComponent*)pItem->AddComponent("ImageComponent");
 		pImage->SetImageSource("ui_image/grass.bmp");
 		pItem->SetLeft(500);
-		//pTransform->SetWidth(100);
-		//pTransform->SetHeight(100);
+		pItem->SetWidth(100);
+		pItem->SetHeight(100);
 		pItem->SetVisible(true);
 		pMainEntity->AddChild(pItem);
 	}

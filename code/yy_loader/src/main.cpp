@@ -15,36 +15,48 @@
 EGLDevice g_eglDevice;
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-	if (!App::Instance()->IsOpened())
-		return TRUE;
-
-	if (message == WM_SIZE)
+	if (App::Instance()->IsOpened())
 	{
-		g_eglDevice.ResetSurface();
+		if (message == WM_SIZE)
+		{
+			g_eglDevice.ResetSurface();
 
-		int fwSizeType = wParam; // resizing flag
-		int nWidth = LOWORD(lParam); // width of client area
-		int nHeight = HIWORD(lParam); // height of client area
-		App::Instance()->Resize(nWidth, nHeight);
+			int fwSizeType = wParam; // resizing flag
+			int nWidth = LOWORD(lParam); // width of client area
+			int nHeight = HIWORD(lParam); // height of client area
+			App::Instance()->Resize(nWidth, nHeight);
+		}
+
+		bool ret = App::Instance()->OnMsg(message, (unsigned int)wParam, (unsigned int)lParam);
+		if (ret)
+			return 0;
 	}
 
-    bool ret = App::Instance()->OnMsg(message,(unsigned int) wParam, (unsigned int)lParam);
-    if(!ret)
-        return DefWindowProc(hWnd, message, wParam, lParam);
+	switch (message)
+	{
+	case WM_CLOSE:
+		DestroyWindow(hWnd);
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		break;
+	}
 
-    return TRUE;
+	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 
 
-HWND CreateMyWindow(int width, int height, const std::string& title, WNDPROC func)
+HWND CreateMyWindow(HINSTANCE hInstance, int width, int height, const std::string& title, WNDPROC func)
 {
     WNDCLASSEX wndclass = {0}; 
     RECT     windowRect;
-    HINSTANCE hInstance = GetModuleHandle(NULL);
+    //HINSTANCE hInstance = GetModuleHandle(NULL);
 
     wndclass.cbSize         = sizeof(WNDCLASSEX);
-    wndclass.style         = CS_OWNDC;
+    wndclass.style         = CS_HREDRAW | CS_VREDRAW;;
     wndclass.lpfnWndProc   = (WNDPROC)func; 
     wndclass.cbClsExtra        = 0;
     wndclass.cbWndExtra        = 0;
@@ -66,7 +78,7 @@ HWND CreateMyWindow(int width, int height, const std::string& title, WNDPROC fun
     windowRect.bottom = height;
 
 	DWORD wsStyle = WS_VISIBLE | WS_SYSMENU | WS_CAPTION;
-    AdjustWindowRect ( &windowRect, wsStyle, FALSE );
+    AdjustWindowRect ( &windowRect, WS_SYSMENU | WS_CAPTION, FALSE );
 
     HWND hWnd = CreateWindow("WINCLASS1",title.c_str(), wsStyle,0,0,
         windowRect.right - windowRect.left,
@@ -78,7 +90,8 @@ HWND CreateMyWindow(int width, int height, const std::string& title, WNDPROC fun
 
     throw_assert( hWnd != NULL, "create windows failed. ");
 
-    ShowWindow ( hWnd, TRUE );
+    ShowWindow ( hWnd, SW_SHOW);
+	UpdateWindow(hWnd);
     return hWnd;
 }
 
@@ -103,7 +116,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
     int width=1024;
     int height=768;
-    HWND nHwnd = CreateMyWindow(width,height, "hello", &WndProc);
+    HWND nHwnd = CreateMyWindow(hInstance, width,height, "hello", &WndProc);
 
 	g_eglDevice.InitDevice(nHwnd);
 
@@ -115,14 +128,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     MSG	msg;
     for (;;)
 	{
-		MSG msg;
-		if (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
+		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			if ( GetMessage (&msg, NULL, 0, 0) )
+			if (msg.message == WM_QUIT)
 			{
-				TranslateMessage (&msg);
-				DispatchMessage (&msg);
+				return 1;
 			}
+			
+			LOG_TRACE(msg.message);
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 
         App::Instance()->Excute();

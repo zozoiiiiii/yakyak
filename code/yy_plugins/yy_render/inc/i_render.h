@@ -84,6 +84,5 @@ public:
 	// by default, gl_position origin is in the middle, x,y between [-1, 1], so here need x1/width, y1/height, to fit [-1,1], then invert bottom with top
 	// https://stackoverflow.com/questions/25416820/set-origin-to-top-left-corner-of-screen-in-opengl-es-2
 	virtual Mat4f GetTopLeftMatrix() = 0;
-
 	virtual void RenderTexture(IRenderTexture* pRes) = 0;
 };

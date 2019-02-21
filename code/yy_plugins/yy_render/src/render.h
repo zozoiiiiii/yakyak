@@ -49,6 +49,7 @@ public:
 
 	void ScreenShot(const char* name, int x, int y, int w, int h);
 
+
 	// äÖÈ¾ÎÆÀíµ½È«ÆÁ
 	void RenderTexture(IRenderTexture* pRes);
 
@@ -81,4 +82,5 @@ private:
     int m_nWinHeight;
 
 	Mat4f m_topLeftMatrix;
+	IFrameBuffer* m_pFBO;
 };
