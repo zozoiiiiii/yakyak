@@ -4,6 +4,16 @@
 namespace AlgorithmNS
 {
 
+	MyBase::MyBase():SIZE(10)
+	{
+
+	}
+
+	MyBase::~MyBase()
+	{
+
+	}
+
 	void Append(Node* root, int data)
 	{
 		Node* tmp = root;

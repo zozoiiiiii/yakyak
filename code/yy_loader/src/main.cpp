@@ -114,6 +114,9 @@ bool checkNumber(int* nums, int length)
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
                    LPSTR lpCmdLine, int iCmdShow)
 {
+	AlgorithmNS::MyBase base;
+
+	return 0;
     int width=1024;
     int height=768;
     HWND nHwnd = CreateMyWindow(hInstance, width,height, "hello", &WndProc);

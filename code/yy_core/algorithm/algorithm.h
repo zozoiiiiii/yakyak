@@ -3,6 +3,61 @@
 @author:    junliang
 @brief:     algorithm
 
+
+
+
+
+Cpp application in memory layout(4GB in win32)
+_______________________________________________high address
+Cmd line argument
+_______________________________________________
+Stack
+------------------------------------------------------
+  |
+......
+_______________________________________________
+Shared libraries(malloc.o(lib*.so)                     dynamic load library
+_______________________________________________
+......
+
+  |
+------------------------------------------------------
+Heap(malloc, calloc, new)
+_______________________________________________
+Data(Global/static, intialized and unitialize, int y=100)
+_______________________________________________
+Text(compiled code like main.o, file.o,  a.out)       malloc.o, static link library
+_______________________________________________low adderss
+
+
+
+
+
+----------------------------------------------------------------------------------------
+Stack
+
+
+Int add(int a, int b)
+{Int c;
+c=a+b;
+Return c}
+
+Call Add(4,8) function
+
+_______________________________________________low
+
+Local data               0xc
+_______________________________________________
+EBP
+_______________________________________________
+Return address       [ebp]+4
+_______________________________________________
+4              [ebp]+8
+8              [ebp]+12
+_______________________________________________high
+
+
+
 traversal: 遍历
 bfs: breadth first search, 广度优先遍历
 dfs: deep first search, 深度优先遍历
@@ -19,6 +74,25 @@ dfs: deep first search, 深度优先遍历
 
 namespace AlgorithmNS
 {
+	class MyBase
+	{
+	public:
+		MyBase();
+		~MyBase();
+
+	private:
+		const int SIZE = 100;
+		//char m_buf[SIZE];
+	};
+
+	class MyA : public MyBase
+	{
+	public:
+	};
+
+
+
+
 	/*
 
 	ListNS::Node* node1 = new ListNS::Node;
