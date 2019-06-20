@@ -72,11 +72,11 @@ void Demo::CreateTestUI()
 
 
 	// create gui and render module
-	//IGUI::Instance();
+	//IGUI::Instance(GetMgr());
 	//MainView* pMainView = new MainView(GetMgr());
 	return;
-// 	float width = IRender::Instance()->GetDeviceWidth();
-// 	float height = IRender::Instance()->GetDeviceHeight();
+// 	float width = IRender::Instance(GetMgr())->GetDeviceWidth();
+// 	float height = IRender::Instance(GetMgr())->GetDeviceHeight();
 // 
 // 	// load view file
 // 	Item* pView = (Item*)Entity::ParseFromEntityFile(GetMgr(), "views\\main.xml");
@@ -120,10 +120,10 @@ void Demo::CreateTestScene()
 	if (!pScene)
 		return;
 
-	int width = IRender::Instance()->GetDeviceWidth();
-	int height = IRender::Instance()->GetDeviceHeight();
+	int width = IRender::Instance(GetMgr())->GetDeviceWidth();
+	int height = IRender::Instance(GetMgr())->GetDeviceHeight();
 
-	std::string res_path = IRender::Instance()->GetResPath();
+	std::string res_path = IRender::Instance(GetMgr())->GetResPath();
 
 
 	{

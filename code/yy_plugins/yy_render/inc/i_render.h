@@ -38,17 +38,17 @@ render process:
 class IRender : public YY::BaseObject
 {
 public:
-	static IRender* Instance()
+	static IRender* Instance(IObjectMgr* pObjMgr)
 	{
 		static IRender* s_pRender = nullptr;
 		if (s_pRender)
 			return s_pRender;
 
-		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("Render");
+		BaseObject* pObject = pObjMgr->FindGlobalObject("Render");
 		if (NULL == pObject)
 		{
-			BaseObject* pBaseObject = GetGlobalEntMgr()->Create("Render");
-			GetGlobalEntMgr()->SetGlobal("Render", pBaseObject->GetID());
+			BaseObject* pBaseObject = pObjMgr->Create("Render");
+			pObjMgr->SetGlobal("Render", pBaseObject->GetID());
 			pObject = pBaseObject;
 		}
 

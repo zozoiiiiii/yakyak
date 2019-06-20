@@ -16,7 +16,6 @@ App::App()
 :m_bOpened(false), m_pEntMgr(NULL)
 {
 	m_pEntMgr = CreateEntMgr();
-	SetGlobalEntMgr(m_pEntMgr);
 }
 
 App* App::Instance()
@@ -45,14 +44,14 @@ void App::Open(float width, float height, const std::string& resPath)
         //DllMgr* pDllMgr = new DllMgr;
         //pDllMgr->Load(m_pEntMgr, file.c_str());
 
-	IRender* pRender = IRender::Instance();
+	IRender* pRender = IRender::Instance(m_pEntMgr);
         pRender->SetResPath(resPath);
         pRender->SetWinWidth(width);
         pRender->SetWinHeight(height);
         pRender->SetDeviceWidth(width);
         pRender->SetDeviceHeight(height);
         pRender->CreateDevice();
-		IGUI::Instance()->ReSize(width, height);
+		IGUI::Instance(m_pEntMgr)->ReSize(width, height);
 
 
         // create game
@@ -109,7 +108,7 @@ bool App::OnMsg(unsigned int msg, size_t param1, size_t param2)
     //try{
     //    if(msg==WM_LBUTTONDOWN)
         {
-            //IWorld::Instance()->GetScene()->ScreenShot("c:/test1.jpg", 0,0,500,500);
+            //IWorld::Instance(GetMgr())->GetScene()->ScreenShot("c:/test1.jpg", 0,0,500,500);
         }
 
 //        return m_pEntMgr->OnMsg(msg, param1, param2);
@@ -124,6 +123,6 @@ bool App::OnMsg(unsigned int msg, size_t param1, size_t param2)
 void App::Resize(float width, float height)
 {
 
-	IGUI::Instance()->ReSize(width, height);
+	IGUI::Instance(m_pEntMgr)->ReSize(width, height);
 	m_pEntMgr->GetEventMgr()->Invoke(YY_INVALID_OBJECTID, "OnEvent_RenderWindow_Resize", YY::VarList() << (int)width << (int)height);
 }

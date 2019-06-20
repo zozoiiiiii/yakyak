@@ -23,7 +23,7 @@ void Item::OnDestroyed()
  
  void Item::Show()
  {
- 	YY_OBJECTID id = IGUI::Instance()->GetDesktopForm();
+ 	YY_OBJECTID id = IGUI::Instance(GetMgr())->GetDesktopForm();
  	Entity* pDeskTop = (Entity*)GetMgr()->Find(id);
  	if (NULL == pDeskTop)
  	{
@@ -35,7 +35,7 @@ void Item::OnDestroyed()
 
  void Item::Close()
  {
-	 YY_OBJECTID id = IGUI::Instance()->GetDesktopForm();
+	 YY_OBJECTID id = IGUI::Instance(GetMgr())->GetDesktopForm();
 	 Entity* pDeskTop = (Entity*)GetMgr()->Find(id);
 	 if (NULL == pDeskTop)
 	 {
@@ -47,12 +47,12 @@ void Item::OnDestroyed()
 
  void Item::ShowModal()
  {
-	 IGUI::Instance()->AddModalForm(GetID());
+	 IGUI::Instance(GetMgr())->AddModalForm(GetID());
  }
  
  void Item::CloseModal()
  {
- 	IGUI::Instance()->RemoveModalForm(GetID());
+ 	IGUI::Instance(GetMgr())->RemoveModalForm(GetID());
  }
 
 float Item::GetTop()

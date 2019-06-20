@@ -671,7 +671,7 @@ bool Entity::IsChildExist(Entity* pEntity)
 // IRender* Entity::GetRender()
 // {
 // 	if (nullptr == m_pRender)
-// 		m_pRender = IRender::Instance();
+// 		m_pRender = IRender::Instance(GetMgr());
 // 
 // 	return m_pRender;
 // }

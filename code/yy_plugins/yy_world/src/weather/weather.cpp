@@ -8,7 +8,7 @@
 
 void Weather::OnCreate(const VariantMap& args)
 {
-	Scene* pScene = (Scene*)IWorld::Instance()->GetScene();
+	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->GetScene();
     m_pRenderCxt = pScene->GetRenderCxt();
 
     //light

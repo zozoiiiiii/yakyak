@@ -17,9 +17,9 @@ void Comp_MeshRender::OnRender(IRender* pRender, RenderContext* pCxt)
 	static IShader* pMeshShader = NULL;
 	if (NULL == pMeshShader)
 	{
-		std::string vsh = IRender::Instance()->GetResPath() + "shader\\mesh.vsh";
-		std::string fsh = IRender::Instance()->GetResPath() + "shader\\mesh.fsh";
-		pMeshShader = IRender::Instance()->GetResMgr()->LoadShader(vsh, fsh);
+		std::string vsh = IRender::Instance(GetMgr())->GetResPath() + "shader\\mesh.vsh";
+		std::string fsh = IRender::Instance(GetMgr())->GetResPath() + "shader\\mesh.fsh";
+		pMeshShader = IRender::Instance(GetMgr())->GetResMgr()->LoadShader(vsh, fsh);
 	}
 
 
@@ -92,7 +92,7 @@ void Comp_MeshRender::SetMesh(const std::string& path, const std::string& mesh_f
 {
     throw_assert(NULL == m_mesh, "only support one mesh.");
 
-    IModelRes* pModelRes = IRender::Instance()->GetModelResMgr();
+    IModelRes* pModelRes = IRender::Instance(GetMgr())->GetModelResMgr();
 
     //m_path = YY::SlashTrim(path, true);
 	m_path = path;
@@ -115,7 +115,7 @@ void Comp_MeshRender::SetMesh(const std::string& path, const std::string& mesh_f
 
 int Comp_MeshRender::AddAnim(const std::string& anim_file, float fEnterTime, float fLeaveTime)
 {
-    IModelRes* pModelRes = IRender::Instance()->GetModelResMgr();
+    IModelRes* pModelRes = IRender::Instance(GetMgr())->GetModelResMgr();
     YY::IAnim* am =  pModelRes->LoadAnimFile(m_skele, m_path + anim_file);
     m_anims.push_back(am);
 	m_anims_name.push_back(anim_file);

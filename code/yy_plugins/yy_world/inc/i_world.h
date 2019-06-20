@@ -37,17 +37,17 @@ class IWorld : public YY::BaseObject
 	YY_VIRTUAL_BEGIN(IWorld, BaseObject);
 	YY_END
 public:
-    static IWorld* Instance()
+    static IWorld* Instance(IObjectMgr* pObjMgr)
 	{
 		static IWorld* s_pWorld = nullptr;
 		if (s_pWorld)
 			return s_pWorld;
 
-		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("World");
+		BaseObject* pObject = pObjMgr->FindGlobalObject("World");
 		if (NULL == pObject)
 		{
-			BaseObject* pBaseObject = GetGlobalEntMgr()->Create("World");
-			GetGlobalEntMgr()->SetGlobal("World", pBaseObject->GetID());
+			BaseObject* pBaseObject = pObjMgr->Create("World");
+			pObjMgr->SetGlobal("World", pBaseObject->GetID());
 			pObject = pBaseObject;
 		}
 

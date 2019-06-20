@@ -31,7 +31,7 @@ Font* FontManager::GetFont(std::string fontFile, unsigned int fontSize)
 	{
 		FT_Face* face = new FT_Face();
 
-		std::string strFontFile = IRender::Instance()->GetResPath() + fontFile;
+		std::string strFontFile = IRender::Instance(m_pObjMgr)->GetResPath() + fontFile;
 		int bRet = FT_New_Face(*m_library, strFontFile.c_str(), 0, face);
 
 		// For Some Twisted Reason, FreeType Measures Font Size

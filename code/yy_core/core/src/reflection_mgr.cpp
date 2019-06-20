@@ -23,7 +23,9 @@ MetaClass* ReflectionMgr::FindMetaClass(const std::string& strClassName)
 void ReflectionMgr::RegCreator(MetaClass* pCreator)
 {
     std::map<std::string, MetaClass*>::iterator itor = m_creatorClasses.find(pCreator->name);
-    throw_assert(itor == m_creatorClasses.end(), "creator:" << pCreator->name << "already exist.");
+	if (itor != m_creatorClasses.end())
+		return;
+
     m_creatorClasses[pCreator->name] = pCreator;
 }
 

@@ -134,7 +134,7 @@ void ImageComponent::OnRender(IRender* pRender, RenderContext* pCxt)
 
 void ImageComponent::SetImageSource(const std::string& url)
 {
-	IRender* pRender = IGUI::Instance()->GetRender();
+	IRender* pRender = IGUI::Instance(GetMgr())->GetRender();
 	if (!pRender)
 		return;
 

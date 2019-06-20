@@ -25,37 +25,37 @@ extern"C" __declspec(dllexport) void dll_main(YY::IObjectMgr* pEntMgr);
 
 void plugin_main_render(YY::IObjectMgr* pEntMgr)
 {
-    SetGlobalEntMgr(pEntMgr);
-	YY_REG(Entity);
-	YY_REG(Component);
-	YY_REG(RenderComponent);
+	IReflectionMgr* pReflectionMgr = pEntMgr->GetReflectionMgr();
+	YY_REG(pReflectionMgr, Entity);
+	YY_REG(pReflectionMgr, Component);
+	YY_REG(pReflectionMgr, RenderComponent);
 
-	YY_REG(Render);
-	YY_REG(IRes);
-	YY_REG(IFrameBuffer);
-	YY_REG(IRenderBuffer);
-	YY_REG(ITexture);
-	YY_REG(IStaticTexture);
-	YY_REG(IDynamicTexture);
-	YY_REG(IShader);
-    YY_REG(IRenderTexture);
-	YY_REG(IFontTexture);
-	YY_REG(FontTexture);
+	YY_REG(pReflectionMgr, Render);
+	YY_REG(pReflectionMgr, IRes);
+	YY_REG(pReflectionMgr, IFrameBuffer);
+	YY_REG(pReflectionMgr, IRenderBuffer);
+	YY_REG(pReflectionMgr, ITexture);
+	YY_REG(pReflectionMgr, IStaticTexture);
+	YY_REG(pReflectionMgr, IDynamicTexture);
+	YY_REG(pReflectionMgr, IShader);
+    YY_REG(pReflectionMgr, IRenderTexture);
+	YY_REG(pReflectionMgr, IFontTexture);
+	YY_REG(pReflectionMgr, FontTexture);
 
-    YY_REG(FrameBuffer);
-    YY_REG(ColorRenderBuffer);
-    YY_REG(DepthRenderBuffer);
-    YY_REG(StencilRenderBuffer);
-    YY_REG(DepthStencilRenderBuffer);
-    YY_REG(StaticTexture);
-    YY_REG(DynamicTexture);
-    YY_REG(ColorTexture);
-    YY_REG(DepthTexture);
-    YY_REG(Shader);
-    YY_REG(BatchGroup);
-	YY_REG(ResMgr);
+    YY_REG(pReflectionMgr, FrameBuffer);
+    YY_REG(pReflectionMgr, ColorRenderBuffer);
+    YY_REG(pReflectionMgr, DepthRenderBuffer);
+    YY_REG(pReflectionMgr, StencilRenderBuffer);
+    YY_REG(pReflectionMgr, DepthStencilRenderBuffer);
+    YY_REG(pReflectionMgr, StaticTexture);
+    YY_REG(pReflectionMgr, DynamicTexture);
+    YY_REG(pReflectionMgr, ColorTexture);
+    YY_REG(pReflectionMgr, DepthTexture);
+    YY_REG(pReflectionMgr, Shader);
+    YY_REG(pReflectionMgr, BatchGroup);
+	YY_REG(pReflectionMgr, ResMgr);
 
-	YY_REG(Vec3f);
+	YY_REG(pReflectionMgr, Vec3f);
 	//YY_REG(RenderSystem);
 
 	//pEntMgr->Create("RenderSystem");

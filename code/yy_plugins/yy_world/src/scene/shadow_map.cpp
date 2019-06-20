@@ -10,7 +10,7 @@ void ShadowMap::OnCreate(const VariantMap& args)
 {
     // disable shadow default.
     m_bEnableShadow = false;
-	Scene* pScene = (Scene*)IWorld::Instance()->GetScene();
+	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->GetScene();
     m_pRender = pScene->GetRender();
 
 
@@ -81,7 +81,7 @@ void ShadowMap::GenerateShadowMap(std::vector<YY_OBJECTID>& objs, RenderContext*
 				continue;
 
 			RenderComponent* pRenderComponent = (RenderComponent*)pComponent;
-			pRenderComponent->OnRender(IRender::Instance(), &tmp);
+			pRenderComponent->OnRender(IRender::Instance(GetMgr()), &tmp);
 		}
     }
 }

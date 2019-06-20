@@ -13,8 +13,8 @@
 
 void plugin_main_demo(YY::IObjectMgr* pEntMgr)
 {
-    SetGlobalEntMgr(pEntMgr);
-	YY_REG(Demo);
+	IReflectionMgr* pReflectionMgr = pEntMgr->GetReflectionMgr();
+	YY_REG(pReflectionMgr, Demo);
 	//YY_REG(HierarchyView);
 	//YY_REG(Design);
 

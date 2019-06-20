@@ -17,7 +17,7 @@ void Scene::OnCreate(const VariantMap& args)
 {
     //FreeImage_Initialise();
 	m_pMainCamera = nullptr;
-	IWorld* pWorld = IWorld::Instance();
+	IWorld* pWorld = IWorld::Instance(GetMgr());
 	pWorld->SetSceneID(this->GetID());
 
     m_pBatchGroup = (IBatchGroup*)GetMgr()->Create("BatchGroup");
@@ -56,7 +56,7 @@ void Scene::OnCreate(const VariantMap& args)
     m_pOctreeScene = (OctreeScene*)GetMgr()->Create("OctreeScene");
     m_pOctreeScene->init(sceneBounding);
 
-     IEventMgr* pEventMgr = IWorld::Instance()->GetEventMgr();
+     IEventMgr* pEventMgr = IWorld::Instance(GetMgr())->GetEventMgr();
      pEventMgr->ConnectGlobals("OnEvent_RenderWindow_Resize",  fastdelegate::MakeDelegate(this, &Scene::OnEvent_Resize));
 }
 
@@ -90,7 +90,7 @@ RenderContext* Scene::GetRenderCxt()
 
 IRender* Scene::GetRender()
 {
-	return IRender::Instance();
+	return IRender::Instance(GetMgr());
 }
 
 IGameObj* Scene::CreateObj(IGameObj* pParent)

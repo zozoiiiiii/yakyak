@@ -47,19 +47,18 @@ buttom control= entity(transform,sprint,button)
 
 void plugin_main_ui(YY::IObjectMgr* pEntMgr)
 {
-    SetGlobalEntMgr(pEntMgr);
-
-	YY_REG(IGUI);
-	YY_REG(GUI);
-	YY_REG(Item);
-	YY_REG(ItemComponent);
-	YY_REG(RectangleComponent);
+	IReflectionMgr* pReflectionMgr = pEntMgr->GetReflectionMgr();
+	YY_REG(pReflectionMgr, IGUI);
+	YY_REG(pReflectionMgr, GUI);
+	YY_REG(pReflectionMgr, Item);
+	YY_REG(pReflectionMgr, ItemComponent);
+	YY_REG(pReflectionMgr, RectangleComponent);
 
 	//YY_REG(ColumnComponent);
 	//YY_REG(RowComponent);
 
-	YY_REG(ImageComponent);
-	YY_REG(TextComponent);
+	YY_REG(pReflectionMgr, ImageComponent);
+	YY_REG(pReflectionMgr, TextComponent);
 
 //	YY_REG(ItemGeneratorComponent);
 //	YY_REG(AnchorFillComponent);

@@ -37,15 +37,15 @@
 
 void plugin_main_world(YY::IObjectMgr* pEntMgr)
 {
-    SetGlobalEntMgr(pEntMgr);
-	YY_REG(IWorld);
-	YY_REG(World);
-	YY_REG(IScene);
-	YY_REG(Scene);
-    YY_REG(OctreeScene);
-    YY_REG(ShadowMap);
+	IReflectionMgr* pReflectionMgr = pEntMgr->GetReflectionMgr();
+	YY_REG(pReflectionMgr, IWorld);
+	YY_REG(pReflectionMgr, World);
+	YY_REG(pReflectionMgr, IScene);
+	YY_REG(pReflectionMgr, Scene);
+    YY_REG(pReflectionMgr, OctreeScene);
+    YY_REG(pReflectionMgr, ShadowMap);
 	//YY_REG(CameraView);
-    YY_REG(Weather);
+    YY_REG(pReflectionMgr, Weather);
 
     // primitive
 //     YY_REG(GridLines);
@@ -53,14 +53,14 @@ void plugin_main_world(YY::IObjectMgr* pEntMgr)
      //YY_REG(Cube);
 //     YY_REG(EditQuard);
 
-	YY_REG(Comp_Terrain);
-	YY_REG(IComp_MeshRender);
-	YY_REG(IComp_Camera);
-    YY_REG(Comp_MeshRender);
-    YY_REG(Comp_Camera);
+	YY_REG(pReflectionMgr, Comp_Terrain);
+	YY_REG(pReflectionMgr, IComp_MeshRender);
+	YY_REG(pReflectionMgr, IComp_Camera);
+    YY_REG(pReflectionMgr, Comp_MeshRender);
+    YY_REG(pReflectionMgr, Comp_Camera);
 //    YY_REG(Comp_Model_Obj);
     //YY_REG(ShowDepthMap);
-    YY_REG(GameObj);
-	YY_REG(GameObjComponent);
-	YY_REG(Transform);
+    YY_REG(pReflectionMgr, GameObj);
+	YY_REG(pReflectionMgr, GameObjComponent);
+	YY_REG(pReflectionMgr, Transform);
 }

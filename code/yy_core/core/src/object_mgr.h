@@ -66,4 +66,5 @@ private:
 	InputMgr* m_pInputMgr;
     sint64 m_BaseObject_id_seed;
 };
+
 NS_YY_END

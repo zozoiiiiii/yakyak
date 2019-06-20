@@ -16,13 +16,13 @@ void Comp_Terrain::OnDestroy()
 void Comp_Terrain::LoadTex(const std::string& strHighMap, const std::string& strTex)
 {
     throw_assert(NULL==m_mesh, "null check.");
-    m_mesh = IRender::Instance()->GetModelResMgr()->CreateMesh();
+    m_mesh = IRender::Instance(GetMgr())->GetModelResMgr()->CreateMesh();
 
     // create mesh
     YY::SubMesh sm;
 
 
-    std::string res_path = IRender::Instance()->GetResPath();
+    std::string res_path = IRender::Instance(GetMgr())->GetResPath();
 
     int width,height,n;
     std::string path = res_path + strHighMap;

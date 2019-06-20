@@ -149,17 +149,17 @@ class IGUI : public BaseObject
 	YY_VIRTUAL_BEGIN(IGUI, BaseObject);
 	YY_END
 public:
-	static IGUI* Instance()
+	static IGUI* Instance(IObjectMgr* pObjMgr)
 	{
 		static IGUI* s_pGUI = nullptr;
 		if (s_pGUI)
 			return s_pGUI;
 
-		BaseObject* pObject = GetGlobalEntMgr()->FindGlobalObject("GUI");
+		BaseObject* pObject = pObjMgr->FindGlobalObject("GUI");
 		if (NULL == pObject)
 		{
-			BaseObject* pBaseObject = GetGlobalEntMgr()->Create("GUI");
-			GetGlobalEntMgr()->SetGlobal("GUI", pBaseObject->GetID());
+			BaseObject* pBaseObject = pObjMgr->Create("GUI");
+			pObjMgr->SetGlobal("GUI", pBaseObject->GetID());
 			pObject = pBaseObject;
 		}
 

@@ -31,3 +31,8 @@ public:
 	virtual YY::Var GetBaseFieldVal(void* pClassInstance, MetaField* pMetaField) = 0;
 };
 NS_YY_END
+
+#define YY_REG(reflectionMgr, cls) reflectionMgr->RegCreator(cls::MetaClassInstance());
+    //extern YY::IReflectionMgr* GetGlobalReflectionMgr(); \
+    //GetGlobalReflectionMgr()->RegCreator(cls::MetaClassInstance());
+

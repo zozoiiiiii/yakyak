@@ -57,5 +57,10 @@ public:
 	virtual void RemoveMsgProc(YY::BaseObject* pBaseObject, uint32 msg_id) = 0;
 };
 
+
+//interface
+#define LOG_ERR(pObjMgr,Msg)          pObjMgr->GetLog()->LogData((int)Log::LL_ERROR, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
+#define LOG_TRACE(pObjMgr,Msg)        pObjMgr->GetLog()->LogData((int)Log::LL_TRACE, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
+#define LOG_DEBUG(pObjMgr,Msg)        pObjMgr->GetLog()->LogData((int)Log::LL_DEBUG, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
 NS_YY_END
 

@@ -39,17 +39,6 @@
 #include "math/inc/yy_aabb.h"
 
 YY::IObjectMgr* CreateEntMgr();
-YY::IObjectMgr* GetGlobalEntMgr();
-void SetGlobalEntMgr(YY::IObjectMgr* pEntMgr);
-YY::IReflectionMgr* GetGlobalReflectionMgr();
 
 
-#define YY_REG(cls) \
-    extern YY::IReflectionMgr* GetGlobalReflectionMgr(); \
-    GetGlobalReflectionMgr()->RegCreator(cls::MetaClassInstance());
 
-
-#define LOG_ERR(Msg)          GetGlobalEntMgr()->GetLog()->LogData((int)Log::LL_ERROR, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
-#define LOG_WARN(Msg)         GetGlobalEntMgr()->GetLog()->LogData((int)Log::LL_WARN, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
-#define LOG_TRACE(Msg)        GetGlobalEntMgr()->GetLog()->LogData((int)Log::LL_TRACE, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)
-#define LOG_DEBUG(Msg)        GetGlobalEntMgr()->GetLog()->LogData((int)Log::LL_DEBUG, __FILE__, __LINE__, Log::StreamFormatter()<<Msg)

@@ -6,7 +6,7 @@
 
 void Comp_Camera::OnCreate(const VariantMap& args)
 {
-    IEventMgr* pEventMgr = IWorld::Instance()->GetEventMgr();
+    IEventMgr* pEventMgr = IWorld::Instance(GetMgr())->GetEventMgr();
     pEventMgr->ConnectGlobals("OnEvent_RenderWindow_Resize",  fastdelegate::MakeDelegate(this, &Comp_Camera::OnEvent_Resize));
 }
 
@@ -45,7 +45,7 @@ void Comp_Camera::OnEvent_Resize(const char* name, const YY::VarList& args)
 
 void Comp_Camera::GetRayDirection(float mouseX, float mouseY, float& x, float& y, float& z, bool draw_ray)
 {
-    IScene* pScene = IWorld::Instance()->GetScene();
+    IScene* pScene = IWorld::Instance(GetMgr())->GetScene();
     RenderContext* pRenderCxt = pScene->GetRenderCxt();
 
     const YY::Mat4f& mtxProj = pRenderCxt->projMatrix;
@@ -116,7 +116,7 @@ void Comp_Camera::GetRayDirection(float mouseX, float mouseY, float& x, float& y
 //         Lines* pComp_Lines=NULL;
 //         if(NULL == pTestLine)
 //         {
-//             IScene* pScene = IWorld::Instance()->GetScene();
+//             IScene* pScene = IWorld::Instance(GetMgr())->GetScene();
 //             pTestLine = pScene->CreateObj();
 // 			pTestLine->SetName("dray_ray_line");
 //             pScene->AddObj(pTestLine);

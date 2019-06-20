@@ -10,21 +10,3 @@ YY::IObjectMgr* CreateEntMgr()
 {
     return new YY::ObjectMgr;
 }
-
-YY::IObjectMgr* GetGlobalEntMgr()
-{
-    throw_assert(NULL!=g_pEntMgr, "null check.");
-    return g_pEntMgr;
-}
-
-
-void SetGlobalEntMgr(YY::IObjectMgr* pEntMgr)
-{
-    g_pEntMgr = pEntMgr;
-}
-
-YY::IReflectionMgr* GetGlobalReflectionMgr()
-{
-    throw_assert(NULL!=g_pEntMgr, "null check.");
-    return GetGlobalEntMgr()->GetReflectionMgr();
-}

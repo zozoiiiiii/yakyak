@@ -41,8 +41,8 @@ void RectangleComponent::Setup()
 	float x2 = x1 + pItem->GetWidth();
 	float y2 = y1 + pItem->GetHeight();
 
-	//x2 = x2 / IRender::Instance()->GetDeviceWidth();
-	//y2 = y2 / IRender::Instance()->GetDeviceHeight();
+	//x2 = x2 / IRender::Instance(GetMgr())->GetDeviceWidth();
+	//y2 = y2 / IRender::Instance(GetMgr())->GetDeviceHeight();
 	//x1 = SETX(x1);
 	//y1 = SETY(y1);
 	//x2 = SETX(x2);

@@ -5,7 +5,7 @@ void GUI::OnCreate(const VariantMap& args)
 {
 	FontManager::Instance()->Init(GetMgr());
 
-	m_pRender = IRender::Instance();
+	m_pRender = IRender::Instance(GetMgr());
 	m_pUIBatchGroup = m_pRender->GetUIBatchGroup();
 	m_pRenderContext = m_pUIBatchGroup->GetRenderContext();
 	m_pDeskTop = (Item*)GetMgr()->Create("Item");
