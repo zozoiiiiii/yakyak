@@ -18,7 +18,7 @@ class GUI : public IGUI
     YY_BEGIN(GUI, IGUI);
     YY_END
 public:
-	virtual void OnCreate(const VariantMap& args);
+	virtual void OnCreate();
 	virtual void OnDestroy();
 	virtual void ReSize(float w, float h);
 

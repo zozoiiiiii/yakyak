@@ -1,7 +1,7 @@
 #include "gui.h"
 #include "font/font_manager.h"
 
-void GUI::OnCreate(const VariantMap& args)
+void GUI::OnCreate()
 {
 	FontManager::Instance()->Init(GetMgr());
 

@@ -1,21 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<node class="Entity" name="">
-	<children>
-		<node class="Item" name="" height="100.000000" left="0.000000" top="0.000000" width="100.000000">
-			<components>
-				<node class="RectangleComponent"/>
-			</components>
-		</node>
-		<node class="Item" name="" height="100.000000" left="100.000000" top="0.000000" width="100.000000">
-			<components>
-				<node class="TextComponent"/>
-			</components>
-		</node>
-		<node class="Item" name="" height="100.000000" left="500.000000" top="0.000000" width="100.000000">
-			<components>
-				<node class="ImageComponent"/>
-			</components>
-		</node>
-	</children>
-</node>
-
+{
+    "Entity": {
+        "name": ""
+    }
+}

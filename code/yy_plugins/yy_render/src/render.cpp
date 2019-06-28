@@ -9,7 +9,7 @@
 #include "model/model_res.h"
 
 
-void Render::OnCreate(const VariantMap& args)
+void Render::OnCreate()
 {
     m_pQuad = NULL;
     m_pResMgr = (IResMgr*)GetMgr()->Create("ResMgr");

@@ -18,7 +18,7 @@ class BatchGroup : public IBatchGroup
     YY_BEGIN(BatchGroup, IBatchGroup);
     YY_END
 public:
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy();
     virtual void RenderAllBatch(IRender* pRender);
     virtual void ClearAllBatch();

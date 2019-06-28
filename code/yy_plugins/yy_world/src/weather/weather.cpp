@@ -6,9 +6,12 @@
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 
-void Weather::OnCreate(const VariantMap& args)
+void Weather::OnCreate()
 {
-	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->GetScene();
+	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->FindScene();
+	if (!pScene)
+		return;
+
     m_pRenderCxt = pScene->GetRenderCxt();
 
     //light

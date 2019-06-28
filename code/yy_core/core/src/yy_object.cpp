@@ -5,6 +5,191 @@
 
 NS_YY_BEGIN
 
+BaseObject* BaseObject::parseFromFile(IObjectMgr* pObjMgr, const std::string& file, YY_OBJECTID id)
+{
+	FILE* pFile = fopen(file.c_str(), "r");
+	if (nullptr == pFile)
+		return nullptr;
+
+	fseek(pFile, 0, SEEK_END);
+	int nSize = ftell(pFile);
+	fseek(pFile, 0, SEEK_SET);
+
+	YY::AutoMem<char, 512> buf(nSize);
+	fread(buf.GetBuf(), nSize, 1, pFile);
+	fclose(pFile);
+
+	return parseFrom(pObjMgr, buf.GetBuf(), id);
+}
+
+void BaseObject::parseFromObjectString(const std::string& data)
+{
+	Document doc;
+	doc.Parse(data.c_str());
+	if (!doc.IsObject())
+		return;
+
+	parseFromObject(&doc);
+}
+
+void BaseObject::parseFromObject(const rapidjson::Value* value)
+{
+	Value::ConstMemberIterator propertiesItr = value->FindMember("properties");
+	if (propertiesItr == value->MemberEnd())
+		return;
+
+
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+	MetaClass* pMetaClass = GetMetaClass();
+	YY::Var var;
+	const Value& properties = propertiesItr->value;
+	for (Value::ConstMemberIterator itr = properties.MemberBegin(); itr != properties.MemberEnd(); ++itr)
+	{
+		std::string key = itr->name.GetString();
+		MetaField* pMetaField = pMetaClass->FindMetaField(key.c_str());
+		if (!pMetaField)
+			continue;
+
+		if (!itr->value.IsObject())
+		{
+			// base variant
+			std::string strValue = itr->value.GetString();
+			var.SetType(pMetaField->var_type);
+			var.ParseFrom(strValue);
+			pReflectionMgr->SetBaseFieldVal(this, pMetaField, var);
+		}
+		else
+		{
+			// object
+			if (pMetaField->var_type != YVT_CLASS)
+				continue;
+
+			MetaClass* pSubMetaClass = pReflectionMgr->FindMetaClass(pMetaField->type_name);
+			if (!pSubMetaClass)
+				continue;
+
+			if (!pReflectionMgr->IsInstanceOf(pSubMetaClass, "BaseObject"))
+				continue;
+
+			BaseObject* pSubObject = (BaseObject*)pMetaField->Get(this);
+			pSubObject->parseFromObject(&itr->value);
+		}
+	}
+}
+
+BaseObject* BaseObject::parseFrom(IObjectMgr* pObjMgr, const std::string& data, YY_OBJECTID id)
+{
+	IReflectionMgr* pReflectionMgr = pObjMgr->GetReflectionMgr();
+	YY::Var var;
+	Document doc;
+	doc.Parse(data.c_str());
+	if (!doc.IsObject())
+		return nullptr;
+
+	Value::ConstMemberIterator classItr = doc.FindMember("class");
+	if (classItr == doc.MemberEnd())
+		return nullptr;
+
+	std::string strClass = classItr->value.GetString();
+	MetaClass* pMetaClass = pReflectionMgr->FindMetaClass(strClass.c_str());
+	if (!pMetaClass)
+		return nullptr;
+
+	BaseObject* pObject = pObjMgr->Create(strClass, id);
+	if (!pObject)
+		return nullptr;
+
+	pObject->parseFromObject(&doc);
+	return pObject;
+}
+
+
+bool BaseObject::serializeProperties(rapidjson::Document* doc, rapidjson::Value* pObject,MetaClass* pMetaClass, void* pInstance)
+{
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+	std::vector<MetaField*> fields;
+	pReflectionMgr->GetAllMetaField(pMetaClass->name, fields);
+	for (int i = 0; i < fields.size(); i++)
+	{
+		MetaField* pMetaField = fields[i];
+		std::string key = pMetaField->name;
+		rapidjson::Value rjKey(key.c_str(), doc->GetAllocator());
+
+		if (pMetaField->var_type == YVT_CLASS)
+		{
+ 			std::string strChildClassName = pMetaField->type_name;
+ 			void* pChildInstance = pMetaField->Get(pInstance);
+ 			MetaClass* pChildMetaClass = pReflectionMgr->FindMetaClass(strChildClassName);
+ 			if(!pChildMetaClass)
+ 				continue;
+
+			// this object should not hierarchy of BaseObject(consider as child), like vec3f
+			if (pReflectionMgr->IsInstanceOf(pChildMetaClass, "BaseObject"))
+				continue;
+
+			rapidjson::Value rjVal;
+			rjVal.SetObject();
+			serializeProperties(doc, &rjVal, pChildMetaClass, pChildInstance);
+			pObject->AddMember(rjKey, rjVal, doc->GetAllocator());
+		}
+		else
+		{
+			// property is base type
+			YY::Var value = pReflectionMgr->GetBaseFieldVal(pInstance, pMetaField);
+			std::string strFieldVal = value.SerializeTo();
+			rapidjson::Value rjVal(strFieldVal.c_str(), doc->GetAllocator());
+			pObject->AddMember(rjKey, rjVal, doc->GetAllocator());
+		}
+	}
+	return true;
+}
+
+void BaseObject::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* pObject)
+{
+	bool bResult = true;
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+	serializeProperties(doc, pObject, GetMetaClass(), this);
+	return;
+}
+
+
+
+std::string BaseObject::serializeTo()
+{
+	rapidjson::Document doc;
+	doc.SetObject();
+
+
+	rapidjson::Value objectVal;
+	objectVal.SetObject();
+	this->serializeObjectTo(&doc, &objectVal);
+
+	rapidjson::Value classVal(GetMetaClass()->name.c_str(), doc.GetAllocator());
+	doc.AddMember(classVal, objectVal, doc.GetAllocator());
+
+
+	rapidjson::StringBuffer strBuf;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(strBuf);
+	doc.Accept(writer);
+	return strBuf.GetString();
+}
+
+bool BaseObject::serializeToFile(const std::string& file)
+{
+	FILE* pFile = fopen(file.c_str(), "w");
+	if (!pFile)
+		return false;
+
+	std::string str = serializeTo();
+	fwrite(str.c_str(), str.length(), 1, pFile);
+	fclose(pFile);
+	return true;
+}
+
+
+
+
+/////////////////////////////////////////////////
 bool BaseObject::IsInstanceOf(const std::string& strClassName)
 {
 	IReflectionMgr* pReflectionMgr = GetMgr()->GetReflectionMgr();

@@ -24,7 +24,7 @@
 
 
 using namespace YY;
-void Demo::OnCreate(const VariantMap& args)
+void Demo::OnCreate()
 {
 	CreateTestUI();
 	CreateTestScene();
@@ -67,7 +67,7 @@ void Demo::CreateTestUI()
 		pMainEntity->AddChild(pItem);
 	}
 
-	pMainEntity->SerializeToFile("ttt.xml");
+	pMainEntity->serializeToFile("ttt.xml");
 
 
 

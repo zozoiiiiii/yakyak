@@ -4,7 +4,7 @@
 #include "yy_world/inc/i_world.h"
 
 
-void Comp_MeshRender::OnCreate(const VariantMap& args)
+void Comp_MeshRender::OnCreate()
 {}
 
 void Comp_MeshRender::OnDestroy()

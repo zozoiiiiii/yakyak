@@ -21,7 +21,7 @@ class Comp_Camera : public IComp_Camera
     YY_END
 public:
     ~Comp_Camera(){}
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy();
 
     // perspective projection£¨Õ∏ ”Õ∂”∞

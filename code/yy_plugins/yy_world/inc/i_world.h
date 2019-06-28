@@ -56,7 +56,7 @@ public:
     }
 
     virtual YY_OBJECTID GetSceneID() = 0;
-    virtual IScene* GetScene() = 0;
+    virtual IScene* FindScene() = 0;
     virtual void SetSceneID(YY_OBJECTID scene_id) = 0;
 //    virtual IEventMgr* GetEventMgr() = 0;
     //virtual IRender* GetRender() = 0;

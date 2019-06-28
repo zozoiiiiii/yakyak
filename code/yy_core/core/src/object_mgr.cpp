@@ -55,41 +55,26 @@ ObjectMgr::ObjectMgr():m_BaseObject_id_seed(10000)
 	m_pInputMgr = new InputMgr;
 }
 
-BaseObject* ObjectMgr::BeginCreate(const std::string& strClassName)
+BaseObject* ObjectMgr::Create(const std::string& strClassName, YY_OBJECTID id)
 {
-    // get unique BaseObject id
-    YY_OBJECTID newid = m_BaseObject_id_seed++;
+	// get unique BaseObject id
+	YY_OBJECTID newid = m_BaseObject_id_seed++;
 
-    MetaClass* pec = m_pReflectionMgr->FindMetaClass(strClassName);
-    throw_assert(pec!=NULL, "get creator from type:"<<strClassName<<" failed.");
-    throw_assert(NULL != pec->create_func, "cannot create this virtual class:"<<strClassName);
+	MetaClass* pec = m_pReflectionMgr->FindMetaClass(strClassName);
+	throw_assert(pec != NULL, "get creator from type:" << strClassName << " failed.");
+	throw_assert(NULL != pec->create_func, "cannot create this virtual class:" << strClassName);
 
-    BaseObject* pBaseObject = (BaseObject*)pec->create_func();
-    throw_assert(NULL != pBaseObject, "create BaseObject failed.");
-    pBaseObject->SetEntMgr(this);
-    pBaseObject->SetID(newid);
-    pBaseObject->SetCreator(pec);
+	BaseObject* pBaseObject = (BaseObject*)pec->create_func();
+	if (!pBaseObject)
+		return nullptr;
 
-    m_pEntities[newid] = pBaseObject;
-
-    return pBaseObject;
-}
-
-void ObjectMgr::EndCreate(BaseObject* pObject, const VariantMap& args)
-{
-	if (nullptr == pObject)
-		return;
-
-	pObject->OnCreate(args);
-	m_pEventMgr->Invoke(pObject->GetID(), "ObjectCreated", pObject->GetID());
-}
-
-
-BaseObject* ObjectMgr::Create(const std::string& strClassName, const VariantMap& args)
-{
-	YY::BaseObject* pObject = BeginCreate(strClassName);
-	EndCreate(pObject, args);
-	return pObject;
+	m_pEntities[newid] = pBaseObject;
+	pBaseObject->SetEntMgr(this);
+	pBaseObject->SetID(newid);
+	pBaseObject->SetCreator(pec);
+	pBaseObject->OnCreate();
+	m_pEventMgr->Invoke(pBaseObject->GetID(), "ObjectCreated", pBaseObject->GetID());
+	return pBaseObject;
 }
 
 

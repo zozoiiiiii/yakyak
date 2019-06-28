@@ -29,7 +29,7 @@ class GameObj : public IGameObj
 public:
     GameObj();
     virtual ~GameObj(){}
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy(){}
     virtual std::string GetName(){return m_name;}
     virtual void SetName(const std::string& name){m_name = name;}

@@ -9,6 +9,7 @@
 
 #include "core/inc/yy_entity.h"
 #include "yy_render/inc/i_batch.h"
+#include "yy_world/src/gameobj/transform.h"
 
 
 // texture offset
@@ -33,6 +34,18 @@
 #define COLOR_TREEITEM_HIGHLIGHT 0xFF3A3A3A
 
 //NS_YY_BEGIN
+class Item;
+class ItemComponent : public RenderComponent
+{
+	YY_BEGIN(ItemComponent, RenderComponent);
+	YY_FIELD(&ItemComponent::m_test, "test", "");
+	YY_END
+public:
+	Item* FindItem();
+private:
+	int m_test;
+};
+
 class Item : public YY::Entity
 {
 	YY_BEGIN(Item, Entity);
@@ -40,11 +53,12 @@ class Item : public YY::Entity
 	YY_FIELD(&Item::m_left, "left", "");
 	YY_FIELD(&Item::m_width, "width", "");
 	YY_FIELD(&Item::m_height, "height", "");
-	//YY_FIELD(&Item::m_pAnchorLayout, "anchor", "");
+	//YY_FIELD(&Item::m_pos, "pos", "");
+	YY_FIELD(&Item::m_transform, "transform", "");
 	YY_END
 public:
 	Item();
-	virtual void OnCreate(const VariantMap& args);
+	virtual void OnCreate();
 	virtual void OnDestroyed();
 
 
@@ -86,14 +100,12 @@ private:
 	int m_opacity;
 	bool m_visible;
 	bool m_bTransformChanged;
-	//Component* m_pAnchorLayout;
+	YY::Vec3f m_pos;
+	Transform m_transform;
 };
 
-class ItemComponent : public RenderComponent
-{
-	YY_BEGIN(ItemComponent, RenderComponent);
-	YY_END
-public:
-	Item* FindItem();
-};
 //NS_YY_END
+
+
+using namespace YY;
+YY_TYPEHELPER(ItemComponent, YVT_CLASS);

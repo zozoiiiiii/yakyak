@@ -109,7 +109,7 @@ class Demo : public YY::BaseObject
 
 public:
     virtual ~Demo(){}
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy();
     virtual void OnExcute(float sec);
 private:

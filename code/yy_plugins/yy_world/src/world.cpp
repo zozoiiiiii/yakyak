@@ -2,15 +2,19 @@
 #include "core/inc/yy_ObjectMgr.h"
 
 
-IScene* World::GetScene()
+IScene* World::FindScene()
 {
-    YY::BaseObject* pBaseObject = GetMgr()->Get(m_scene_id);
+    YY::BaseObject* pBaseObject = GetMgr()->Find(m_scene_id);
+	if (!pBaseObject)
+		return nullptr;
+
     bool result = pBaseObject->IsInstanceOf("Scene");
-    throw_assert(result, "type check.");
+	if (!result)
+		return nullptr;
     return (IScene*)pBaseObject;
 }
 
-void World::OnCreate(const VariantMap& args)
+void World::OnCreate()
 {
     //m_pEventMgr = (IEventMgr*)GetMgr()->Create("EventMgr");
     //m_pRender = (IRender*)GetMgr()->Create("Render");
@@ -26,7 +30,7 @@ void World::OnDestroy()
 void World::OnExcute(float sec)
 {
     // add batch groups
-    IScene* pScene = GetScene();
+    IScene* pScene = FindScene();
     //pScene->Update(sec);
     //pScene->Render();
 
@@ -39,6 +43,7 @@ void World::OnExcute(float sec)
 
 void World::onEvent_AddBatch(const char* name, const YY::VarList& args)
 {
-	IScene* pScene = GetScene();
-	pScene->Render();
+	IScene* pScene = FindScene();
+	if(pScene)
+		pScene->Render();
 }

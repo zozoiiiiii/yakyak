@@ -26,6 +26,7 @@ extern"C" __declspec(dllexport) void dll_main(YY::IObjectMgr* pEntMgr);
 void plugin_main_render(YY::IObjectMgr* pEntMgr)
 {
 	IReflectionMgr* pReflectionMgr = pEntMgr->GetReflectionMgr();
+	YY_REG(pReflectionMgr, BaseObject);
 	YY_REG(pReflectionMgr, Entity);
 	YY_REG(pReflectionMgr, Component);
 	YY_REG(pReflectionMgr, RenderComponent);

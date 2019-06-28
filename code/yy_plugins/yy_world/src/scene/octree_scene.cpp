@@ -63,8 +63,8 @@ IGameObj* OctreeScene::FindObjByName(const std::string& name)
     for(int i=0; i<nSize; i++)
     {
         YY_OBJECTID id = m_objList[i];
-        IGameObj* pGameObj = (IGameObj*)GetMgr()->Get(id);
-        if(pGameObj->GetName() == name)
+        IGameObj* pGameObj = (IGameObj*)GetMgr()->Find(id);
+        if(pGameObj && pGameObj->GetName() == name)
             return pGameObj;
     }
 

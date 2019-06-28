@@ -8,9 +8,9 @@ Item::Item()
 {}
 
 
-void Item::OnCreate(const VariantMap& args)
+void Item::OnCreate()
 {
-	Entity::OnCreate(args);
+	Entity::OnCreate();
 
 	//AddComponent("AnchorFillComponent");
 	//m_pAnchorLayout = AddComponent("AnchorLayoutComponent");

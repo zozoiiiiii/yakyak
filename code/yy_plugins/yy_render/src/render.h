@@ -19,7 +19,7 @@ class Render : public IRender
 	YY_FIELD(&Render::m_nWinHeight, "height", "");
     YY_END
 public:
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
 	virtual void OnDestroy();
 	virtual void OnExcute(float sec);
 

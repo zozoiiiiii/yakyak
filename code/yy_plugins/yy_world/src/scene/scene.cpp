@@ -13,7 +13,7 @@
 //#include "freeimage/include/freeimage.h"
 
 
-void Scene::OnCreate(const VariantMap& args)
+void Scene::OnCreate()
 {
     //FreeImage_Initialise();
 	m_pMainCamera = nullptr;
@@ -74,7 +74,10 @@ void Scene::Update(float sec)
     for(int i=0; i<nSize; i++)
     {
         YY_OBJECTID id = visibleList[i];
-        YY::BaseObject* pBaseObject = GetMgr()->Get(id);
+        YY::BaseObject* pBaseObject = GetMgr()->Find(id);
+		if (!pBaseObject)
+			return;
+
         bool bRet = pBaseObject->IsInstanceOf("GameObj");
         throw_assert(bRet, "type check.");
         IGameObj* pGameObj = (IGameObj*)pBaseObject;
@@ -150,7 +153,10 @@ void Scene::VisitAllObjs()
 	for(int i=0; i<nSize; i++)
 	{
 		YY_OBJECTID id = GetVisibleObjByID(i);
-		YY::BaseObject* pBaseObject = GetMgr()->Get(id);
+		YY::BaseObject* pBaseObject = GetMgr()->Find(id);
+		if (!pBaseObject)
+			return;
+
 		bool bRet = pBaseObject->IsInstanceOf("GameObj");
 		throw_assert(bRet, "type check.");
 		IGameObj* pGameObj = (IGameObj*)pBaseObject;

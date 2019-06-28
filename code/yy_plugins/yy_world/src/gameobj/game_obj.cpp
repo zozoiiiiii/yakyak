@@ -10,7 +10,7 @@ GameObj::GameObj()
 }
 
 
-void GameObj::OnCreate(const VariantMap& args)
+void GameObj::OnCreate()
 {}
 
 IRender* GameObj::GetRender()

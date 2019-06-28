@@ -26,7 +26,7 @@ class Scene : public IScene
     YY_END
 public:
     Scene(){}
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy();
     virtual void OnExcute(float sec){}
 

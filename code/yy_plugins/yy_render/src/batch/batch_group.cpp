@@ -1,7 +1,7 @@
 #include "batch_group.h"
 
 
-void BatchGroup::OnCreate(const VariantMap& args)
+void BatchGroup::OnCreate()
 {
     m_pRenderContext = new RenderContext;
 }

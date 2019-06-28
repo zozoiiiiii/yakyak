@@ -201,12 +201,12 @@ bool Entity::parseComponents(const xml_node* pNode)
 			continue;
 		}
 
-		if (!parseProperties(pComponentNode, pComponent))
-		{
-			bResult = false;
-			pComponentNode = pComponentNode->next_sibling();
-			continue;
-		}
+		//if (!parseProperties(pComponentNode, pComponent))
+		//{
+			//bResult = false;
+			//pComponentNode = pComponentNode->next_sibling();
+			//continue;
+		//}
 
 		pComponentNode = pComponentNode->next_sibling();
 	}
@@ -236,8 +236,8 @@ Entity* Entity::parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode)
 
 	Entity* pEntity = (Entity*)pObject;
 	bool bResult = true;
-	if (!pEntity->parseProperties(pNode, pEntity))
-		bResult = false;
+	//if (!pEntity->parseProperties(pNode, pEntity))
+		//bResult = false;
 
 	if (!pEntity->parseChildren(pNode))
 		bResult = false;
@@ -250,36 +250,36 @@ Entity* Entity::parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode)
 
 
 
-
-std::string Entity::SerializeTo()
-{
-	throw_assert(GetMetaClass() && GetMgr(), "null check.");
-
-	xml_document doc;
-	xml_node * decl = doc.allocate_node(rapidxml::node_declaration);
-	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
-	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
-	doc.append_node(decl);
-
-
-	// object node
-	xml_node* pRootNode = doc.allocate_node(rapidxml::node_element, doc.allocate_string("node"));
-	serializeToNode(&doc, pRootNode);
-	doc.append_node(pRootNode);
-
-	std::string xmlText;
-	rapidxml::print(std::back_inserter(xmlText), doc, 0);
-	return xmlText;
-}
-
-void Entity::SerializeToFile(const std::string& file)
-{
-	FILE* pFile = fopen(file.c_str(), "w");
-	throw_assert(NULL != pFile, "create file:" << file << "errno:%d" << errno);
-	std::string str = SerializeTo();
-	fwrite(str.c_str(), str.length(), 1, pFile);
-	fclose(pFile);
-}
+// 
+// std::string Entity::SerializeTo()
+// {
+// 	throw_assert(GetMetaClass() && GetMgr(), "null check.");
+// 
+// 	xml_document doc;
+// 	xml_node * decl = doc.allocate_node(rapidxml::node_declaration);
+// 	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+// 	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
+// 	doc.append_node(decl);
+// 
+// 
+// 	// object node
+// 	xml_node* pRootNode = doc.allocate_node(rapidxml::node_element, doc.allocate_string("node"));
+// 	serializeToNode(&doc, pRootNode);
+// 	doc.append_node(pRootNode);
+// 
+// 	std::string xmlText;
+// 	rapidxml::print(std::back_inserter(xmlText), doc, 0);
+// 	return xmlText;
+// }
+// 
+// void Entity::SerializeToFile(const std::string& file)
+// {
+// 	FILE* pFile = fopen(file.c_str(), "w");
+// 	throw_assert(NULL != pFile, "create file:" << file << "errno:%d" << errno);
+// 	std::string str = SerializeTo();
+// 	fwrite(str.c_str(), str.length(), 1, pFile);
+// 	fclose(pFile);
+// }
 
 
 
@@ -411,6 +411,33 @@ bool Entity::serializeProperties(BaseObject* pObject, xml_document* pDoc, xml_no
 
 
 
+
+void Entity::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value)
+{
+	BaseObject::serializeObjectTo(doc, value);
+	//serializeComponents(doc, value);
+	//serializeChildren(doc, value);
+}
+
+
+bool Entity::serializeComponents(rapidjson::Document* doc, rapidjson::Value* value)
+{
+	return true;
+}
+
+bool Entity::serializeChildren(rapidjson::Document* doc, rapidjson::Value* value)
+{
+	int nChildCnt = GetChildCount();
+	if (nChildCnt <= 0)
+		return true;
+
+	bool bResult = true;
+
+	// children node
+
+	return true;
+}
+
 bool Entity::serializeToNode(xml_document* pDoc, xml_node* pObjectNode)
 {
 	if (NULL == pDoc || NULL == pObjectNode)
@@ -437,51 +464,51 @@ bool Entity::serializeToNode(xml_document* pDoc, xml_node* pObjectNode)
 
 
 
-void Entity::OnCreate(const VariantMap& args)
+void Entity::OnCreate()
 {
-	BaseObject::OnCreate(args);
+	BaseObject::OnCreate();
 
-	YY_OBJECTID parent = YY_INVALID_OBJECTID;
-	YY_OBJECTID prev = YY_INVALID_OBJECTID;
-	YY_OBJECTID next = YY_INVALID_OBJECTID;
-	auto itor = args.find(PROP_ENTITY_PARENT);
-	if (itor != args.end())
-		parent = itor->second.GetInt64();
-
-	itor = args.find(PROP_ENTITY_PREV);
-	if (itor != args.end())
-		prev = itor->second.GetInt64();
-
-	itor = args.find(PROP_ENTITY_NEXT);
-	if (itor != args.end())
-		next = itor->second.GetInt64();
-
-	BaseObject* pParent = GetMgr()->Find(parent);
-	BaseObject* pPrev = GetMgr()->Find(prev);
-	BaseObject* pNext = GetMgr()->Find(next);
-	if (nullptr != pParent)
-	{
-		if (!pParent->IsInstanceOf("Entity"))
-			return;
-
-		Entity* pParentEntity = (Entity*)pParent;
-		if (pPrev)
-		{
-			if (!pPrev->IsInstanceOf("Entity"))
-				return;
-
-			pParentEntity->InsertAfter(this, (Entity*)pPrev);
-		}
-		else if (pNext)
-		{
-			if (!pNext->IsInstanceOf("Entity"))
-				return;
-
-			pParentEntity->InsertBefore(this, (Entity*)pNext);
-		}
-		else
-				pParentEntity->AddChild(this);
-	}
+// 	YY_OBJECTID parent = YY_INVALID_OBJECTID;
+// 	YY_OBJECTID prev = YY_INVALID_OBJECTID;
+// 	YY_OBJECTID next = YY_INVALID_OBJECTID;
+// 	auto itor = args.find(PROP_ENTITY_PARENT);
+// 	if (itor != args.end())
+// 		parent = itor->second.GetInt64();
+// 
+// 	itor = args.find(PROP_ENTITY_PREV);
+// 	if (itor != args.end())
+// 		prev = itor->second.GetInt64();
+// 
+// 	itor = args.find(PROP_ENTITY_NEXT);
+// 	if (itor != args.end())
+// 		next = itor->second.GetInt64();
+// 
+// 	BaseObject* pParent = GetMgr()->Find(parent);
+// 	BaseObject* pPrev = GetMgr()->Find(prev);
+// 	BaseObject* pNext = GetMgr()->Find(next);
+// 	if (nullptr != pParent)
+// 	{
+// 		if (!pParent->IsInstanceOf("Entity"))
+// 			return;
+// 
+// 		Entity* pParentEntity = (Entity*)pParent;
+// 		if (pPrev)
+// 		{
+// 			if (!pPrev->IsInstanceOf("Entity"))
+// 				return;
+// 
+// 			pParentEntity->InsertAfter(this, (Entity*)pPrev);
+// 		}
+// 		else if (pNext)
+// 		{
+// 			if (!pNext->IsInstanceOf("Entity"))
+// 				return;
+// 
+// 			pParentEntity->InsertBefore(this, (Entity*)pNext);
+// 		}
+// 		else
+// 				pParentEntity->AddChild(this);
+// 	}
 }
 
 void Entity::OnDestroyed()
@@ -493,7 +520,7 @@ void Entity::OnDestroyed()
 
 Entity* Entity::Duplicate()
 {
-	std::string str = SerializeTo();
+	std::string str = serializeTo();
 	return Entity::parseFrom(GetMgr(), str);
 }
 

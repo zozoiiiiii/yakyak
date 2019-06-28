@@ -28,7 +28,7 @@ class Comp_MeshRender : public IComp_MeshRender
 public:
     Comp_MeshRender():m_mesh(NULL),m_skele(NULL){}
     ~Comp_MeshRender(){}
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy();
 	virtual void OnRender(IRender* pRender, RenderContext* pCxt);
 	//virtual void OnRender(RenderContext* pCxt);

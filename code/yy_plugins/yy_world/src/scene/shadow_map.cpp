@@ -6,11 +6,14 @@
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 
-void ShadowMap::OnCreate(const VariantMap& args)
+void ShadowMap::OnCreate()
 {
     // disable shadow default.
     m_bEnableShadow = false;
-	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->GetScene();
+	Scene* pScene = (Scene*)IWorld::Instance(GetMgr())->FindScene();
+	if (!pScene)
+		return;
+
     m_pRender = pScene->GetRender();
 
 
@@ -51,7 +54,10 @@ void ShadowMap::GenerateShadowMap(std::vector<YY_OBJECTID>& objs, RenderContext*
     for(int i=0; i<nSize; i++)
     {
         YY_OBJECTID id = objs[i];
-        YY::BaseObject* pBaseObject = GetMgr()->Get(id);
+        YY::BaseObject* pBaseObject = GetMgr()->Find(id);
+		if(!pBaseObject)
+			continue;
+
         bool bRet = pBaseObject->IsInstanceOf("GameObj");
         throw_assert(bRet, "type check.");
         IGameObj* pGameObj = (IGameObj*)pBaseObject;

@@ -31,7 +31,7 @@ class Weather : public YY::BaseObject
     YY_BEGIN(Weather, "BaseObject");
     YY_END
 public:
-    virtual void OnCreate(const VariantMap& args);
+    virtual void OnCreate();
     virtual void OnDestroy(){}
     DirLight* GetDirLight(){return m_pDirLight;}
     AmbientLight* GetAmbientLight(){return m_pLight_Ambient;}
