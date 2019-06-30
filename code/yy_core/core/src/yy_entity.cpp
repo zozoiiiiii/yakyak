@@ -3,271 +3,112 @@
 
 NS_YY_BEGIN
 
-bool Entity::parseProperties(const xml_node* pNode, BaseObject* pObject)
+bool Entity::parseFromObject(const rapidjson::Value* pObject)
 {
-	bool result = true;
-
-	MetaClass* pMetaClass = pObject->GetMetaClass();
-	xml_attribute* pAttribute = pNode->first_attribute();
-	while (pAttribute)
-	{		
-		std::string key = pAttribute->name();
-		std::string value = pAttribute->value();
-
-		std::vector<std::string> splits;
-		YY::Split(splits, key, ".");
-		if (splits.size() >= 2)
-		{
-			if (splits.size() != 2)
-			{
-				result = false;
-				pAttribute = pAttribute->next_attribute();
-				continue;
-			}
-
-			std::string className = splits[0];
-			std::string fieldName = splits[1];
-			void* pInstance = nullptr;
-			pObject->GetFieldVal(className.c_str(), pInstance);
-			MetaField* pMetaField = GetReflectionMgr()->FindMetaFieldFromAll(className, fieldName);
-			if (nullptr == pMetaField)
-			{
-				result = false;
-				pAttribute = pAttribute->next_attribute();
-				continue;
-			}
-
-			YY::Var var;
-			var.SetType(pMetaField->var_type);
-			var.ParseFrom(value);
-			GetReflectionMgr()->SetBaseFieldVal(pInstance, pMetaField, var);
-			
-		}
-		else
-		{
-			// skip this property
-			if (key == "class")
-			{
-				pAttribute = pAttribute->next_attribute();
-				continue;
-			}
-
-			MetaField* pMetaField = GetReflectionMgr()->FindMetaFieldFromAll(pMetaClass->name, key);
-			if (nullptr == pMetaField)
-			{
-				result = false;
-				pAttribute = pAttribute->next_attribute();
-				continue;
-			}
-
-			YY::Var var;
-			var.SetType(pMetaField->var_type);
-			var.ParseFrom(value);
-			GetMgr()->GetReflectionMgr()->SetBaseFieldVal(pObject, pMetaField, var);
-		}
-
-		pAttribute = pAttribute->next_attribute();
-	}
-	return result;
-}
-
-bool Entity::parseChildren(const xml_node* pNode)
-{
-	if (nullptr == pNode)
+	if (!BaseObject::parseFromObject(pObject))
 		return false;
 
-	xml_node* pChildrenNode = pNode->first_node("children");
-	if (nullptr == pChildrenNode)
+
+	if (!parseFromComponents(pObject))
+		return false;
+
+	if (!parseFromChildren(pObject))
+		return false;
+
+	return true;
+}
+
+
+bool Entity::parseFromComponents(const rapidjson::Value* pObject)
+{
+	return true;
+}
+
+bool Entity::parseFromChildren(const rapidjson::Value* pObject)
+{
+	Value::ConstMemberIterator childrenItr = pObject->FindMember("children");
+	if (childrenItr == pObject->MemberEnd())
 		return true;
 
-	bool bResult = true;
-	xml_node* pChildNode = pChildrenNode->first_node();
-	while (pChildNode)
+
+	bool bRet = true;
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+	const Value* children = &childrenItr->value;
+	for (Value::ConstMemberIterator itr = children->MemberBegin(); itr != children->MemberEnd(); ++itr)
 	{
-		Entity* pChildEntity = parseFromNode(GetMgr(), pChildNode);
-		if(!pChildEntity)
+		std::string key = itr->name.GetString();
+		const rapidjson::Value* pChildValue = &itr->value;
+
+		// new entity
+		BaseObject* pChildObject = GetMgr()->Create(key);
+		if (!pChildObject)
 		{
-			bResult = false;
-			pChildNode = pChildNode->next_sibling();
+			bRet = false;
+			continue;
+		}
+
+		if (!pChildObject->IsInstanceOf("Entity"))
+		{
+			GetMgr()->Destroy(pChildObject->GetID());
+			bRet = false;
+			continue;
+		}
+
+		Entity* pChildEntity = (Entity*)pChildObject;
+		if (!pChildEntity->parseFromObject(pChildValue))
+		{
+			bRet = false;
 			continue;
 		}
 
 		AddChild(pChildEntity);
-		pChildNode = pChildNode->next_sibling();
 	}
 
-	return bResult;
+	return bRet;
 }
 
-bool Entity::parseComponents(const xml_node* pNode)
+
+
+bool Entity::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* pObject)
 {
-	if (nullptr == pNode)
+	if (!BaseObject::serializeObjectTo(doc, pObject))
 		return false;
 
-	xml_node* pComponentsNode = pNode->first_node("components");
-	if (nullptr == pComponentsNode)
-		return true;
-
-	bool bResult = true;
-	xml_node* pComponentNode = pComponentsNode->first_node();
-	while (pComponentNode)
-	{
-		xml_attribute* pAttribute = pComponentNode->first_attribute("class");
-		if (nullptr == pAttribute)
-			return false;
-
-		std::string className = pAttribute->value();
-		YY::Component* pComponent = AddComponent(className);
-		if (!pComponent)
-		{
-			bResult = false;
-			pComponentNode = pComponentNode->next_sibling();
-			continue;
-		}
-
-		//if (!parseProperties(pComponentNode, pComponent))
-		//{
-			//bResult = false;
-			//pComponentNode = pComponentNode->next_sibling();
-			//continue;
-		//}
-
-		pComponentNode = pComponentNode->next_sibling();
-	}
-
-	return bResult;
-}
-
-bool Entity::parseFromObject(const rapidjson::Value* value)
-{
-	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
-	Value::ConstMemberIterator propertiesItr = value->FindMember("properties");
-	if (propertiesItr == value->MemberEnd())
+	if (!serializeComponents(doc, pObject))
 		return false;
 
-	const Value& properties = propertiesItr->value;
-	return parseFromProperties(&properties, GetMetaClass(), this);
+	if (!serializeChildren(doc, pObject))
+		return false;
+
+	return true;
 }
 
 
-Entity* Entity::parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode)
+bool Entity::serializeComponents(rapidjson::Document* doc, rapidjson::Value* pObject)
 {
-	if (nullptr == pNode)
-		return nullptr;
-
-	xml_attribute* pAttribute = pNode->first_attribute("class");
-	if (nullptr == pAttribute)
-	 	return nullptr;
-	 
-	std::string className = pAttribute->value();
-	BaseObject* pObject = pObjMgr->Create(className);
-	if (!pObject)
-	 	return nullptr;
-
-	if (!pObject->IsInstanceOf("Entity"))
-	{
-		pObjMgr->Destroy(pObject->GetID());
-		return nullptr;
-	}
-
-	Entity* pEntity = (Entity*)pObject;
-	bool bResult = true;
-	//if (!pEntity->parseProperties(pNode, pEntity))
-		//bResult = false;
-
-	if (!pEntity->parseChildren(pNode))
-		bResult = false;
-
-	if (!pEntity->parseComponents(pNode))
-		bResult = false;
-
-	return pEntity;
+	return true;
 }
 
-
-
-// 
-// std::string Entity::SerializeTo()
-// {
-// 	throw_assert(GetMetaClass() && GetMgr(), "null check.");
-// 
-// 	xml_document doc;
-// 	xml_node * decl = doc.allocate_node(rapidxml::node_declaration);
-// 	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
-// 	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
-// 	doc.append_node(decl);
-// 
-// 
-// 	// object node
-// 	xml_node* pRootNode = doc.allocate_node(rapidxml::node_element, doc.allocate_string("node"));
-// 	serializeToNode(&doc, pRootNode);
-// 	doc.append_node(pRootNode);
-// 
-// 	std::string xmlText;
-// 	rapidxml::print(std::back_inserter(xmlText), doc, 0);
-// 	return xmlText;
-// }
-// 
-// void Entity::SerializeToFile(const std::string& file)
-// {
-// 	FILE* pFile = fopen(file.c_str(), "w");
-// 	throw_assert(NULL != pFile, "create file:" << file << "errno:%d" << errno);
-// 	std::string str = SerializeTo();
-// 	fwrite(str.c_str(), str.length(), 1, pFile);
-// 	fclose(pFile);
-// }
-
-
-
-
-
-bool Entity::serializeComponents(xml_document* pDoc, xml_node* pObjectNode)
-{
-	if (m_components.empty())
-		return true;
-
-	bool bResult = true;
-	xml_node* pComponentsNode = pDoc->allocate_node(rapidxml::node_element, pDoc->allocate_string("components"));
-	pObjectNode->append_node(pComponentsNode);
-	auto itor = m_components.begin();
-	for (; itor != m_components.end(); itor++)
-	{
-		xml_node* pTmpNode = pDoc->allocate_node(rapidxml::node_element, pDoc->allocate_string("node"));
-		Component* pComponent = itor->second;
-		if (!serializeProperties(pComponent, pDoc, pTmpNode))
-		{
-			bResult = false;
-			continue;
-		}
-
-		pComponentsNode->append_node(pTmpNode);
-	}
-
-	return bResult;
-}
-
-
-bool Entity::serializeChildren(xml_document* pDoc, xml_node* pObjectNode)
+bool Entity::serializeChildren(rapidjson::Document* doc, rapidjson::Value* pObject)
 {
 	int nChildCnt = GetChildCount();
 	if (nChildCnt <= 0)
 		return true;
 
 	bool bResult = true;
+	rapidjson::Value children;
+	children.SetObject();
 
-	// children node
-	xml_node* pChildrenNode = pDoc->allocate_node(rapidxml::node_element, pDoc->allocate_string("children"));
-	pObjectNode->append_node(pChildrenNode);
-
-	for (int i = 0; i < nChildCnt; i++)
+	for (int i=0; i<m_children.size(); i++)
 	{
-		YY_OBJECTID id = GetChildByIndex(i);
+		YY_OBJECTID id = m_children[i];
 		BaseObject* pChildObject = GetMgr()->Find(id);
-		if (nullptr == pChildObject)
+		if (!pChildObject)
 		{
 			bResult = false;
 			continue;
 		}
+
 
 		if (!pChildObject->IsInstanceOf("Entity"))
 		{
@@ -276,136 +117,22 @@ bool Entity::serializeChildren(xml_document* pDoc, xml_node* pObjectNode)
 		}
 
 		Entity* pChildEntity = (Entity*)pChildObject;
-		xml_node* pTmpNode = pDoc->allocate_node(rapidxml::node_element, pDoc->allocate_string("node"));
-		//xml_attribute* pAttribute = pDoc->allocate_attribute(pDoc->allocate_string("class"), pDoc->allocate_string(pChildEntity->GetMetaClass()->name.c_str()));
-		//pTmpNode->append_attribute(pAttribute);
 
-		pChildEntity->serializeToNode(pDoc, pTmpNode);
-		pChildrenNode->append_node(pTmpNode);
+		rapidjson::Value subValue;
+		subValue.SetObject();
+		if(!pChildEntity->serializeObjectTo(doc, &subValue))
+		{
+			bResult = false;
+			continue;
+		}
+
+		rapidjson::Value subKey(pChildEntity->GetMetaClass()->name.c_str(), doc->GetAllocator());
+		children.AddMember(subKey, subValue, doc->GetAllocator());
 	}
 
+	pObject->AddMember("children", children, doc->GetAllocator());
 	return bResult;
 }
-
-bool Entity::serializeProperties(BaseObject* pObject, xml_document* pDoc, xml_node* pObjectNode)
-{
-	if (NULL == pDoc || NULL == pObject || nullptr == pObjectNode)
-		return false;
-
-	bool bResult = true;
-	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
-	MetaClass* pMetaClass = pObject->GetMetaClass();
-
-	// class name
-	xml_attribute* pAttributeKey = pDoc->allocate_attribute("class", pDoc->allocate_string(pMetaClass->name.c_str()));
-	pObjectNode->append_attribute(pAttributeKey);
-
-	std::vector<MetaField*> fields;
-	pReflectionMgr->GetAllMetaField(pMetaClass->name, fields);
-	for (int i=0; i<fields.size(); i++)
-	{
-		MetaField* pMetaField = fields[i];
-		std::string key = pMetaField->name;
-
-		if (pMetaField->var_type == YVT_CLASS)
-		{
-			// property is object
-			std::string className = pMetaField->type_name;
-			void* pInstance = pMetaField->Get(this);
-
-			MetaClass* pChildInstanceMetaClass = pReflectionMgr->FindMetaClass(className);
-			throw_assert(NULL != pChildInstanceMetaClass, "null check.");
-			auto itor = pChildInstanceMetaClass->fields.begin();
-			for (; itor != pChildInstanceMetaClass->fields.end(); itor++)
-			{
-				MetaField* pField = itor->second;
-				if (pField->var_type == YVT_CLASS)	// not support
-				{
-					bResult = false;
-					continue;
-				}
-
-				YY::Var value = pReflectionMgr->GetBaseFieldVal(pInstance, pField);
-				std::string strFieldVal = value.SerializeTo(); //getStr(pMetaField->var_type, pFieldVal);
-				std::string name = className + "." + pField->name;
-				xml_attribute* pAttributeKey = pDoc->allocate_attribute(pDoc->allocate_string(name.c_str()), pDoc->allocate_string(strFieldVal.c_str()));
-				pObjectNode->append_attribute(pAttributeKey);
-			}
-		}
-		else
-		{
-			// normal property node
-			YY::Var value = pReflectionMgr->GetBaseFieldVal(pObject, pMetaField);
-			std::string strFieldVal = value.SerializeTo(); //getStr(pMetaField->var_type, pFieldVal);
-			xml_attribute* pAttributeKey = pDoc->allocate_attribute(pDoc->allocate_string(key.c_str()), pDoc->allocate_string(strFieldVal.c_str()));
-			pObjectNode->append_attribute(pAttributeKey);
-		}
-	}
-
-	return bResult;
-}
-
-
-
-
-bool Entity::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* pObject)
-{
-	bool bResult = true;
-	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
-
-	// serialize properties data
-	rapidjson::Value properties;
-	properties.SetObject();
-	if (!serializeToProperties(doc, &properties, GetMetaClass(), this))
-		return false;
-
-	// add properties to target
-	pObject->AddMember("properties", properties, doc->GetAllocator());
-	return true;
-}
-
-
-bool Entity::serializeComponents(rapidjson::Document* doc, rapidjson::Value* value)
-{
-	return true;
-}
-
-bool Entity::serializeChildren(rapidjson::Document* doc, rapidjson::Value* value)
-{
-	int nChildCnt = GetChildCount();
-	if (nChildCnt <= 0)
-		return true;
-
-	bool bResult = true;
-
-	// children node
-
-	return true;
-}
-
-bool Entity::serializeToNode(xml_document* pDoc, xml_node* pObjectNode)
-{
-	if (NULL == pDoc || NULL == pObjectNode)
-		return false;
-
-	bool bResult = true;
-	if (!serializeProperties(this, pDoc, pObjectNode))
-		bResult = false;
-
-	if (!serializeComponents(pDoc, pObjectNode))
-		bResult = false;
-
-	if (!serializeChildren(pDoc, pObjectNode))
-		bResult = false;
-	return bResult;
-}
-
-
-
-
-
-
-
 
 
 

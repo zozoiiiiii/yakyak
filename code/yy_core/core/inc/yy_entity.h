@@ -89,30 +89,18 @@ public:
 
 	void InvokeEvent(const std::string& event, const YY::VarList& args = YY::VarList());
 	virtual void OnEvent(const std::string& event, const YY::VarList& args = YY::VarList()) {}
-
-
-	// whether the first time to render.
-	//virtual bool FirstRender() { return m_bFirstRender; }
-
 private:
+	// parse from
 	virtual bool parseFromObject(const rapidjson::Value* value);
-	static Entity* parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode);
-	bool parseProperties(const xml_node* pNode, BaseObject* pObject);
-	bool parseChildren(const xml_node* pNode);
-	bool parseComponents(const xml_node* pNode);
+	bool parseFromComponents(const rapidjson::Value* value);
+	bool parseFromChildren(const rapidjson::Value* value);
 
+	// serialize to
 	virtual bool serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
 	bool serializeComponents(rapidjson::Document* doc, rapidjson::Value* value);
 	bool serializeChildren(rapidjson::Document* doc, rapidjson::Value* value);
-
-	bool serializeToNode(xml_document* pDoc, xml_node* pObjectNode);
-	bool serializeComponents(xml_document* pDoc, xml_node* pObjectNode);
-	bool serializeChildren(xml_document* pDoc, xml_node* pObjectNode);
-	bool serializeProperties(BaseObject* pObject, xml_document* pDoc, xml_node* pObjectNode);
 private:
-	//bool m_bFirstRender;
 	std::string m_name;
-	//IRender* m_pRender;
 	YY_OBJECTID m_parent;
 	std::vector<YY_OBJECTID> m_children;
 	std::map<std::string, Component*> m_components;

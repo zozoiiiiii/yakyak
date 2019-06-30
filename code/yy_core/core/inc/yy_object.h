@@ -96,7 +96,7 @@ protected:
 	virtual bool serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
 
 	// property object should not contain baseobject(can used as child), like vec3f
-	virtual bool serializeToProperties(rapidjson::Document* doc, rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
+	virtual bool serializeProperties(rapidjson::Document* doc, rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
 	virtual bool parseFromProperties(const rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
 private:
     void SetEntMgr(IObjectMgr* pMgr){m_pObjectMgr=pMgr;}

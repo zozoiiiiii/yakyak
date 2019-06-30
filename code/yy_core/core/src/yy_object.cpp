@@ -32,19 +32,20 @@ void BaseObject::parseFromObjectString(const std::string& data)
 	parseFromObject(&doc);
 }
 
-bool BaseObject::parseFromObject(const rapidjson::Value* value)
+bool BaseObject::parseFromObject(const rapidjson::Value* pObject)
 {
 	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
-	Value::ConstMemberIterator propertiesItr = value->FindMember("properties");
-	if (propertiesItr == value->MemberEnd())
-		return false;
-
-	const Value& properties = propertiesItr->value;
-	return parseFromProperties(&properties, GetMetaClass(), this);
+	return parseFromProperties(pObject, GetMetaClass(), this);
 }
 
-bool BaseObject::parseFromProperties(const rapidjson::Value* properties, MetaClass* pMetaClass, void* pInstance)
+bool BaseObject::parseFromProperties(const rapidjson::Value* pObject, MetaClass* pMetaClass, void* pInstance)
 {
+	Value::ConstMemberIterator propertiesItr = pObject->FindMember("properties");
+	if (propertiesItr == pObject->MemberEnd())
+		return true;
+
+	const Value* properties = &propertiesItr->value;
+
 	bool bRet = true;
 	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
 	YY::Var var;
@@ -131,8 +132,11 @@ BaseObject* BaseObject::parseFrom(IObjectMgr* pObjMgr, const std::string& data, 
 }
 
 
-bool BaseObject::serializeToProperties(rapidjson::Document* doc, rapidjson::Value* pObject,MetaClass* pMetaClass, void* pInstance)
+bool BaseObject::serializeProperties(rapidjson::Document* doc, rapidjson::Value* pObject,MetaClass* pMetaClass, void* pInstance)
 {
+	rapidjson::Value properties;
+	properties.SetObject();
+
 	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
 	std::vector<MetaField*> fields;
 	pReflectionMgr->GetAllMetaField(pMetaClass->name, fields);
@@ -156,8 +160,8 @@ bool BaseObject::serializeToProperties(rapidjson::Document* doc, rapidjson::Valu
 
 			rapidjson::Value rjVal;
 			rjVal.SetObject();
-			serializeToProperties(doc, &rjVal, pChildMetaClass, pChildInstance);
-			pObject->AddMember(rjKey, rjVal, doc->GetAllocator());
+			serializeProperties(doc, &rjVal, pChildMetaClass, pChildInstance);
+			properties.AddMember(rjKey, rjVal, doc->GetAllocator());
 		}
 		else
 		{
@@ -165,9 +169,11 @@ bool BaseObject::serializeToProperties(rapidjson::Document* doc, rapidjson::Valu
 			YY::Var value = pReflectionMgr->GetBaseFieldVal(pInstance, pMetaField);
 			std::string strFieldVal = value.SerializeTo();
 			rapidjson::Value rjVal(strFieldVal.c_str(), doc->GetAllocator());
-			pObject->AddMember(rjKey, rjVal, doc->GetAllocator());
+			properties.AddMember(rjKey, rjVal, doc->GetAllocator());
 		}
 	}
+
+	pObject->AddMember("properties", properties, doc->GetAllocator());
 	return true;
 }
 
@@ -177,13 +183,9 @@ bool BaseObject::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* p
 	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
 
 	// serialize properties data
-	rapidjson::Value properties;
-	properties.SetObject();
-	if (!serializeToProperties(doc, &properties, GetMetaClass(), this))
+	if (!serializeProperties(doc, pObject, GetMetaClass(), this))
 		return false;
 
-	// add properties to target
-	pObject->AddMember("properties", properties, doc->GetAllocator());
 	return true;
 }
 
@@ -199,8 +201,8 @@ std::string BaseObject::serializeTo()
 	if (!serializeObjectTo(&doc, &objectVal))
 		return false;
 
-	rapidjson::Value classVal(GetMetaClass()->name.c_str(), doc.GetAllocator());
-	doc.AddMember(classVal, objectVal, doc.GetAllocator());
+	rapidjson::Value key(GetMetaClass()->name.c_str(), doc.GetAllocator());
+	doc.AddMember(key, objectVal, doc.GetAllocator());
 
 
 	// convert rapidjson into string

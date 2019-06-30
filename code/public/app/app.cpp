@@ -64,14 +64,6 @@ void App::Open(float width, float height, const std::string& resPath)
     //}catch(YY::AssertFailureException& err)
     {
     }
-
-
-	BaseObject* pNewItem = BaseObject::parseFromFile(m_pEntMgr,  "D:\\projects\\yakyak\\bin\\res\\ui_layout\\test.json");
-	BaseObject* pItem = m_pEntMgr->Create("Item");
-	pItem->serializeToFile("D:\\projects\\yakyak\\bin\\res\\ui_layout\\test.json");
-	//BaseObject* pObject = BaseObject::parseFromFile(m_pEntMgr, "D:\\work\\projects\\fun\\yakyak\\bin\\res\\ui_layout\\test.json");
-
-
 }
 
 void App::Close()

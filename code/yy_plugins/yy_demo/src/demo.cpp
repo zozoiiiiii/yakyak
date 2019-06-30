@@ -29,6 +29,17 @@ void Demo::OnCreate()
 	CreateTestUI();
 	CreateTestScene();
 
+
+
+
+	BaseObject* pNewItem = BaseObject::parseFromFile(GetMgr(),  "D:\\projects\\yakyak\\bin\\res\\ui_layout\\test.json");
+	Item* pItem = (Item*)GetMgr()->Create("Item");
+	Item* pItem1 = (Item*)GetMgr()->Create("Item");
+	pItem->AddChild(pItem1);
+
+	pItem->serializeToFile("D:\\projects\\yakyak\\bin\\res\\ui_layout\\test.json");
+	//BaseObject* pObject = BaseObject::parseFromFile(m_pEntMgr, "D:\\work\\projects\\fun\\yakyak\\bin\\res\\ui_layout\\test.json");
+
 }
 
 void Demo::CreateTestUI()
