@@ -1,5 +1,7 @@
 {
     "Entity": {
-        "name": ""
+        "properties": {
+            "name": ""
+        }
     }
 }

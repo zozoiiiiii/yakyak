@@ -92,11 +92,13 @@ public:
 	void Invoke(void* result, const char* name, void* p1, void* p2, void* p3, void* p4, void* p5);
 
 protected:
-	virtual void parseFromObject(const rapidjson::Value* value);	
-	virtual void serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
-private:
+	virtual bool parseFromObject(const rapidjson::Value* value);	
+	virtual bool serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
+
 	// property object should not contain baseobject(can used as child), like vec3f
-	bool serializeProperties(rapidjson::Document* doc, rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
+	virtual bool serializeToProperties(rapidjson::Document* doc, rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
+	virtual bool parseFromProperties(const rapidjson::Value* value, MetaClass* pMetaClass, void* pInstance);
+private:
     void SetEntMgr(IObjectMgr* pMgr){m_pObjectMgr=pMgr;}
     void SetID(YY_OBJECTID id){m_id = id;}
     void SetCreator(MetaClass* creator){ m_pMetaClass = creator;}

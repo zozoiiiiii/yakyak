@@ -3,82 +3,6 @@
 
 NS_YY_BEGIN
 
-Entity* Entity::ParseFromFile(IObjectMgr* pObjMgr, const std::string& file, YY_OBJECTID parent, YY_OBJECTID prev, YY_OBJECTID next)
-{
-	const std::string& xmlFile = file;
-	FILE* pFile = fopen(xmlFile.c_str(), "r");
-	if (nullptr == pFile)
-		return nullptr;
-
-	fseek(pFile, 0, SEEK_END);
-	int nSize = ftell(pFile);
-	fseek(pFile, 0, SEEK_SET);
-
-	YY::AutoMem<char, 512> buf(nSize);
-	fread(buf.GetBuf(), nSize, 1, pFile);
-	fclose(pFile);
-
-	return parseFrom(pObjMgr, buf.GetBuf(), parent, prev, next);
-}
-
-Entity* Entity::parseFrom(IObjectMgr* pObjMgr, const std::string& data, YY_OBJECTID parent, YY_OBJECTID prev, YY_OBJECTID next)
-{
-	YY::AutoMem<char, 512> strBuf(data.length());
-	strcpy(strBuf.GetBuf(), data.c_str());
-
-	xml_document doc;
-	try
-	{
-		doc.parse<0>(strBuf.GetBuf());
-	}
-	catch (std::exception & e)
-	{
-		return nullptr;
-	}
-
-	// only one root node.
-	xml_node * node = doc.first_node();
-	if (node->next_sibling() != nullptr)
-		return nullptr;
-
-	BaseObject* pObject = parseFromNode(pObjMgr, node);
-	if (pObject->IsInstanceOf("Entity"))
-		return (Entity*)pObject;
-
-	pObjMgr->Destroy(pObject->GetID());
-	return nullptr;
-
-
-// 
-// 	// parse from the string
-// 	xml_attribute* pAttribute = node->first_attribute("class");
-// 	if (nullptr == pAttribute)
-// 		return nullptr;
-// 
-// 	std::string className = pAttribute->value();
-// 	BaseObject* pObject = pObjMgr->BeginCreate(className);
-// 	if (!pObject)
-// 		return nullptr;
-// 
-// 	if (!pObject->IsInstanceOf("Entity"))
-// 	{
-// 		pObjMgr->Destroy(pObject->GetID());
-// 		return nullptr;
-// 	}
-// 
-// 	Entity* pEntity = (Entity*)pObject;
-// 	bool bLoad = pEntity->parseFromNode(node);
-// 	if (!bLoad)
-// 	{
-// 		// log error.
-// 	}
-// 
-// 	//pObjMgr->EndCreate(pObject, args);
-// 
-// 	return pEntity;
-}
-
-
 bool Entity::parseProperties(const xml_node* pNode, BaseObject* pObject)
 {
 	bool result = true;
@@ -213,6 +137,18 @@ bool Entity::parseComponents(const xml_node* pNode)
 
 	return bResult;
 }
+
+bool Entity::parseFromObject(const rapidjson::Value* value)
+{
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+	Value::ConstMemberIterator propertiesItr = value->FindMember("properties");
+	if (propertiesItr == value->MemberEnd())
+		return false;
+
+	const Value& properties = propertiesItr->value;
+	return parseFromProperties(&properties, GetMetaClass(), this);
+}
+
 
 Entity* Entity::parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode)
 {
@@ -412,11 +348,20 @@ bool Entity::serializeProperties(BaseObject* pObject, xml_document* pDoc, xml_no
 
 
 
-void Entity::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value)
+bool Entity::serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* pObject)
 {
-	BaseObject::serializeObjectTo(doc, value);
-	//serializeComponents(doc, value);
-	//serializeChildren(doc, value);
+	bool bResult = true;
+	IReflectionMgr* pReflectionMgr = GetReflectionMgr();
+
+	// serialize properties data
+	rapidjson::Value properties;
+	properties.SetObject();
+	if (!serializeToProperties(doc, &properties, GetMetaClass(), this))
+		return false;
+
+	// add properties to target
+	pObject->AddMember("properties", properties, doc->GetAllocator());
+	return true;
 }
 
 
@@ -520,8 +465,9 @@ void Entity::OnDestroyed()
 
 Entity* Entity::Duplicate()
 {
-	std::string str = serializeTo();
-	return Entity::parseFrom(GetMgr(), str);
+	//std::string str = serializeTo();
+	//return Entity::parseFrom(GetMgr(), str);
+	return nullptr;
 }
 
 

@@ -51,9 +51,6 @@ class Entity : public BaseObject
 	YY_FIELD(&Entity::m_name, "name", "");
 	YY_END
 public:
-	static Entity* parseFrom(IObjectMgr* pObjMgr, const std::string& data, YY_OBJECTID parent = YY_INVALID_OBJECTID, YY_OBJECTID prev = YY_INVALID_OBJECTID, YY_OBJECTID next = YY_INVALID_OBJECTID);
-	static Entity* ParseFromFile(IObjectMgr* pObjMgr, const std::string& file, YY_OBJECTID parent = YY_INVALID_OBJECTID, YY_OBJECTID prev = YY_INVALID_OBJECTID, YY_OBJECTID next = YY_INVALID_OBJECTID);
-
 	Entity() {}
 	virtual void OnCreate();
 	virtual void OnDestroyed();
@@ -98,12 +95,13 @@ public:
 	//virtual bool FirstRender() { return m_bFirstRender; }
 
 private:
+	virtual bool parseFromObject(const rapidjson::Value* value);
 	static Entity* parseFromNode(IObjectMgr* pObjMgr, const xml_node* pNode);
 	bool parseProperties(const xml_node* pNode, BaseObject* pObject);
 	bool parseChildren(const xml_node* pNode);
 	bool parseComponents(const xml_node* pNode);
 
-	virtual void serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
+	virtual bool serializeObjectTo(rapidjson::Document* doc, rapidjson::Value* value);
 	bool serializeComponents(rapidjson::Document* doc, rapidjson::Value* value);
 	bool serializeChildren(rapidjson::Document* doc, rapidjson::Value* value);
 
